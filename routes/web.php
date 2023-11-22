@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PushController;
+use App\Http\Controllers\Webhooks\FlutterwaveTransactions;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::any('/push',[PushController::class,'store'])->name('push.store');
+
+Route::get('/push/test',[PushController::class,'push'])->name('push');
+
+/*======================== WEBHOOK ROUTE =====================*/
+Route::post('webhook/transactions/flutterwave',[FlutterwaveTransactions::class,'landingPage']);

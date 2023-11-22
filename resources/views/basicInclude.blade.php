@@ -4,3 +4,9 @@
 <script src="https://kit.fontawesome.com/6b3c5ea29e.js" crossorigin="anonymous"></script>
 
 @include('noti_js')
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<script>
+    new ClipboardJS('.copy');
+</script>

@@ -48,4 +48,7 @@ Route::middleware(['web','auth'])->group(function (){
         ->name('verify-password-reset');
     Route::post('recover-password/email-verification/process',[RecoverAccount::class,'processVerificationCode'])
         ->name('auth.recovery');
+
+    Route::get('me/logout',[Login::class,'logout'])
+        ->name('logout');
 });

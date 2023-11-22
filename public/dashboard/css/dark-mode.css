@@ -215,6 +215,10 @@
   background-color: #FFFFFF !important;
   border-color: #353558 !important;
 }
+[data-theme="dark"] .modal-content {
+  background-color: #353558 !important;
+  border-color: #353558 !important;
+}
 
 [data-theme="dark"] .available-cards-wrap {
   background-color: #2c2b44;
