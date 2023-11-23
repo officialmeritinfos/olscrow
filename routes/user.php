@@ -51,4 +51,12 @@ Route::get('fetch/state_city',[Profile::class,'fetchStateCity'])
 Route::get('profile/verification/index',[Profile::class,'escortVerification'])
     ->name('user.verification');
 Route::post('profile/verification/submit',[Profile::class,'processEscortVerification'])
-    ->name('user.verification.submit');
+    ->name('user.verification.submit');//submit profile verification
+Route::get('profile/security/index',[Profile::class,'securitySetting'])
+    ->name('user.security');
+Route::post('profile/security/password',[Profile::class,'changePassword'])
+    ->name('user.security.password');//change password
+Route::post('profile/security/security',[Profile::class,'twoFactorAuth'])
+    ->name('user.security.security');//update two-factor authentication
+Route::get('profile/gallery/index',[Profile::class,'securitySetting'])
+    ->name('user.gallery');

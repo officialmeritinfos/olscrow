@@ -11,7 +11,9 @@ use App\Models\EscortVerification;
 use App\Models\GeneralSetting;
 use App\Models\State;
 use App\Models\User;
+use App\Models\UserActivity;
 use App\Models\UserFeature;
+use App\Models\UserSetting;
 use App\Notifications\CustomNotification;
 use App\Notifications\SendPushNotification;
 use App\Traits\Regular;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Intervention\Image\Facades\Image;
 
 class Profile extends BaseController
@@ -223,6 +226,11 @@ class Profile extends BaseController
 
             $user->save();
 
+            UserActivity::create([
+                'user'=>$user->id,'title'=>'Location updated',
+                'content'=>'Account Location was updated from account via IP: '.$request->ip()
+            ]);
+
             return $this->sendResponse([
                 'redirectTo'=>url()->previous()
             ],'Location updated successfully.');
@@ -330,7 +338,10 @@ class Profile extends BaseController
             if (!empty($verification)){
                 $user->isVerified=4;
                 $user->save();
-
+                UserActivity::create([
+                    'user'=>$user->id,'title'=>'KYC Submitted',
+                    'content'=>'Account KYC was submitted from account via IP: '.$request->ip()
+                ]);
                 //send mail to admin
                 $admin = User::where('isAdmin',1)->first();
                 if (!empty($admin)){
@@ -348,5 +359,108 @@ class Profile extends BaseController
             Log::info($exception->getMessage().' on '.$exception->getLine());
             return $this->sendError('location.error',['error'=>'Internal Server error']);
         }
+    }
+    //security setting
+    public function securitySetting()
+    {
+        $user = Auth::user();
+        $web = GeneralSetting::find(1);
+
+        return view('dashboard.pages.profile.security')->with([
+            'web'=>$web,
+            'pageName'=>'Account Security',
+            'siteName'=>$web->name,
+            'user'=>$user,
+            'countries'=>Country::where('status',1)->get(),
+            'setting'=>UserSetting::where('user',$user->id)->first()
+        ]);
+    }
+    //change password
+    public function changePassword(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'oldPassword'=>['required','string','current_password:web'],
+                'password'=>['required',Password::min(8)->uncompromised(1),'confirmed'],
+                'password_confirmation'=>['required','same:password']
+            ],['current_password'=>'Current password is wrong'],['oldPassword'=>'Current Password'])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $user->password = bcrypt($input['password']);
+            $user->save();
+            UserActivity::create([
+                'user'=>$user->id,'title'=>'Password Reset',
+                'content'=>'Account password was reset from account via IP: '.$request->ip()
+            ]);
+            $message = "Your ".$web->name." account password was recently reset from your account. Please contact support if you did not make this change.";
+            //send notification
+            $user->notify(new CustomNotification($user,$message,'Account Password Reset Notification'));
+            $user->notify(new SendPushNotification($user,'Account Password Reset Notification',$message));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Password successfully reset');
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('location.error',['error'=>'Internal Server error']);
+        }
+    }
+    //two factor authentication
+    public function twoFactorAuth(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'password'=>['required','string','current_password:web',Password::min(8)->uncompromised(1)],
+                'twoFactor'=>['required','numeric'],
+            ],['current_password'=>'Current password is wrong'],['oldPassword'=>'Current Password'])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $setting = UserSetting::where('user',$user->id)->first();
+
+            $setting->twoFactor = $input['twoFactor'];
+            $setting->save();
+            UserActivity::create([
+                'user'=>$user->id,'title'=>'Two Factor Authentication Updated',
+                'content'=>'Two-factor authentication was updated from account via IP: '.$request->ip()
+            ]);
+            $message = "Your ".$web->name." account two-factor authentication was recently updated from your account. Please contact support if you did not make this change.";
+            //send notification
+            $user->notify(new CustomNotification($user,$message,'Security update'));
+            $user->notify(new SendPushNotification($user,'Security Update',$message));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Two-factor authentication successfully updated');
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('location.error',['error'=>'Internal Server error']);
+        }
+    }
+    //user gallery
+    public function gallery()
+    {
+        $user = Auth::user();
+        $web = GeneralSetting::find(1);
+
+        return view('dashboard.pages.profile.gallery')->with([
+            'web'=>$web,
+            'pageName'=>'Gallery',
+            'siteName'=>$web->name,
+            'user'=>$user,
+        ]);
     }
 }

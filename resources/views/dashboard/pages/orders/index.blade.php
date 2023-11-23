@@ -30,8 +30,9 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">TITLE</th>
-                            <th scope="col">SHORT-TIME AMOUNT</th>
-                            <th scope="col">OVERNIGHT AMOUNT</th>
+                            <th scope="col">SHORT-TIME FEE</th>
+                            <th scope="col">OVERNIGHT FEE</th>
+                            <th scope="col">WEEKEND FEE</th>
                             <th scope="col">STATUS</th>
                             <th scope="col">ACTION</th>
                         </tr>
@@ -54,6 +55,9 @@
                                 </td>
                                 <td>
                                     {{$order->currency}} {{number_format($order->overnight,2)}}
+                                </td>
+                                <td>
+                                    {{$order->currency}} {{number_format($order->weekend,2)}}
                                 </td>
 
                                 <td class="status">

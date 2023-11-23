@@ -42,12 +42,14 @@ class Orders extends BaseController
                 'title' => ['required', 'string'],
                 'amount' => ['required', 'numeric'],
                 'overnight' => ['required', 'numeric'],
+                'weekend' => ['required', 'numeric'],
                 'personalized' => ['nullable', 'numeric','integer'],
                 'service'=>['required'],
                 'service.*'=>['required','numeric','exists:services,id']
             ],[],[
                 'amount'=>'Short-time fee',
-                'overnight'=>'Overnight fee'
+                'overnight'=>'Overnight fee',
+                'weekend'=>'Weekend fee',
             ])->stopOnFirstFailure();
 
             if ($validator->fails()) return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
@@ -63,6 +65,7 @@ class Orders extends BaseController
                 'reference' => $reference,
                 'amount' => $input['amount'],
                 'overnight' => $input['overnight'],
+                'weekend' => $input['weekend'],
                 'personalized'=>$request->has('personalized')?1:2,
                 'description'=>$input['description'],'status'=>1,
                 'user'=>$user->id,'currency'=>$user->mainCurrency,
@@ -134,6 +137,7 @@ class Orders extends BaseController
                 'title' => ['required', 'string'],
                 'amount' => ['required', 'numeric'],
                 'overnight' => ['required', 'numeric'],
+                'weekend' => ['required', 'numeric'],
                 'personalized' => ['nullable', 'numeric','integer'],
                 'status' => ['required', 'numeric','integer'],
                 'service'=>['required'],
@@ -141,7 +145,8 @@ class Orders extends BaseController
                 'id' => ['required', 'string',Rule::exists('orders','reference')->where('user',$user->id)],
             ],[],[
                 'amount'=>'Short-time fee',
-                'overnight'=>'Overnight fee'
+                'overnight'=>'Overnight fee',
+                'weekend'=>'Weekend fee'
             ])->stopOnFirstFailure();
 
             if ($validator->fails()){
@@ -157,6 +162,7 @@ class Orders extends BaseController
                 'title' => $input['title'],
                 'amount' => $input['amount'],
                 'overnight' => $input['overnight'],
+                'weekend' => $input['weekend'],
                 'personalized'=>$request->has('personalized')?1:2,
                 'description'=>$input['description'],'status'=>$input['status'],
                 'currency'=>$user->mainCurrency,

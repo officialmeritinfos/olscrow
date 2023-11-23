@@ -45,6 +45,11 @@
                     <input type="number" name="overnight" step="0.01" class="form-control" id="inputEmail4"
                            required value="{{$order->overnight}}"/>
                 </div>
+                <div class="col-md-12 mt-2">
+                    <label for="inputEmail4" class="form-label">Weekend Amount</label>
+                    <input type="number" name="weekend" step="0.01" class="form-control" id="inputEmail4"
+                           required value="{{$order->weekend}}"/>
+                </div>
                 <div class="col-12 mt-2">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="gridCheck" name="personalized" value="1"

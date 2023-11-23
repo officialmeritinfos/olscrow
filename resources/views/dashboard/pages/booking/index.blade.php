@@ -52,8 +52,11 @@
                                         @case(1)
                                             <span class="badge bg-info">Short-time</span>
                                         @break
+                                        @case(1)
+                                            <span class="badge bg-dark">Overnight</span>
+                                        @break
                                         @default
-                                            <span class="badge bg-primary">Overnight</span>
+                                            <span class="badge bg-primary">Weekend</span>
                                         @break
                                     @endswitch
                                 </td>

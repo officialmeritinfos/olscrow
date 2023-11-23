@@ -89,7 +89,7 @@
                             Upload photos for your potential clients
                         </p>
                     </div>
-                    <a href="#" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                    <a href="{{route('user.gallery')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
                         Manage
                     </a>
                 </div>
@@ -123,7 +123,7 @@
                             Secure your account
                         </p>
                     </div>
-                    <a href="#" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                    <a href="{{route('user.security')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
                         Manage
                     </a>
                 </div>
