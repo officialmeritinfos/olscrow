@@ -1,0 +1,116 @@
+{
+    "data": [
+        {
+            "id": 112,
+            "name": "Athletic",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 345,
+            "name": "Chubby",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 48,
+            "name": "Curvy",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 102,
+            "name": "Elegant",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 317,
+            "name": "Fat",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 609,
+            "name": "Fluffy",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 240,
+            "name": "Gym Buddy",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 49,
+            "name": "Heavy",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 128,
+            "name": "Huge",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 610,
+            "name": "Muscular",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 138,
+            "name": "Regular",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 608,
+            "name": "Robust",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 353,
+            "name": "Select",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 166,
+            "name": "Skinny",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 82,
+            "name": "Slender",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 163,
+            "name": "Slim",
+            "type": "build",
+            "deleted": "0",
+            "status": "1"
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "data": [
+        {
+            "id": 603,
+            "name": "Average",
+            "type": "height",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 602,
+            "name": "Not too Tall",
+            "type": "height",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 607,
+            "name": "Portable",
+            "type": "height",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 605,
+            "name": "Tall",
+            "type": "height",
+            "deleted": "0",
+            "status": "1"
+        },
+        {
+            "id": 606,
+            "name": "Very Tall",
+            "type": "height",
+            "deleted": "0",
+            "status": "1"
+        }
+    ]
+}

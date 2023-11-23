@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0",
         "fruitcake/laravel-cors": "^2.0.5",
+        "google/cloud-storage": "^1.35",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
         "kutia-software-company/larafirebase": "^1.3",

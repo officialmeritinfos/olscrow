@@ -111,11 +111,11 @@
                     </div>
                 @else
 
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="row justify-content-center">
 
 
-                            <div class="col-lg-6 col-sm-6">
+                            <div class="col-lg-4">
                                 <div class="single-today-card d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <span class="today">Main Balance</span>

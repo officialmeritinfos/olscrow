@@ -28,6 +28,9 @@
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="{{asset('dashboard/css/responsive.css')}}">
 
+<link rel="stylesheet" href="{{asset('dashboard/vendors/summernote/summernote-bs5.css')}}">
+<!-- Selectize -->
+<link rel="stylesheet" href="{{asset('dashboard/css/selectize.bootstrap5.css')}}">
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="{{asset($web->favicon)}}">
 <!-- Title -->

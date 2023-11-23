@@ -4,805 +4,841 @@
  * Licensed under MIT (https://github.com/coliff/dark-mode-switch/blob/main/LICENSE)
  */
 [data-theme="dark"] {
-  background-color: #222238 !important;
-  color: #bfc9d1 !important;
+    background-color: #222238 !important;
+    color: #bfc9d1 !important;
 }
 
 [data-theme="dark"] .h1, [data-theme="dark"] .h2, [data-theme="dark"] .h3, [data-theme="dark"] .h4, [data-theme="dark"] .h5, [data-theme="dark"] .h6, [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6 {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav .metismenu li a {
-  color: #bfc9d1;
+    color: #bfc9d1;
+}
+
+[data-theme="dark"] .nav-pills .nav-link {
+    color: #ffffff;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav .metismenu li.mm-active .box-style {
-  background-color: #2c2b44;
-  -webkit-box-shadow: 0 0 20px 0px #000;
-          box-shadow: 0 0 20px 0px #000;
-  color: #ffffff;
+    background-color: #2c2b44;
+    -webkit-box-shadow: 0 0 20px 0px #000;
+    box-shadow: 0 0 20px 0px #000;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav .metismenu li.mm-active .mm-collapse li.active a {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav .metismenu li:hover .box-style {
-  background-color: #2c2b44;
-  -webkit-box-shadow: 0 0 20px 0px #000;
-          box-shadow: 0 0 20px 0px #000;
-  color: #ffffff;
+    background-color: #2c2b44;
+    -webkit-box-shadow: 0 0 20px 0px #000;
+    box-shadow: 0 0 20px 0px #000;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav .metismenu li a i {
-  background-color: #212137;
-  color: #ffffff;
+    background-color: #212137;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .side-menu-area .sidebar-nav .metismenu li .mm-collapse li a:hover {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar {
-  background-color: #2c2b44 !important;
+    background-color: #2c2b44 !important;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .search-bar .form-control {
-  background-color: #212137;
-  border-color: #353558;
+    background-color: #212137;
+    border-color: #353558;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item .nav-link i {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item .nav-link.avatar h3 {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item .nav-link.avatar span {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .single-today-card {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .chart-wrap {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .active-user {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .active-user .active-single-item span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .activity-timeline {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .activity-timeline ul li p {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .activity-timeline ul li span {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .analytics-wrap {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .apexcharts-legend-text {
-  color: #ffffff !important;
+    color: #ffffff !important;
 }
 
 [data-theme="dark"] .latest-transaction-area .table-responsive {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
+}
+[data-theme="dark"]  .table-responsive {
+    background-color: #2c2b44;
+    color: #ffffff;
 }
 
+
 [data-theme="dark"] .latest-transaction-area .table tbody tr {
-  border-bottom: 1px solid #383750;
+    border-bottom: 1px solid #383750;
 }
 
 [data-theme="dark"] .latest-transaction-area .table tbody tr td {
-  color: #bfc9d1;
+    color: #bfc9d1;
+}
+[data-theme="dark"] .table tbody tr td {
+    color: #ffffff;
 }
 
 [data-theme="dark"] .latest-transaction-area .table thead tr th {
-  border-bottom: 1px solid #5d5c6b !important;
+    border-bottom: 1px solid #5d5c6b !important;
+}
+[data-theme="dark"] .table thead tr th {
+    border-bottom: 1px solid #5d5c6b !important;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .read-more {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .read-more i {
-  color: #bfc9d1;
-  -webkit-transition: all ease 0.5s;
-  transition: all ease 0.5s;
+    color: #bfc9d1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
 }
 
 [data-theme="dark"] .read-more:hover {
-  color: #f90283;
+    color: #f90283;
 }
 
 [data-theme="dark"] .read-more:hover i {
-  color: #f90283;
+    color: #f90283;
 }
 
 [data-theme="dark"] .target-chart {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .social-media {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .country-chart {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .dark-bar {
-  background-color: #2c2b44;
-  border-color: #383750;
+    background-color: #2c2b44;
+    border-color: #383750;
 }
 
 [data-theme="dark"] .dark-bar span {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .single-emmeli {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .card {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
+}
+
+[data-theme="dark"] .boxed-check-group .boxed-check-label {
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .quick-transfer {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .quick-transfer .input-group .btn-outline-secondary {
-  background-color: #212137;
-  border-color: #353558;
-  color: #bfc9d1;
+    background-color: #212137;
+    border-color: #353558;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .buy-sell-form {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .buy-sell-form .tabs {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .buy-sell-form .input-group .btn-outline-secondary {
-  background-color: #212137;
-  border-color: #353558;
-  color: #bfc9d1;
+    background-color: #212137;
+    border-color: #353558;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .buy-sell-form .input-group .dropdown-menu {
-  background-color: #2c2b44;
-  -webkit-box-shadow: 0 0 20px 0px #000;
-          box-shadow: 0 0 20px 0px #000;
+    background-color: #2c2b44;
+    -webkit-box-shadow: 0 0 20px 0px #000;
+    box-shadow: 0 0 20px 0px #000;
 }
 
 [data-theme="dark"] .buy-sell-form .input-group .dropdown-menu .dropdown-item {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .buy-sell-form .input-group .dropdown-menu .dropdown-item:hover {
-  background-color: #212137 !important;
+    background-color: #212137 !important;
 }
 
 [data-theme="dark"] .form-select {
-  background-color: #212137;
-  border-color: #353558;
-  color: #bfc9d1;
+    background-color: #212137;
+    border-color: #353558;
+    color: #bfc9d1;
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: #212137;
+    border-color: #7f26c6;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .form-control {
-  background-color: #FFFFFF !important;
-  border-color: #353558 !important;
+    background-color: #212137 !important;
+    border-color: #353558 !important;color: #ffffff !important;
 }
-[data-theme="dark"] .modal-content {
-  background-color: #353558 !important;
-  border-color: #353558 !important;
+
+[data-theme="dark"] .selectize-input,.selectize-control.single .selectize-input.input-active  {
+    background-color: #212137 !important;
+    border-color: #353558 !important;color: #ffffff !important;
+}
+[data-theme="dark"] .selectize-dropdown .selected {
+    background-color:#483248;
+    color:#fff
 }
 
 [data-theme="dark"] .available-cards-wrap {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .available-cards-wrap .owl-carousel .owl-item img {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
 [data-theme="dark"] .available-cards-wrap .recent-transaction-wrap .recent-title .shorting-menu {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .available-cards-wrap .recent-transaction-wrap .recent-title .shorting-menu .filter {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .available-cards-wrap .recent-transaction-wrap .recent-title .shorting-menu .filter.active {
-  color: #7f26c6;
+    color: #7f26c6;
 }
 
 [data-theme="dark"] .available-cards-wrap .available-title .add-img img {
-  border-radius: 50px;
+    border-radius: 50px;
 }
 
 [data-theme="dark"] .calendar-wrap {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .calendar-wrap .fc-theme-standard .fc-scrollgrid {
-  border-color: #3a3952;
+    border-color: #3a3952;
 }
 
 [data-theme="dark"] .calendar-wrap .fc .fc-button-primary {
-  background-color: #2c2b44;
-  -webkit-box-shadow: 0 0 20px 0px #000;
-          box-shadow: 0 0 20px 0px #000;
-  color: #bfc9d1;
+    background-color: #2c2b44;
+    -webkit-box-shadow: 0 0 20px 0px #000;
+    box-shadow: 0 0 20px 0px #000;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .calendar-wrap .fc-theme-standard td, [data-theme="dark"] .calendar-wrap .fc-theme-standard th {
-  border-color: #3a3952;
+    border-color: #3a3952;
 }
 
 [data-theme="dark"] .activity-timeline.next-events ul li::before {
-  border-color: #3a3952;
+    border-color: #3a3952;
 }
 
 [data-theme="dark"] .chat-content-area .sidebar-left .sidebar {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .chat-content-area .sidebar-left .sidebar .sidebar-content .chat-menu .list-group-label {
-  border-color: #3a3952;
+    border-color: #3a3952;
 }
 
 [data-theme="dark"] .chat-content-area .content-right .chat-list-wrapper .chat-list {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .chat-content-area .content-right .chat-list-wrapper .chat-list .chat-list-footer {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .chat-content-area .content-right .chat-list-wrapper .chat-list .chat-container {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .single-products {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .single-products .products-content .product-title h3 a {
-  color: #ffffff !important;
+    color: #ffffff !important;
 }
 
 [data-theme="dark"] .product-details-wrap {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .product-details-desc .sku li {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .product-details-desc .product-review .rating-count {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tabs li {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tabs li.current {
-  color: #7f26c6;
+    color: #7f26c6;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .additional-information li span {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-comments .review-item .review-report-link {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-comments .review-item .review-report-link:hover {
-  color: #7f26c6;
+    color: #7f26c6;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-comments .review-item span strong {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-form form .form-group label {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .order-details-area {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .order-details-area .latest-transaction-area .table-responsive .dropdown .dropdown-menu {
-  background-color: #2c2b44;
-  -webkit-box-shadow: 0 0 20px 0px #000;
-          box-shadow: 0 0 20px 0px #000;
+    background-color: #2c2b44;
+    -webkit-box-shadow: 0 0 20px 0px #000;
+    box-shadow: 0 0 20px 0px #000;
 }
 
 [data-theme="dark"] .order-details-area .latest-transaction-area .table-responsive .dropdown .dropdown-menu li a {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .cart-area .cart-controller {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .cart-area .cart-totals {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .cart-area .cart-totals ul li {
-  border-color: #3f3e52 !important;
-  color: #bfc9d1;
+    border-color: #3f3e52 !important;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .cart-area .cart-totals ul li span {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .cart-area .cart-totals ul li b {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .cart-area .cart-table table {
-  border-color: #3f3e52 !important;
+    border-color: #3f3e52 !important;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td {
-  border-bottom: 1px solid #3f3e52;
+    border-bottom: 1px solid #3f3e52;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td.product-name a {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td.product-name span {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td.product-quantity .input-counter input {
-  background-color: #2c2b44;
-  color: #ffffff;
+    background-color: #2c2b44;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td.product-quantity .input-counter .minus-btn {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td.product-quantity .input-counter .plus-btn {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td .unit-amount {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .cart-area .cart-table table tbody tr td .subtotal-amount {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .checkout-area .billing-details {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .checkout-area .billing-details h3 {
-  border-bottom: 1px solid #535175;
+    border-bottom: 1px solid #535175;
 }
 
 [data-theme="dark"] .checkout-area .payment-information .single-payment {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .checkout-area .cart-totals {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .checkout-area .cart-totals .cart-total-list li {
-  color: #bfc9d1;
-  border-color: #535175;
+    color: #bfc9d1;
+    border-color: #535175;
 }
 
 [data-theme="dark"] .checkout-area .cart-totals .cart-total-list li span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .submit-property-form {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .submit-property-form .file-upload .inputfile + label {
-  color: #bfc9d1;
-  background-color: #212137;
+    color: #bfc9d1;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .submit-property-form .form-group label {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .simplebar-content-wrapper {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .email-content-area .sidebar-left .sidebar .sidebar-content .email-menu .list-group-messages .list-group-item {
-  background-color: #2c2b44;
-  color: #bfc9d1;
+    background-color: #2c2b44;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-content-area .sidebar-left .sidebar .sidebar-content .email-menu .list-group-messages .list-group-item.active {
-  color: #f90283;
+    color: #f90283;
 }
 
 [data-theme="dark"] .email-content-area .sidebar-left .sidebar .sidebar-content .email-menu .list-group-labels .list-group-item {
-  background-color: #2c2b44;
-  color: #bfc9d1;
+    background-color: #2c2b44;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-content-area .sidebar-left .sidebar .sidebar-content .email-menu .list-group-chat .list-group-item {
-  background-color: #2c2b44;
-  color: #bfc9d1;
+    background-color: #2c2b44;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .email-list-header {
-  background-color: #2c2b44;
-  border-color: #484761;
+    background-color: #2c2b44;
+    border-color: #484761;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .email-list-header .btn-icon {
-  background-color: #212137;
-  color: #bfc9d1;
+    background-color: #212137;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .list-wrapper .email-list-item {
-  background-color: #2c2b44;
-  border-bottom: 1px solid #484761;
+    background-color: #2c2b44;
+    border-bottom: 1px solid #484761;
+}
+[data-theme="dark"] .apexcharts-theme-light {
+    background-color: #2c2b44;
+    border-bottom: 1px solid #484761;
 }
 
+
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .list-wrapper .email-list-item .email-list-detail .from {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .list-wrapper .email-list-item .email-list-detail .msg {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .email-list-footer {
-  background-color: #2c2b44;
-  border-color: #484761;
+    background-color: #2c2b44;
+    border-color: #484761;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .email-list-footer p {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-content-area .content-right .email-list-wrapper .email-list .email-list-footer .email-pagination-btn button {
-  background-color: #2c2b44;
-  -webkit-box-shadow: 0 0 20px 0px #000;
-          box-shadow: 0 0 20px 0px #000;
-  color: #bfc9d1;
+    background-color: #2c2b44;
+    -webkit-box-shadow: 0 0 20px 0px #000;
+    box-shadow: 0 0 20px 0px #000;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-header {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-header .header-right .btn-icon {
-  background-color: #212137;
-  color: #bfc9d1;
+    background-color: #212137;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-item {
-  background-color: #2c2b44;
-  border-color: #484761;
+    background-color: #2c2b44;
+    border-color: #484761;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-item .email-read-list-detail .name {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-item .email-read-list-detail .email-information .dropdown .dropdown-menu {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-item .email-read-list-detail .email-information .dropdown .dropdown-menu .dropdown-item {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-item .email-read-list-detail .email-information .dropdown .dropdown-menu .dropdown-item:hover {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-item .email-read-list-content .email-read-list-footer {
-  border-color: #424161;
+    border-color: #424161;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .list-wrapper .email-reply-list-item a {
-  background-color: #212137;
-  border-color: #212137;
-  color: #bfc9d1;
+    background-color: #212137;
+    border-color: #212137;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-read-list .email-read-list-header {
-  border-color: #424161;
+    border-color: #424161;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-list-footer {
-  border-color: #424161;
-  background-color: #2c2b44;
+    border-color: #424161;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .email-read-content-area .content-right .email-read-list-wrapper .email-list-footer .email-pagination-btn button {
-  background-color: #212137;
-  color: #bfc9d1;
+    background-color: #212137;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .invoice-area {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .invoice-table table thead th {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .invoice-table table tbody td {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .invoice-middle h5 sub {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .profile-face {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .profile-face .projects {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .profile-information {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .profile-information table tbody tr th {
-  color: #ffffff;
-  border-color: #424161;
+    color: #ffffff;
+    border-color: #424161;
 }
 
 [data-theme="dark"] .profile-information table tbody tr td {
-  border-color: #424161;
+    border-color: #424161;
 }
 
 [data-theme="dark"] .profile-experience {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .profile-experience ul li a {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .user-area .user-form-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .error-area {
-  background-color: #222238 !important;
+    background-color: #222238 !important;
 }
 
 [data-theme="dark"] .error-area .error-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .main-contact-area .main-contact-wrap {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .single-contact-bg {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .single-blog .single-blog-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .single-blog .single-blog-content ul li a {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .single-blog .single-blog-content h3 a {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .blog-details-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .blog-details-content .leave-reply {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .faq-accordion .accordion .accordion-title {
-  background-color: #35354a;
-  color: #ffffff;
+    background-color: #35354a;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .faq-accordion .accordion .accordion-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .faq-accordion .accordion-item {
-  border: none;
-  background-color: transparent;
+    border: none;
+    background-color: transparent;
 }
 
 [data-theme="dark"] .single-pricing-card .pricing-bar {
-  background-image: -webkit-gradient(linear, left top, right bottom, from(#222238), to(#2c2b44));
-  background-image: linear-gradient(to bottom right, #222238, #2c2b44);
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#222238), to(#2c2b44));
+    background-image: linear-gradient(to bottom right, #222238, #2c2b44);
 }
 
 [data-theme="dark"] .single-pricing-card .pricing-bar span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .single-pricing-card .price-list {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .timeline .timeline-section .timeline-box .box-title {
-  background-color: #2c2b44;
-  color: #ffffff;
+    background-color: #2c2b44;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .timeline .timeline-section .timeline-box .box-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .timeline .timeline-section .timeline-box .box-content .box-item {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .timeline .timeline-section .timeline-box .box-content .box-item strong {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .main-default-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .coming-soon-area .coming-soon-content {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .coming-soon-area .coming-soon-content form .form-group .input-newsletter {
-  background-color: #222238;
-  border-color: #222238;
+    background-color: #222238;
+    border-color: #222238;
 }
 
 [data-theme="dark"] .ui-kit-card {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .ui-kit-cards {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .alert-email {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .alert-email .email-content .free-report span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .alert-email .email-content .dastone span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .icon-used-example {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .icon-used-example p {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .icon-box .icon-box-inner {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .icon-box .icon-box-inner .icon-box-name {
-  color: #bfc9d1;
+    color: #bfc9d1;
 }
 
 [data-theme="dark"] .icon-box .icon-base {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .remixicon-area .icon-info {
-  background-color: #2c2b44;
+    background-color: #2c2b44;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .responsive-burger-menu span {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 [data-theme="dark"] .for-mobile-devices.option-item .close-btn {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .for-mobile-devices.option-item .search-btn {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .for-mobile-devices.option-item .search-overlay.search-popup {
-  background-color: #222238;
+    background-color: #222238;
 }
 
 [data-theme="dark"] .for-mobile-devices.option-item .search-overlay.search-popup .search-form .search-input {
-  background-color: #2c2b44;
-  border-color: #2c2b44;
+    background-color: #2c2b44;
+    border-color: #2c2b44;
 }
 
 [data-theme="dark"] .sidebar-content .tab .tabs li {
-  background-color: #212137;
+    background-color: #212137;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item.notification-box .dropdown-menu .dropdown-footer {
-  border-color: #212137;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f90283), to(#7f26c6));
-  background-image: linear-gradient(to bottom, #f90283, #7f26c6);
-  border-radius: 0 0 8px 8px;
+    border-color: #212137;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f90283), to(#7f26c6));
+    background-image: linear-gradient(to bottom, #f90283, #7f26c6);
+    border-radius: 0 0 8px 8px;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item.notification-box .dropdown-menu .dropdown-footer .dropdown-item {
-  color: #ffffff !important;
+    color: #ffffff !important;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item.apps-box .dropdown-menu .dropdown-footer {
-  border-color: #212137;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f90283), to(#7f26c6));
-  background-image: linear-gradient(to bottom, #f90283, #7f26c6);
-  border-radius: 0 0 8px 8px;
+    border-color: #212137;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f90283), to(#7f26c6));
+    background-image: linear-gradient(to bottom, #f90283, #7f26c6);
+    border-radius: 0 0 8px 8px;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item.apps-box .dropdown-menu .dropdown-footer .dropdown-item {
-  color: #ffffff !important;
+    color: #ffffff !important;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item.apps-box .dropdown-menu .dropdown-body .dropdown-item span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item .dropdown-body .dropdown-item .content span {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="dark"] .main-content .main-top-navbar .navbar-collapse .navbar-nav .nav-item .dropdown-body .dropdown-item .content p {
-  color: #cfcfcf;
+    color: #cfcfcf;
 }
 /*# sourceMappingURL=dark-mode.css.map */

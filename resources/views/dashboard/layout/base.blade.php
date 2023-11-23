@@ -137,7 +137,7 @@
                                 <div class="info text-center">
                                     <span class="name">{{$user->name}}</span>
                                     <p class="mb-3 email">
-                                        {{$user->reference}}
+                                       ID:  <span data-clipboard-text="{{$user->reference}}" class="copy">{{$user->reference}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                             <div class="dropdown-body">
                                 <ul class="profile-nav p-0 pt-3">
                                     <li class="nav-item">
-                                        <a href="profile" class="nav-link">
+                                        <a href="{{route('user.profile')}}" class="nav-link">
                                             <i class="ri-user-line"></i>
                                             <span>Profile</span>
                                         </a>
@@ -183,6 +183,22 @@
                 </ul>
             </div>
         </nav>
+    </div>
+
+    <div class="mb-2 mt-3">
+        <a href="javascript: history.go(-1)"><i class="bx bx-arrow-to-left"></i> Go back</a>
+    </div>
+
+    <div class="page-title-area" style="margin-bottom: 0rem;">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="page-title">
+                        <h6>{{$pageName}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     @yield('content')

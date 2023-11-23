@@ -38,11 +38,19 @@
                     <span class="menu-title">Account</span>
                 </a>
             </li>
+            @if($user->accountType==1)
+                <li>
+                    <a href="{{route('user.orders')}}" class="box-style">
+                        <i class="ri-file-3-fill"></i>
+                        <span class="menu-title">Orders</span>
+                    </a>
+                </li>
+            @endif
 
             <li>
-                <a href="chat" class="box-style">
-                    <i class="ri-file-3-fill"></i>
-                    <span class="menu-title">Orders</span>
+                <a href="{{route('user.bookings')}}" class="box-style">
+                    <i class="ri-book-2-fill"></i>
+                    <span class="menu-title">Bookings</span>
                 </a>
             </li>
 
@@ -61,7 +69,7 @@
             </li>
 
             <li>
-                <a href="chat" class="box-style">
+                <a href="{{route('user.profile')}}" class="box-style">
                     <i class="ri-user-settings-fill"></i>
                     <span class="menu-title">Profile</span>
                 </a>
