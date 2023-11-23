@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             <label>Video Sample</label>
                                             <div class="file-upload">
-                                                <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px;">
+                                                <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px;width: auto;">
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                         <div class="form-group">
                                             <label>Image Sample</label>
                                             <div class="file-upload">
-                                                <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px;">
+                                                <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px; width: auto;">
                                             </div>
                                         </div>
                                     </div>

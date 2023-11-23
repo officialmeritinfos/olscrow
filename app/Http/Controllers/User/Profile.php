@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
 
 class Profile extends BaseController
 {
@@ -318,7 +319,7 @@ class Profile extends BaseController
             //upload the video
             $videoResult = $this->uploadGoogle($request->file('liveVideo'));
             $video  = $videoResult['link'];
-            //upload image
+            //upload image - we will watermark this image
             $imageResult = $this->uploadGoogle($request->file('liveImage'));
             $image  = $imageResult['link'];
 
@@ -335,7 +336,7 @@ class Profile extends BaseController
                 if (!empty($admin)){
                     $message = "A new Escort verification was submitted on ".$web->name." by the escort ".$user->name.". Review immediately";
                     $admin->notify(new CustomNotification($admin,$message,'New Escort verification document received'));
-                    $admin->notify(new SendPushNotification($admin,'-New Escort verification document received',$message));
+                    $admin->notify(new SendPushNotification($admin,'New Escort verification document received',$message));
                 }
                 return $this->sendResponse([
                     'redirectTo'=>url()->previous()

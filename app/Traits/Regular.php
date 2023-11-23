@@ -304,7 +304,7 @@ trait Regular
 
         return $n_format . $suffix;
     }
-    public function uploadGoogle($file)
+     public function uploadGoogle($file)
     {
         $user = Auth::user();
         //get the credentials in the json file
