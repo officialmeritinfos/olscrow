@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\EscortPhoto;
 use App\Models\EscortProfile;
 use App\Models\EscortVerification;
 use App\Models\GeneralSetting;
@@ -461,6 +462,93 @@ class Profile extends BaseController
             'pageName'=>'Gallery',
             'siteName'=>$web->name,
             'user'=>$user,
+            'photos'=>EscortPhoto::where('user',$user->id)->paginate()
         ]);
+    }
+    //process gallery upload
+    public function processGalleryUpload(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'photos'=>['required','array','max:5'],
+                'photos.*'=>['required','image']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            foreach($request->file('photos') as $key => $file)
+            {
+                $result = $this->uploadGoogle($file);
+                $fileName = $result['link'];
+
+                EscortPhoto::create([
+                    'user'=>$user->id,
+                    'photo'=>$fileName,
+                    'reference'=>$this->generateUniqueReference('escort_photos','reference',10)
+                ]);
+            }
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Photos successfully uploaded.');
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('gallery.upload.error',['error'=>'Internal Server error']);
+        }
+    }
+    //ste image as profile image
+    public function setPhotoAsProfile($id)
+    {
+        $user = Auth::user();
+
+        $photo = EscortPhoto::where([
+            'user'=>$user->id,'reference'=>$id
+        ])->firstOrFail();
+
+        //check the image that was there
+        if ($user->photo ==$photo->photo){
+            return back()->with('error','This is image is already set as the profile image');
+        }
+        //check the image with the current image
+        $currentPhoto = EscortPhoto::where('photo',$user->photo)->first();
+
+
+        $user->photo = $photo->photo;
+        $user->save();
+        $photo->isProfile=1;
+        $photo->save();
+
+        if (!empty($currentPhoto)){
+            $currentPhoto->isProfile = 2;
+            $currentPhoto->save();
+        }
+
+        return back()->with('success','Image set as profile image');
+    }
+    //delete image
+    public function deleteAnImage($id)
+    {
+        $user = Auth::user();
+
+        $photo = EscortPhoto::where([
+            'user'=>$user->id,'reference'=>$id
+        ])->firstOrFail();
+
+        //check the image that was there
+        if ($user->photo ==$photo->photo){
+            return back()->with('error','This is image is already set as the profile image. Set another image first before you can delete.');
+        }
+
+        $this->deleteUpload($user->photo);
+
+        $photo->delete();
+
+        return  back()->with('success','Image removed');
+
     }
 }

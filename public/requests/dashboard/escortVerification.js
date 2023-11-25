@@ -75,6 +75,7 @@ const escortVerificationRequest =function (){
             });
         });
     }
+
     return {
         init: function() {
             submitForm();

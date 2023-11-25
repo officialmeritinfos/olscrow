@@ -320,7 +320,7 @@ trait Regular
         $bucket = $storage->bucket($storageBucketName);
         $image_path = $file->getRealPath();
         //rename the file
-        $fileName = $user->name.'-'.time().'.'.$file->extension();
+        $fileName = $user->username.'-'.time().'.'.$file->extension();
 
         //open the file using fopen
         $fileSource = fopen($image_path, 'r');

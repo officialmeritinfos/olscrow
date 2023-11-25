@@ -77,16 +77,15 @@
                     </div>
 
                     <div class="col-12">
-                        <div class="login-action">
-									<span class="log-rem">
-										<input id="remember-2" type="checkbox"
-                                               name="remember" value="1">
-										<label>Keep me logged in</label>
-									</span>
+                        <div class="login-action row">
+                            <span class="log-rem col-6">
+                                <input id="remember-2" type="checkbox" name="remember" value="1"/>
+                                <label>Keep me logged in</label>
+                            </span>
 
-                            <span class="forgot-login">
-										<a href="{{route('recoverPassword')}}">Forgot your password?</a>
-									</span>
+                            <span class="forgot-login col-6">
+                                <a href="{{route('recoverPassword')}}">Forgot your password?</a>
+                            </span>
                         </div>
                     </div>
 

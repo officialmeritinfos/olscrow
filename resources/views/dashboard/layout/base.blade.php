@@ -112,7 +112,7 @@
 
                     <li class="nav-item dropdown profile-nav-item">
                         <a class="nav-link dropdown-toggle avatar" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=random&round=true"
+                            <img src="{{empty($user->photo)?'https://ui-avatars.com/api/?name='.$user->name.'&background=random&round=true':$user->photo}}"
                                  class="rounded-circle" alt="Images" style="width: 50px;">
                             <h3>{{$user->name}}</h3>
                             <span>
@@ -130,8 +130,8 @@
                         <div class="dropdown-menu">
                             <div class="dropdown-header d-flex flex-column align-items-center">
                                 <div class="figure mb-3">
-                                    <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=random&round=true"
-                                         class="rounded-circle" alt="image">
+                                    <img src="{{empty($user->photo)?'https://ui-avatars.com/api/?name='.$user->name.'&background=random&round=true':$user->photo}}"
+                                         class="rounded-circle" alt="image" style="width: 100px;">
                                 </div>
 
                                 <div class="info text-center">

@@ -58,5 +58,11 @@ Route::post('profile/security/password',[Profile::class,'changePassword'])
     ->name('user.security.password');//change password
 Route::post('profile/security/security',[Profile::class,'twoFactorAuth'])
     ->name('user.security.security');//update two-factor authentication
-Route::get('profile/gallery/index',[Profile::class,'securitySetting'])
+Route::get('profile/gallery/index',[Profile::class,'gallery'])
     ->name('user.gallery');
+Route::post('profile/gallery/upload',[Profile::class,'processGalleryUpload'])
+    ->name('user.gallery.upload');//upload photo
+Route::get('profile/gallery/{id}/setProfile',[Profile::class,'setPhotoAsProfile'])
+    ->name('user.gallery.setProfile');//set profile picture
+Route::get('profile/gallery/{id}/delete',[Profile::class,'deleteAnImage'])
+    ->name('user.gallery.delete');//delete
