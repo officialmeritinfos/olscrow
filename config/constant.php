@@ -14,5 +14,24 @@ return [
     'vpay'=>[
         'pubKey'=>'dd571119-2f6d-469b-908f-3488ffdf5254',
         'secKey'=>'ac9d962d-80eb-4cc0-8d8a-2d4317f26a87'
-    ]
+    ],
+    'tatum'=>[
+        'solutions'=>[
+            'wallet'=>[
+                'test'=>'',
+                'live'=>''
+            ],
+            'infrastructure'=>[
+                'test'=>'',
+                'live'=>''
+            ],
+            'business'=>[
+                'test'=>'094ac9bf-f2f8-49ba-afd5-9d9ac28ce827',
+                'live'=>'ff7bc0ac-aed6-4a5b-a88a-135b2554de3c'
+            ]
+        ],
+        'url'=>'https://api.tatum.io/v3/',
+        'isLive'=>2
+    ],
+
 ];

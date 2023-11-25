@@ -29,7 +29,7 @@
                             Manage your subscriptions
                         </p>
                     </div>
-                    <a href="#" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                    <a href="{{route('user.subscription')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
                         Manage
                     </a>
                 </div>

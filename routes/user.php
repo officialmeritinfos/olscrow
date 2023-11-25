@@ -66,3 +66,11 @@ Route::get('profile/gallery/{id}/setProfile',[Profile::class,'setPhotoAsProfile'
     ->name('user.gallery.setProfile');//set profile picture
 Route::get('profile/gallery/{id}/delete',[Profile::class,'deleteAnImage'])
     ->name('user.gallery.delete');//delete
+Route::get('profile/subscription/index',[Profile::class,'subscriptionManagement'])
+    ->name('user.subscription');//subscription landing page
+Route::post('profile/subscription/enroll',[Profile::class,'processSubscriptionEnrollment'])
+    ->name('user.subscription.enroll');//enroll in subscription
+Route::post('profile/subscription/cancel',[Profile::class,'cancelSubscription'])
+    ->name('user.subscription.cancel');//cancel subscription
+Route::post('profile/subscription/reactivate',[Profile::class,'reactivateSubscription'])
+    ->name('user.subscription.reactivate');//reactivate subscription

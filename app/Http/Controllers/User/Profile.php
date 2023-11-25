@@ -8,8 +8,11 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\EscortPhoto;
 use App\Models\EscortProfile;
+use App\Models\EscortSubscriptionPayment;
 use App\Models\EscortVerification;
+use App\Models\Fiat;
 use App\Models\GeneralSetting;
+use App\Models\Package;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
@@ -550,5 +553,210 @@ class Profile extends BaseController
 
         return  back()->with('success','Image removed');
 
+    }
+    //subscription
+    public function subscriptionManagement()
+    {
+        $user = Auth::user();
+        $web = GeneralSetting::find(1);
+
+        return view('dashboard.pages.profile.subscription')->with([
+            'web'=>$web,
+            'pageName'=>'Subscription',
+            'siteName'=>$web->name,
+            'user'=>$user,
+            'packages'=>Package::where('status',1)->get(),
+            'fiat'=>Fiat::where('code',$user->mainCurrency)->first()
+        ]);
+    }
+    //enroll in subscription
+    public function processSubscriptionEnrollment(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'package' => ['required', 'exists:packages,id'],
+                'paymentMethod' => ['required'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            //check that user has completed KYC
+            if ($user->isVerified!=1){
+                return $this->sendError('account.error',['error'=>'Your account has not been verified or it is under review.']);
+            }
+
+            $package = Package::where('id',$input['package'])->first();
+
+            $fiat = Fiat::where('code',$user->mainCurrency)->first();
+            $balance = $user->subscriptionBalance;
+
+            switch ($input['paymentMethod']){
+                case 1:
+                    $amountToCharge = $package->monthAmount*$fiat->rate;
+                    $user->subscriptionBalance = $user->subscriptionBalance - $amountToCharge;
+                    $user->package=$package->id;
+                    $user->fetaured = $package->hasFeatured;
+                    if ($package->hasFeatured==1){
+                        $user->featuredEnd =strtotime($package->featuredDuration,time());
+                    }
+                    $user->fee = $package->fee;
+                    if (empty($user->subRenewalDate)){
+                        $user->subRenewalDate=strtotime('1 Month',time());
+                    }elseif($user->subRenewalDate < time()){
+                        $user->subRenewalDate=strtotime('1 Month',$user->subRenewalDate);
+                    }else{
+                        $user->subRenewalDate=strtotime('1 Month',$user->subRenewalDate);
+                    }
+                    break;
+                default:
+                    $amountToCharge = $package->annualAmount*$fiat->rate;
+                    $user->subscriptionBalance = $user->subscriptionBalance - $amountToCharge;
+                    $user->package=$package->id;
+                    $user->fetaured = $package->hasFeatured;
+                    if ($package->hasFeatured==1){
+                        $user->featuredEnd =strtotime($package->featuredDuration,time());
+                    }
+                    $user->fee = $package->fee;
+                    if (empty($user->subRenewalDate)){
+                        $user->subRenewalDate=strtotime('1 Year',time());
+                    }elseif($user->subRenewalDate < time()){
+                        $user->subRenewalDate=strtotime('1 Year',$user->subRenewalDate);
+                    }else{
+                        $user->subRenewalDate=strtotime('1 Year',$user->subRenewalDate);
+                    }
+                    break;
+            }
+            //check balance
+            if ($balance<$amountToCharge){
+                return $this->sendError('balance.error',['error'=>'Insufficient balance in Subscription balance.']);
+            }
+            $subscription = EscortSubscriptionPayment::create([
+                'user'=>$user->id,'reference'=>$this->generateUniqueReference('escort_subscription_payments','reference',20),
+                'amount'=>$amountToCharge,'currency'=>$user->mainCurrency,'balanceAfter'=>$balance-$amountToCharge
+            ]);
+            if (!empty($subscription)){
+                $user->isPublic=1;
+                $user->renewSubscription=1;
+                $message = 'Your subscription to '.$package->name.' was successful and account now public..';
+                $user->isEnrolled=1;
+                $user->save();
+
+                UserActivity::create([
+                    'user'=>$user->id,
+                    'title'=>'Subscription enrollment',
+                    'content'=>$message
+                ]);
+
+                $user->notify(new CustomNotification($user,$message,'Subscription Enrollment'));
+                $user->notify(new SendPushNotification($user,'Subscription Enrollment',$message));
+
+                return $this->sendResponse([
+                    'redirectTo'=>url()->previous()
+                ],'Subscription enrollment successful.');
+            }
+            return $this->sendError('subscription.error',['error'=>'Something went wrong while processing request. Please try again or contact support. ']);
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('subscription.enrollment.error',['error'=>'Internal Server error']);
+        }
+    }
+    //cancel subscription
+    public function cancelSubscription(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'password' => ['required', 'current_password:web'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+
+            $package = Package::where('id',$user->package)->first();
+            //check that user is enrolled
+            if ($user->renewSubscription!=1){
+                return $this->sendError('subscription.error', ['error' => 'Subscription renewal already cancelled']);
+            }
+
+            if ($package->isFree==1){
+                return $this->sendError('subscription.error', ['error' => 'You cannot cancel your subscription to the free package.']);
+            }
+
+            $user->renewSubscription=2;
+            $user->save();
+
+            $message = "Your subscription to ".$package->name." on ".$web->name." has been cancelled. Your subscription will not renew";
+
+            UserActivity::create([
+                'user'=>$user->id,
+                'title'=>'Subscription cancellation',
+                'content'=>$message
+            ]);
+
+            $user->notify(new SendPushNotification($user,'Subscription Cancellation',$message));
+
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Subscription cancelled. We are sorry to see you go.');
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('subscription.cancellation.error',['error'=>'Internal Server error']);
+        }
+    }
+    //reactivate subscription
+    public function reactivateSubscription(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'password' => ['required', 'current_password:web'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+
+            //check that user is enrolled
+            if ($user->renewSubscription==1){
+                return $this->sendError('subscription.error', ['error' => 'Subscription renewal is already active']);
+            }
+
+            if (time() >$user->subRenewalDate){
+                return $this->sendError('subscription.error', ['error' => 'Subscription date already elapsed. Please contact support.']);
+            }
+
+            $package = Package::where('id',$user->package)->first();
+
+            $user->renewSubscription=1;
+            $user->save();
+
+            $message = "Your subscription to ".$package->name." on ".$web->name." has been reactivated. Your subscription will now renew at the end of its cycle.";
+
+            UserActivity::create([
+                'user'=>$user->id,
+                'title'=>'Subscription reactivation',
+                'content'=>$message
+            ]);
+
+            $user->notify(new SendPushNotification($user,'Subscription Reactivation',$message));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Welcome back. Your subscription will renew at towards the end of its cycle.');
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('subscription.cancellation.error',['error'=>'Internal Server error']);
+        }
     }
 }

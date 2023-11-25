@@ -33,7 +33,6 @@ class Custom
     {
         return Coin::where('asset',$asset)->first();
     }
-
     public function decryptWord($string): string
     {
         return Crypt::decryptString($string);
