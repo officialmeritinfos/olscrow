@@ -566,7 +566,8 @@ class Profile extends BaseController
             'siteName'=>$web->name,
             'user'=>$user,
             'packages'=>Package::where('status',1)->get(),
-            'fiat'=>Fiat::where('code',$user->mainCurrency)->first()
+            'fiat'=>Fiat::where('code',$user->mainCurrency)->first(),
+            'payments'=>EscortSubscriptionPayment::where('user',$user->id)->paginate()
         ]);
     }
     //enroll in subscription

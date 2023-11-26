@@ -100,6 +100,50 @@
         </div>
     </div>
 
+    <div class="order-details-area" style="margin-bottom: 10rem;">
+        <div class="container-fluid">
+
+
+            <div class="latest-transaction-area">
+                <div class="table-responsive" data-simplebar>
+                    <table class="table align-middle mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">AMOUNT</th>
+                            <th scope="col">DATE</th>
+                        </tr>
+                        </thead>
+                        <tbody class="searches">
+                        @foreach($payments as $order)
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <span class="badge bg-primary">#{{$order->reference}}</span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{$order->currency}} {{number_format($order->amount,2)}}
+                                </td>
+                                <td>
+                                    {{date('FD, d M Y H:i:s',strtotime($order->created_at))}}
+                                </td>
+
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-5">
+                        {{$payments->links()}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     @push('js')
         @include('dashboard.pages.modal.subscription_modal')
         <script>
