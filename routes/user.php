@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\User\Account;
 use App\Http\Controllers\User\Bookings;
+use App\Http\Controllers\User\ChatController;
 use App\Http\Controllers\User\Dashboard;
 use App\Http\Controllers\User\Orders;
 use App\Http\Controllers\User\Profile;
@@ -74,3 +75,13 @@ Route::post('profile/subscription/cancel',[Profile::class,'cancelSubscription'])
     ->name('user.subscription.cancel');//cancel subscription
 Route::post('profile/subscription/reactivate',[Profile::class,'reactivateSubscription'])
     ->name('user.subscription.reactivate');//reactivate subscription
+Route::get('profile/addons/index',[Profile::class,'profileAddon'])
+    ->name('user.addons');//addon landing page
+Route::post('profile/addon/featured/enroll',[Profile::class,'enrollInFeatured'])
+    ->name('user.addon.featured.enroll');//enroll in an addon
+
+/*========================CHAT ROOM ROUTE ==============================================*/
+Route::get('chats/index',[ChatController::class,'landingPage'])
+    ->name('user.chats');
+Route::get('chats/{id}/fetch',[ChatController::class,'fetchChat'])
+    ->name('user.chat.content');

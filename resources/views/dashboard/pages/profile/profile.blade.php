@@ -74,7 +74,7 @@
                             Manage Addons for your account
                         </p>
                     </div>
-                    <a href="#" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                    <a href="{{route('user.addons')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
                         Manage
                     </a>
                 </div>

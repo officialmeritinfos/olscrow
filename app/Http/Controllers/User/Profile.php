@@ -16,6 +16,7 @@ use App\Models\Package;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
+use App\Models\UserAddonEnrollment;
 use App\Models\UserFeature;
 use App\Models\UserSetting;
 use App\Notifications\CustomNotification;
@@ -757,7 +758,95 @@ class Profile extends BaseController
 
         }catch (\Exception $exception){
             Log::info($exception->getMessage().' on '.$exception->getLine());
-            return $this->sendError('subscription.cancellation.error',['error'=>'Internal Server error']);
+            return $this->sendError('subscription.reactivation.error',['error'=>'Internal Server error']);
+        }
+    }
+    //profile addons
+    public function profileAddon()
+    {
+        $user = Auth::user();
+        $web = GeneralSetting::find(1);
+
+        return view('dashboard.pages.profile.addons')->with([
+            'web'=>$web,
+            'pageName'=>'Addons',
+            'siteName'=>$web->name,
+            'user'=>$user,
+            'fiat'=>Fiat::where('code',$user->mainCurrency)->first(),
+        ]);
+    }
+    //get an account on featured
+    public function enrollInFeatured(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'password' => ['required', 'current_password:web'],
+                'period' => ['required', 'numeric','integer'],
+                'interval' => ['required', 'numeric','integer'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+
+            $input = $validator->validated();
+            $fiat = Fiat::where('code',$user->mainCurrency)->first();
+
+            if ($user->fetaured==4){
+                return $this->sendError('addon.enrollment.error',['error'=>'You have an enrollment awaiting review']);
+            }
+
+            if ($user->fetaured==1){
+                return $this->sendError('addon.enrollment.error',['error'=>'You already have an active enrollment.']);
+            }
+            switch ($input['period']){
+                case 1:
+                    $duration = $input['interval'].' Months';
+                    $fee = $web->featuredFee*$input['interval']*$fiat->rate;
+                    break;
+                default:
+                    $duration = $input['interval'].' Years';
+                    $fee = $web->featuredFee*$input['interval']*$fiat->rate*10;
+                    break;
+            }
+
+            if ($fee>$user->subscriptionBalance){
+                return $this->sendError('balance.error',['error'=>'Insufficient balance to cover for '.$fiat->sign.number_format($fee)]);
+            }
+
+            $user->subscriptionBalance = $user->subscriptionBalance - $fee;
+
+            $enrollment = UserAddonEnrollment::create([
+                'user'=>$user->id,'reference'=>$this->generateUniqueReference('user_addon_enrollments','reference',20),
+                'amount'=>$fee,'duration'=>$duration,'type'=>'Premium Account Featuring'
+            ]);
+            if (!empty($enrollment)){
+
+                $user->fetaured=4;
+                $user->save();
+
+                UserActivity::create([
+                    'user'=>$user->id,'title'=>'Addon Enrollment',
+                    'content'=>'Your account was debited of '.$fiat->sign.number_format($fee,2).' for purchase of an addon - Premium account Featuring for a duration of '.$duration
+                ]);
+                $message = "Your purchase of an addon - Premium Account Featuring has been received, and will be activated for your account. The sum of ".$fiat->sign.number_format($fee,2)." was paid for this, for a duration of ".$duration;
+                $user->notify(new SendPushNotification($user,'New Addon purchase - Premium Account Featuring',$message,route('user.addons')));
+
+                $admin = User::where('isAdmin',1)->first();
+                if (!empty($admin)){
+                    $adminMessage = "A new addon purchase with reference ".$enrollment->reference." has been received from ".$user->name.". Please review and activate";
+                    $admin->notify(new SendPushNotification($admin,'New Addon purchase',$adminMessage));
+                }
+                return $this->sendResponse([
+                    'redirectTo'=>url()->previous()
+                ],'Purchase was successful. Your account will be reviewed and addon activated for you.');
+            }
+            return $this->sendError('addon.enrollment.error',['error'=>'Something went wrong']);
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('addon.featured.enrollment.error',['error'=>'Internal Server error']);
         }
     }
 }

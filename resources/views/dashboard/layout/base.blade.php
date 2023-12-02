@@ -152,7 +152,7 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="chat" class="nav-link">
+                                        <a href="{{route('user.chats')}}" class="nav-link">
                                             <i class="ri-mail-send-line"></i>
                                             <span>My Inbox</span>
                                         </a>
@@ -202,7 +202,49 @@
     </div>
 
     @yield('content')
+    <div class="footer-area">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="copy-right">
+                        <p>Copyright &copy; {{date('Y')}} {{$siteName}}. </p>
+                    </div>
+                </div>
 
+                <div class="col-lg-6">
+                    <div class="social-link">
+                        <ul>
+                            <li>
+                                <a href="https://www.facebook.com/" target="_blank">
+                                    <i class="ri-facebook-fill"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.twitter.com/" target="_blank">
+                                    <i class="ri-twitter-fill"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/" target="_blank">
+                                    <i class="ri-youtube-fill"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.vimeo.com/" target="_blank">
+                                    <i class="ri-vimeo-fill"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                    <i class="ri-instagram-fill"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End Main Content Area -->
 

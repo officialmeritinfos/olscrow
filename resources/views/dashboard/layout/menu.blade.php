@@ -75,7 +75,7 @@
                 </a>
             </li>
             <li>
-                <a href="chat" class="box-style">
+                <a href="{{route('user.chats')}}" class="box-style">
                     <i class="ri-chat-2-fill"></i>
                     <span class="menu-title">Chats</span>
                 </a>
