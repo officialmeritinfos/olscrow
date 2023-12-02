@@ -83,6 +83,8 @@ Route::post('profile/addon/featured/enroll',[Profile::class,'enrollInFeatured'])
 /*========================CHAT ROOM ROUTE ==============================================*/
 Route::get('chats/index',[ChatController::class,'landingPage'])
     ->name('user.chats');
+Route::get('chats/{id}/detail',[ChatController::class,'viewConversation'])
+    ->name('user.chat.detail');
 Route::get('chats/{id}/fetch',[ChatController::class,'fetchChat'])
     ->name('user.chat.content');
 Route::post('chats/send-message',[ChatController::class,'sendMessage'])

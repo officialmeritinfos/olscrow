@@ -1,137 +1,10 @@
 @extends('dashboard.layout.base')
 @section('content')
-@inject('options','App\Traits\Custom')
+    @inject('options','App\Traits\Custom')
     <div class="chat-content-area mt-20">
         <div class="container-fluid">
-            <div class="sidebar-left">
-                <div class="sidebar">
-                    <div class="chat-sidebar-header d-flex align-items-center">
-                        <div class="avatar me-2">
-                            <img src="{{empty($user->photo)?'https://ui-avatars.com/api/?name='.$user->name.'&background=random&round=true':$user->photo}}"
-                                 width="50" height="50" class="rounded-circle" alt="image">
-                        </div>
 
-                        <form class="form-group position-relative mb-0">
-                            <label><i class='bx bx-search'></i></label>
-                            <input type="text" class="form-control" placeholder="Search here...">
-                        </form>
-                    </div>
-
-                    <div class="sidebar-content d-flex chat-sidebar" data-simplebar>
-                        <div class="tab">
-                            <ul class="tabs">
-                                <li>
-                                    Chats
-                                </li>
-                            </ul>
-
-                            <div class="tab_content">
-                                <div class="tabs_item">
-                                    <div class="products-details-tab-content">
-                                        <div class="chat-menu">
-                                            <label class="d-block list-group-label mt-0">Chats</label>
-
-                                            <ul class="list-group list-group-user list-unstyled mb-0">
-                                                @foreach($chats as $chat)
-                                                    <a href="{{route('user.chat.detail',['id'=>$chat->reference])}}" class="d-md-none">
-                                                        <li>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="avatar me-2">
-                                                                    @if($chat->sender!=$user->id)
-                                                                        <img src="{{empty($options->getUserById($chat->sender)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->sender)->name.'&background=random&round=true':$options->getUserById($chat->sender)->photo}}" width="50" height="50"
-                                                                         class="rounded-circle" alt="image">
-                                                                    @elseif($chat->receiver!=$user->id)
-                                                                        <img src="{{empty($options->getUserById($chat->receiver)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->receiver)->name.'&background=random&round=true':$options->getUserById($chat->receiver)->photo}}" width="50" height="50"
-                                                                             class="rounded-circle" alt="image">
-                                                                    @endif
-                                                                    <span class="status-online"></span>
-                                                                </div>
-
-                                                                <div class="user-name">
-                                                                    @if($chat->sender!=$user->id)
-                                                                        <h6 class="font-weight-bold">
-                                                                            {{$options->getUserById($chat->sender)->name}}
-                                                                        </h6>
-                                                                    @elseif($chat->receiver!=$user->id)
-                                                                        <h6 class="font-weight-bold">
-                                                                            {{$options->getUserById($chat->receiver)->name}}
-                                                                        </h6>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </a>
-                                                    <li class="chatBox d-md-block d-none" data-chat-id="{{$chat->reference}}"
-                                                        data-chat-link="{{route('user.chat.content',['id'=>$chat->reference])}}">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar me-2">
-                                                                @if($chat->sender!=$user->id)
-                                                                    <img src="{{empty($options->getUserById($chat->sender)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->sender)->name.'&background=random&round=true':$options->getUserById($chat->sender)->photo}}" width="50" height="50"
-                                                                         class="rounded-circle" alt="image">
-                                                                @elseif($chat->receiver!=$user->id)
-                                                                    <img src="{{empty($options->getUserById($chat->receiver)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->receiver)->name.'&background=random&round=true':$options->getUserById($chat->receiver)->photo}}" width="50" height="50"
-                                                                         class="rounded-circle" alt="image">
-                                                                @endif
-                                                                <span class="status-online"></span>
-                                                            </div>
-
-                                                            <div class="user-name">
-                                                                @if($chat->sender!=$user->id)
-                                                                    <h6 class="font-weight-bold">
-                                                                        {{$options->getUserById($chat->sender)->name}}
-                                                                    </h6>
-                                                                @elseif($chat->receiver!=$user->id)
-                                                                    <h6 class="font-weight-bold">
-                                                                        {{$options->getUserById($chat->receiver)->name}}
-                                                                    </h6>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                @endforeach
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="defaultPage d-md-block d-none">
-                <div class="content-right">
-                    <div class="chat-area">
-                        <div class="chat-list-wrapper">
-                            <div class="chat-list">
-                                <div class="chat-list-header d-flex align-items-center">
-                                    <div class="header-left d-flex align-items-center me-2">
-                                        <h6 class="mb-0 font-weight-bold receiver">Message Panel</h6>
-                                    </div>
-                                </div>
-
-                                <div class="chat-container">
-                                    <div class="ui-kit-card p-5 mb-4 rounded-3">
-                                        <div class="container-fluid py-5">
-                                            <h1 class="display-5 fw-bold">Default Message</h1>
-                                            <p class="col-md-12">
-                                                Select any message from the panel above to see the conversations.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="chat-content">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="messagePage" style="display: none;">
+            <div class="messagePage">
                 <div class="content-right">
                     <div class="chat-area">
                         <div class="chat-list-wrapper">
@@ -172,10 +45,11 @@
 
     @push('js')
         <script>
-            $('.chatBox').on('click',function(){
 
-                var chatId = $(this).data('chat-id');
-                var url = $(this).data('chat-link');
+            $(function(){
+
+                var chatId = "{{$chat->reference}}";
+                var url = "{{route('user.chat.content',['id'=>$chat->reference])}}";
                 $('input[name="chatId"]').val(chatId);
                 $.ajax({
                     url: url,

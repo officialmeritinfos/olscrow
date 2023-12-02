@@ -131,4 +131,28 @@ class ChatController extends BaseController
             return $this->sendError('order.error',['error'=>'Internal Server error']);
         }
     }
+    //view conversation detail
+    public function viewConversation($id)
+    {
+        $user = Auth::user();
+        $web = GeneralSetting::find(1);
+
+        $chat = UserChat::where('reference',$id)->where(function ($query) use ($user) {
+            $query->where('sender', $user->id)
+                ->where('deletedForSender', '!=',1);
+        })
+            ->orWhere(function ($query) use ($user) {
+                $query->where('receiver', $user->id)
+                    ->where('deletedForReceiver', '!=',1);
+            })
+            ->first();
+
+        return view('dashboard.pages.chats.detail')->with([
+            'web'=>$web,
+            'pageName'=>'Conversation',
+            'siteName'=>$web->name,
+            'user'=>$user,
+            'chat'=>$chat
+        ]);
+    }
 }
