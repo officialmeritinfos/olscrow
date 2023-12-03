@@ -55,14 +55,14 @@
             </li>
 
             <li>
-                <a href="chat" class="box-style">
+                <a href="{{route('user.transactions')}}" class="box-style">
                     <i class="ri-file-paper-2-fill"></i>
                     <span class="menu-title">Transactions</span>
                 </a>
             </li>
 
             <li>
-                <a href="chat" class="box-style">
+                <a href="{{route('user.hall')}}" class="box-style">
                     <i class="ri-list-ordered"></i>
                     <span class="menu-title">Hall</span>
                 </a>

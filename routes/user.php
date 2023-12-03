@@ -5,8 +5,10 @@ use App\Http\Controllers\User\Account;
 use App\Http\Controllers\User\Bookings;
 use App\Http\Controllers\User\ChatController;
 use App\Http\Controllers\User\Dashboard;
+use App\Http\Controllers\User\Hall;
 use App\Http\Controllers\User\Orders;
 use App\Http\Controllers\User\Profile;
+use App\Http\Controllers\User\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('dashboard',[Dashboard::class,'landingPage'])
@@ -79,7 +81,6 @@ Route::get('profile/addons/index',[Profile::class,'profileAddon'])
     ->name('user.addons');//addon landing page
 Route::post('profile/addon/featured/enroll',[Profile::class,'enrollInFeatured'])
     ->name('user.addon.featured.enroll');//enroll in an addon
-
 /*========================CHAT ROOM ROUTE ==============================================*/
 Route::get('chats/index',[ChatController::class,'landingPage'])
     ->name('user.chats');
@@ -89,3 +90,9 @@ Route::get('chats/{id}/fetch',[ChatController::class,'fetchChat'])
     ->name('user.chat.content');
 Route::post('chats/send-message',[ChatController::class,'sendMessage'])
     ->name('user.chat.sendMessage');
+/*========================TRANSACTIONS ROUTE ==============================================*/
+Route::get('transactions/index',[TransactionController::class,'landingPage'])
+    ->name('user.transactions');
+/*========================HALL ROUTE ==============================================*/
+Route::get('hall/index',[Hall::class,'landingPage'])
+    ->name('user.hall');

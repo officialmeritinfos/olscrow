@@ -102,8 +102,8 @@
                 </div>
             </div>
 
-            <div class="defaultPage d-md-block d-none">
-                <div class="content-right">
+            <div class="defaultPage">
+                <div class="content-right d-md-block d-none">
                     <div class="chat-area">
                         <div class="chat-list-wrapper">
                             <div class="chat-list">
@@ -158,6 +158,7 @@
 
                                         <input type="text" class="form-control" id="message" name="message" placeholder="Type your message...">
                                         <input type="text" class="form-control" name="chatId" style="display: none;"/>
+                                        <input type="text" class="form-control" name="chatLink" style="display: none;"/>
 
                                         <button type="submit" class="send-btn d-inline-block submit">Send <i class="bx bx-paper-plane"></i></button>
                                     </form>
@@ -177,6 +178,7 @@
                 var chatId = $(this).data('chat-id');
                 var url = $(this).data('chat-link');
                 $('input[name="chatId"]').val(chatId);
+                $('input[name="chatLink"]').val(url);
                 $.ajax({
                     url: url,
                     method: 'GET',
@@ -412,6 +414,71 @@
 
                 }
             });
+            function refreshChat(){
+                if ($('.messagePage').is(':visible')){
+                    var chatId = $('input[name="chatId"]').val();
+                    var url =$('input[name="chatLink"]').val();
+
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                    })
+                        .done(function (data) {
+                            $('.defaultPage').hide();
+                            $('.messagePage').show();
+
+                            if (data.error === true) {
+                                toastr.options = {"closeButton": true, "progressBar": true};
+                                toastr.error(data.data.error);
+                            } else if (data.error === 'ok') {
+                                $('.receiver').html(data.data.receiver);
+                                $('#receiverImage').attr('src', data.data.photo);
+                                //console.log(data.data.data);
+                                var messages = data.data.data;
+                                // Container to hold grouped messages
+                                var groupedMessages = {};
+
+                                $.each(messages, function (index, message) {
+                                    var date = new Date(message.created_at);
+
+                                    var formattedDate = date.toISOString().split('T')[0];
+
+                                    if (!groupedMessages[formattedDate]) {
+                                        groupedMessages[formattedDate] = [];
+                                    }
+
+                                    groupedMessages[formattedDate].push(message);
+                                });
+
+                                // Display messages with date headings
+                                var htmlContent = '';
+                                $.each(groupedMessages, function (date, messages) {
+                                    htmlContent += '<div class="badge badge-pill bg-light text-dark my-3">' + getDateHeading(date) + '</div>';
+
+                                    $.each(messages, function (index, message) {
+                                        var messageClass = (message.sender != {{ Auth::id() }}) ? 'chat-left' : '';
+
+                                        htmlContent += '<div class="chat ' + messageClass + '">';
+                                        htmlContent += '<div class="chat-avatar"><a href="#" class="d-inline-block"><img src="' + message.photo + '" width="50" height="50" class="rounded-circle" alt="image"> </a></div>';
+                                        htmlContent += '<div class="chat-body"><div class="chat-message" style="margin-bottom:2rem;"><p>' + message.message + '</p><span class="time d-block">' + message.hour + '</span></div></div></div>';
+                                    });
+                                });
+
+                                $('.chat-content').html(htmlContent);
+
+                            }
+
+                            $(".chat-container").LoadingOverlay("hide");
+                        })
+                        .fail(function (xhr, status, error) {
+                            toastr.options = {"closeButton": true, "progressBar": true};
+                            toastr.error(error);
+                        });
+
+                }
+            }
+            //call function every 10 seconds
+            setInterval(refreshChat,10000)
         </script>
     @endpush
 @endsection

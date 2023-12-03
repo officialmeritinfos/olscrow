@@ -46,19 +46,13 @@
     @push('js')
         <script>
 
-            $(function(){
-
+            function refreshChat(){
                 var chatId = "{{$chat->reference}}";
                 var url = "{{route('user.chat.content',['id'=>$chat->reference])}}";
                 $('input[name="chatId"]').val(chatId);
                 $.ajax({
                     url: url,
                     method: 'GET',
-                    beforeSend: function() {
-                        $(".chat-container").LoadingOverlay("show", {
-                            size: "5", progress:true
-                        });
-                    }
                 })
                     .done(function(data) {
                         $('.defaultPage').hide();
@@ -112,8 +106,7 @@
                         toastr.options = { "closeButton": true, "progressBar": true };
                         toastr.error(error);
                     });
-
-            });
+            }
             // Function to get date heading (e.g., yesterday, two days ago)
             function getDateHeading(date) {
                 var today = new Date();
@@ -142,6 +135,14 @@
                 var options = { year: 'numeric', month: 'long', day: 'numeric' };
                 return date.toLocaleDateString(undefined, options);
             }
+            //call function on page load
+            $(function (){
+                refreshChat();
+            });
+
+            //call function every 10 seconds
+            setInterval(refreshChat,10000)
+
             //send message
             $('#sendMessage').submit(function(e) {
                 if ($('#message').val().trim() === '') {
