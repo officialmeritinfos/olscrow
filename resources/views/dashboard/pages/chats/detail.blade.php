@@ -141,7 +141,7 @@
             });
 
             //call function every 10 seconds
-            setInterval(refreshChat,10000)
+            setInterval(refreshChat,5000)
 
             //send message
             $('#sendMessage').submit(function(e) {

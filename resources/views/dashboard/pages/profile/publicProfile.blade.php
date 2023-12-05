@@ -101,6 +101,7 @@
                             @endforeach
                         </select>
                     </div>
+
                     <div class="col-md-6 mt-3">
                         <label for="inputEmail4" class="form-label">Sexual Orientation<sup class="text-danger">*</sup></label>
                         <select name="sexualOrientation" class="form-control selectize" id="inputEmail4"
@@ -114,6 +115,15 @@
                     <div class="col-md-6 mt-3">
                         <label for="inputCity" class="form-label">Languages<sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control form-control-lg selectizeAdd" id="inputCity" name="languages[]">
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="inputCity" class="form-label">Services<sup class="text-danger">*</sup></label>
+
+                        <select type="text" class="form-control form-control-lg selectizeAdd" id="inputCity" name="service[]" multiple>
+                            @foreach($services as $service)
+                                <option value="{{$service->id}}">{{$service->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 mt-3">
                         <label for="inputState" class="form-label">Availability for Incall<sup class="text-danger">*</sup></label>
@@ -314,6 +324,24 @@
                         <select type="text" class="form-control form-control-lg selectizeAdd" id="inputCity" name="languages[]" multiple>
                             @foreach($langs as $lang)
                                 <option value="{{$lang}}" selected>{{$lang}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="inputCity" class="form-label">Services<sup class="text-danger">*</sup></label>
+
+                        <select type="text" class="form-control form-control-lg selectizeAdd" id="inputCity" name="service[]" multiple>
+                            @php
+                                $servs = explode(',',$profile->services)
+                            @endphp
+                            @foreach($services as $service)
+                                @foreach($servs as $serv)
+                                    @if($service->id ==$serv)
+                                        <option value="{{$service->id}}" selected>{{$service->name}}</option>
+                                    @endif
+                                    @continue
+                                @endforeach
+                                <option value="{{$service->id}}">{{$service->name}}</option>
                             @endforeach
                         </select>
                     </div>

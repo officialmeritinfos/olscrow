@@ -11,11 +11,15 @@ use App\Models\City;
 use App\Models\Coin;
 use App\Models\Country;
 use App\Models\Department;
+use App\Models\EscortProfile;
+use App\Models\EscortReview;
 use App\Models\Fiat;
 use App\Models\Order;
+use App\Models\Service;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
+use App\Models\UserFeature;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -77,5 +81,30 @@ class Custom
     {
         return City::where('id',$id)->first();
     }
-
+    //fetch escort profile
+    public function fetchEscortProfile($id)
+    {
+        return EscortProfile::where('user',$id)->first();
+    }
+    //escort reviews
+    public function fetchEscortReviews($id)
+    {
+        return EscortReview::where('user',$id)->where('status',1)->get();
+    }
+    //user features
+    public function getUserFeature($id)
+    {
+        return UserFeature::where('id',$id)->first();
+    }
+    //get user age
+    public function convertToAge($timestamp)
+    {
+        $birthdate = Carbon::createFromTimestamp($timestamp);
+        return $birthdate->diffInYears(Carbon::now());
+    }
+    //user service
+    public function getServiceById($id)
+    {
+        return Service::where('id',$id)->first();
+    }
 }

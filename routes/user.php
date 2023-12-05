@@ -96,3 +96,9 @@ Route::get('transactions/index',[TransactionController::class,'landingPage'])
 /*========================HALL ROUTE ==============================================*/
 Route::get('hall/index',[Hall::class,'landingPage'])
     ->name('user.hall');
+Route::get('hall/escort/{username}',[Hall::class,'escortDetail'])
+    ->name('user.escort.detail');
+Route::get('hall/escort/{username}/reviews',[Hall::class,'escortDetail'])
+    ->name('user.escort.reviews');
+Route::get('hall/escort/{username}/gallery',[Hall::class,'escortDetail'])
+    ->name('user.escort.gallery');

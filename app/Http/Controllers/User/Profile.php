@@ -13,6 +13,7 @@ use App\Models\EscortVerification;
 use App\Models\Fiat;
 use App\Models\GeneralSetting;
 use App\Models\Package;
+use App\Models\Service;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
@@ -82,6 +83,9 @@ class Profile extends BaseController
             'heights'=>UserFeature::where([
                 'type'=>'height','status'=>1
             ])->get(),
+            'services'=>Service::where([
+                'status'=>1
+            ])->orderBy('name','asc')->get()
         ]);
 
     }
@@ -108,6 +112,8 @@ class Profile extends BaseController
                 'incall'=>['required','numeric','integer'],
                 'outcall'=>['required','numeric','integer'],
                 'smoker'=>['required','numeric','integer'],
+                'service'=>['required'],
+                'service.*'=>['required','numeric','exists:services,id']
             ], [], [
                 'build' => 'Body Build',
                 'bustSize' => 'Bust size'
@@ -118,6 +124,7 @@ class Profile extends BaseController
             }
 
             $input = $validator->validated();
+            $services = implode(',',$input['service']);
 
             //profile exists
             $profileExists = EscortProfile::where('user',$user->id)->first();
@@ -132,7 +139,8 @@ class Profile extends BaseController
                     'sexualOrientation'=>$input['sexualOrientation'],
                     'incall'=>$input['incall'],'outcall'=>$input['outcall'],
                     'languages'=>implode(',',$input['languages']),
-                    'shortBio'=>$input['shortBio']
+                    'shortBio'=>$input['shortBio'],
+                    'services'=>$services
                 ]);
                 if (!empty($profile)){
 
@@ -153,7 +161,8 @@ class Profile extends BaseController
                     'sexualOrientation'=>$input['sexualOrientation'],
                     'incall'=>$input['incall'],'outcall'=>$input['outcall'],
                     'languages'=>implode(',',$input['languages']),
-                    'shortBio'=>$input['shortBio']
+                    'shortBio'=>$input['shortBio'],
+                    'services'=>$services
                 ]);
                 if ($update){
                     return $this->sendResponse([

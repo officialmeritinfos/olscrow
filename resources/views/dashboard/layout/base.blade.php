@@ -186,10 +186,10 @@
     </div>
 
     <div class="mb-2 mt-3">
-        <a href="javascript: history.go(-1)"><i class="bx bx-arrow-to-left"></i> Go back</a>
+        <a href="javascript: history.go(-1)" class="btn default-btn"><i class="bx bx-arrow-to-left"></i> Go back</a>
     </div>
 
-    <div class="page-title-area" style="margin-bottom: 0rem;">
+    <div class="page-title-area" style="margin-bottom: 0;">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-sm-6">
@@ -202,12 +202,15 @@
     </div>
 
     @yield('content')
+
+    <div class="flex-grow-1"></div>
+
     <div class="footer-area">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="copy-right">
-                        <p>Copyright &copy; {{date('Y')}} {{$siteName}}. </p>
+                        <p>Copyright &copy; {{date('Y')}} {{$siteName}}.  </p>
                     </div>
                 </div>
 
@@ -255,6 +258,8 @@
     </div>
     <!-- End Go Top Area -->
 
+
    @include('dashboard.layout.js')
+
 </body>
 </html>

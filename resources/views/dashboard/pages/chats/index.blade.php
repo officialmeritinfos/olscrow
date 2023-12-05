@@ -1,7 +1,7 @@
 @extends('dashboard.layout.base')
 @section('content')
 @inject('options','App\Traits\Custom')
-    <div class="chat-content-area mt-20">
+    <div class="chat-content-area mt-20" style="margin-bottom: 10rem;">
         <div class="container-fluid">
             <div class="sidebar-left">
                 <div class="sidebar">
@@ -478,7 +478,7 @@
                 }
             }
             //call function every 10 seconds
-            setInterval(refreshChat,10000)
+            setInterval(refreshChat,5000)
         </script>
     @endpush
 @endsection
