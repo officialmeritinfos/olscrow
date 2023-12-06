@@ -14,6 +14,11 @@
                                         <div class="avatar me-2">
                                             <img src="{{asset('dashboard/images/avatar.png')}}" width="70" height="70" class="rounded-circle" id="receiverImage" alt="image">
                                             <span class="status-online"></span>
+                                            @if (Cache::has('user-is-online-' . $chat->receiver))
+                                                <span class="status-online"></span>
+                                            @else
+                                                <span class="status-offline"></span>
+                                            @endif
                                         </div>
                                         <h6 class="mb-0 font-weight-bold receiver"></h6>
                                     </div>
@@ -28,10 +33,11 @@
                                 <div class="chat-list-footer">
                                     <form class="d-flex align-items-center" method="post" id="sendMessage" action="{{route('user.chat.sendMessage')}}">
                                         @csrf
+                                        <div class="col-md-12">
+                                            <textarea type="text" class="form-control summernote" id="message" name="message" placeholder="Type your message..."></textarea>
+                                            <input type="text" class="form-control" name="chatId" style="display: none;"/>
 
-                                        <input type="text" class="form-control" id="message" name="message" placeholder="Type your message...">
-                                        <input type="text" class="form-control" name="chatId" style="display: none;"/>
-
+                                        </div>
                                         <button type="submit" class="send-btn d-inline-block submit">Send <i class="bx bx-paper-plane"></i></button>
                                     </form>
                                 </div>

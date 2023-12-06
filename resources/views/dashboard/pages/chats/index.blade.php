@@ -40,21 +40,31 @@
                                                                     @if($chat->sender!=$user->id)
                                                                         <img src="{{empty($options->getUserById($chat->sender)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->sender)->name.'&background=random&round=true':$options->getUserById($chat->sender)->photo}}" width="50" height="50"
                                                                          class="rounded-circle" alt="image">
+                                                                        @if (Cache::has('user-is-online-' . $chat->sender))
+                                                                            <span class="status-online"></span>
+                                                                        @else
+                                                                            <span class="status-offline"></span>
+                                                                        @endif
                                                                     @elseif($chat->receiver!=$user->id)
                                                                         <img src="{{empty($options->getUserById($chat->receiver)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->receiver)->name.'&background=random&round=true':$options->getUserById($chat->receiver)->photo}}" width="50" height="50"
                                                                              class="rounded-circle" alt="image">
+                                                                        @if (Cache::has('user-is-online-' . $chat->receiver))
+                                                                            <span class="status-online"></span>
+                                                                        @else
+                                                                            <span class="status-offline"></span>
+                                                                        @endif
                                                                     @endif
-                                                                    <span class="status-online"></span>
+
                                                                 </div>
 
                                                                 <div class="user-name">
                                                                     @if($chat->sender!=$user->id)
                                                                         <h6 class="font-weight-bold">
-                                                                            {{$options->getUserById($chat->sender)->name}}
+                                                                            {{$options->getUserById($chat->sender)->username}}
                                                                         </h6>
                                                                     @elseif($chat->receiver!=$user->id)
                                                                         <h6 class="font-weight-bold">
-                                                                            {{$options->getUserById($chat->receiver)->name}}
+                                                                            {{$options->getUserById($chat->receiver)->username}}
                                                                         </h6>
                                                                     @endif
                                                                 </div>
@@ -68,21 +78,30 @@
                                                                 @if($chat->sender!=$user->id)
                                                                     <img src="{{empty($options->getUserById($chat->sender)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->sender)->name.'&background=random&round=true':$options->getUserById($chat->sender)->photo}}" width="50" height="50"
                                                                          class="rounded-circle" alt="image">
+                                                                    @if (Cache::has('user-is-online-' . $chat->sender))
+                                                                        <span class="status-online"></span>
+                                                                    @else
+                                                                        <span class="status-offline"></span>
+                                                                    @endif
                                                                 @elseif($chat->receiver!=$user->id)
                                                                     <img src="{{empty($options->getUserById($chat->receiver)->photo)?'https://ui-avatars.com/api/?name='.$options->getUserById($chat->receiver)->name.'&background=random&round=true':$options->getUserById($chat->receiver)->photo}}" width="50" height="50"
                                                                          class="rounded-circle" alt="image">
+                                                                    @if (Cache::has('user-is-online-' . $chat->receiver))
+                                                                        <span class="status-online"></span>
+                                                                    @else
+                                                                        <span class="status-offline"></span>
+                                                                    @endif
                                                                 @endif
-                                                                <span class="status-online"></span>
                                                             </div>
 
                                                             <div class="user-name">
                                                                 @if($chat->sender!=$user->id)
                                                                     <h6 class="font-weight-bold">
-                                                                        {{$options->getUserById($chat->sender)->name}}
+                                                                        {{$options->getUserById($chat->sender)->username}}
                                                                     </h6>
                                                                 @elseif($chat->receiver!=$user->id)
                                                                     <h6 class="font-weight-bold">
-                                                                        {{$options->getUserById($chat->receiver)->name}}
+                                                                        {{$options->getUserById($chat->receiver)->username}}
                                                                     </h6>
                                                                 @endif
                                                             </div>
@@ -140,7 +159,7 @@
                                     <div class="header-left d-flex align-items-center me-2">
                                         <div class="avatar me-2">
                                             <img src="{{asset('dashboard/images/avatar.png')}}" width="70" height="70" class="rounded-circle" id="receiverImage" alt="image">
-                                            <span class="status-online"></span>
+
                                         </div>
                                         <h6 class="mb-0 font-weight-bold receiver"></h6>
                                     </div>
@@ -155,10 +174,11 @@
                                 <div class="chat-list-footer">
                                     <form class="d-flex align-items-center" method="post" id="sendMessage" action="{{route('user.chat.sendMessage')}}">
                                         @csrf
-
-                                        <input type="text" class="form-control" id="message" name="message" placeholder="Type your message...">
-                                        <input type="text" class="form-control" name="chatId" style="display: none;"/>
-                                        <input type="text" class="form-control" name="chatLink" style="display: none;"/>
+                                        <div class="col-md-12">
+                                            <textarea type="text" class="form-control summernote" id="message" name="message" placeholder="Type your message..."></textarea>
+                                            <input type="text" class="form-control" name="chatId" style="display: none;"/>
+                                            <input type="text" class="form-control" name="chatLink" style="display: none;"/>
+                                        </div>
 
                                         <button type="submit" class="send-btn d-inline-block submit">Send <i class="bx bx-paper-plane"></i></button>
                                     </form>

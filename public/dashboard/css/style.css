@@ -6,7 +6,7 @@ is the file you need to edit to change the look of the template.
 
 This files table contents are outlined below>>>>>
 
-******************************************* 
+*******************************************
 ** - DEFAULT AREA STYLE - **
 
 ** - Default Btn Area Style
@@ -245,6 +245,60 @@ Default Btn Area Style*/
   top: 0;
   -webkit-animation: fadeInUp 1s linear;
           animation: fadeInUp 1s linear;
+}
+
+/*
+Danger Btn Area Style*/
+.danger-btn {
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: inline-table;
+    padding: 10px 20px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#D70040), to(#8B0000));
+    background-image: linear-gradient(to bottom, #D70040, #8B0000);
+    border-radius: 10px;
+}
+
+.danger-btn.radius-btn {
+    border-radius: 10px;
+}
+
+.danger-btn i {
+    position: relative;
+    top: 1.70px;
+    margin-right: 5px;
+}
+
+.danger-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #E34234;
+    z-index: -1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
+}
+
+.danger-btn:hover {
+    color: #ffffff;
+}
+
+.danger-btn:hover::before {
+    height: 100%;
+    bottom: auto;
+    top: 0;
+    -webkit-animation: fadeInUp 1s linear;
+    animation: fadeInUp 1s linear;
 }
 
 /*
@@ -2811,7 +2865,7 @@ Cart Area Style
   width: 50%;
 }
 
-/* 
+/*
 Checkout Area Style
 =====================================================*/
 .checkout-area .billing-details {
@@ -4504,7 +4558,7 @@ App Email Read CSS
   margin-left: 0.25rem !important;
 }
 
-/* 
+/*
 Main Contact Area Style
 =====================================================*/
 .main-contact-area h3 {
@@ -5038,7 +5092,7 @@ Blog Area Style
   color: #242945;
 }
 
-/* 
+/*
 Blog Details Content Style
 =====================================================*/
 .blog-details-content {
@@ -5379,7 +5433,7 @@ FAQ Area CSS
   display: block;
 }
 
-/* 
+/*
 Main Content Text Style
 =====================================================*/
 .main-default-content {
@@ -6766,9 +6820,11 @@ Chat CSS
   background-color: #39DA8A;
 }
 
+
 .chat-content-area .sidebar-left .sidebar .sidebar-content .chat-menu .list-group-user li .avatar .status-away {
   background-color: #FDAC41;
 }
+
 
 .chat-content-area .sidebar-left .sidebar .sidebar-content .chat-menu .list-group-user li .avatar .status-offline {
   background-color: #475F7B;

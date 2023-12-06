@@ -9,13 +9,16 @@ use App\Models\User;
 use App\Models\UserChat;
 use App\Models\UserChatMessage;
 use App\Notifications\SendPushNotification;
+use App\Traits\Regular;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ChatController extends BaseController
 {
+    use Regular;
     //landing page
     public function landingPage()
     {
@@ -47,12 +50,22 @@ class ChatController extends BaseController
 
         if ($user->id!=$chat->sender){
             $userPlace = User::find($chat->sender);
-            $title =$userPlace->name;
-            $image = empty($userPlace->photo)?"https://ui-avatars.com/api/?name=$userPlace->name&background=random&round=true":$userPlace->photo;
+            $title =$userPlace->username;
+            $image = empty($userPlace->photo)?"https://ui-avatars.com/api/?name=$userPlace->username&background=random&round=true":$userPlace->photo;
+            if (Cache::has('user-is-online-' . $chat->sender)){
+                $status=1;
+            }else{
+                $status=2;
+            }
         }elseif ($user->id!=$chat->receiver){
             $userPlace = User::find($chat->receiver);
-            $title =$userPlace->name;
-            $image = empty($userPlace->photo)?"https://ui-avatars.com/api/?name=$userPlace->name&background=random&round=true":$userPlace->photo;
+            $title =$userPlace->username;
+            $image = empty($userPlace->photo)?"https://ui-avatars.com/api/?name=$userPlace->username&background=random&round=true":$userPlace->photo;
+            if (Cache::has('user-is-online-' . $chat->receiver)){
+                $status=1;
+            }else{
+                $status=2;
+            }
         }
         $dataCo=[];
 
@@ -64,8 +77,9 @@ class ChatController extends BaseController
                 'sender'=>$message->sender,
                 'seen'=> $message->seen==1,
                 'name'=>$sender->name,
-                'photo'=>empty($sender->photo)?"https://ui-avatars.com/api/?name=$sender->name&background=random&round=true":$sender->photo,
-                'hour'=>date('h:i A',strtotime($message->created_at))
+                'photo'=>empty($sender->photo)?"https://ui-avatars.com/api/?name=$sender->username&background=random&round=true":$sender->photo,
+                'hour'=>date('h:i A',strtotime($message->created_at)),
+                'onlineStatus'=>$status
             ];
 
             $dataCo[]=$data;
@@ -112,10 +126,10 @@ class ChatController extends BaseController
                 //send push notification
                 if ($chat->sender!=$user->id){
                     $receiver = User::find($chat->sender);
-                    $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->name,$input['message']));
+                    $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->username,$input['message']));
                 }elseif ($chat->receiver!=$user->id){
                     $receiver = User::find($chat->receiver);
-                    $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->name,$input['message']));
+                    $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->username,$input['message']));
                 }
 
                 return $this->sendResponse([
@@ -128,7 +142,7 @@ class ChatController extends BaseController
             return  $this->sendError('chat.error',['error'=>'Unable to deliver message']);
         }catch (\Exception $exception){
             Log::info($exception->getMessage().' on '.$exception->getLine());
-            return $this->sendError('order.error',['error'=>'Internal Server error']);
+            return $this->sendError('chat.error',['error'=>'Internal Server error']);
         }
     }
     //view conversation detail
@@ -138,14 +152,8 @@ class ChatController extends BaseController
         $web = GeneralSetting::find(1);
 
         $chat = UserChat::where('reference',$id)->where(function ($query) use ($user) {
-            $query->where('sender', $user->id)
-                ->where('deletedForSender', '!=',1);
-        })
-            ->orWhere(function ($query) use ($user) {
-                $query->where('receiver', $user->id)
-                    ->where('deletedForReceiver', '!=',1);
-            })
-            ->first();
+            $query->where('sender', $user->id)->orWhere('receiver', $user->id);
+        })->first();
 
         return view('dashboard.pages.chats.detail')->with([
             'web'=>$web,
@@ -155,4 +163,79 @@ class ChatController extends BaseController
             'chat'=>$chat
         ]);
     }
+    //initiate message
+    public function initiateMessage(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'message' => ['required', 'string'],
+                'receiver'=>['required','exists:users,id']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+
+            $input = $validator->validated();
+
+            //let us check if there is a chat between the two before
+            $hasChat = UserChat::where(function ($query) use ($user,$input) {
+                $query->where('sender', $user->id)->where('receiver',$input['receiver']);
+            })
+                ->orWhere(function ($query) use ($user,$input) {
+                    $query->where('receiver', $user->id)->where('sender',$input['receiver']);
+                })
+                ->first();
+
+            if (!empty($hasChat)){
+                $message = UserChatMessage::create([
+                    'chatId'=>$hasChat->reference,
+                    'message'=>$input['message'],
+                    'sender'=>$user->id
+                ]);
+                if (!empty($message)){
+
+                    //send push notification
+                    if ($hasChat->sender!=$user->id){
+                        $receiver = User::find($hasChat->sender);
+                        $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->username,$input['message']));
+                    }elseif ($hasChat->receiver!=$user->id){
+                        $receiver = User::find($hasChat->receiver);
+                        $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->username,$input['message']));
+                    }
+                }
+                return $this->sendResponse([
+                    'redirectTo'=>route('user.chat.detail',['id'=>$hasChat->reference])
+                ],'You already have an active chat with this user');
+            }
+
+            $chat = UserChat::create([
+                'sender'=>$user->id,'receiver'=>$input['receiver'],
+                'reference'=>$this->generateUniqueReference('user_chats','reference')
+            ]);
+            if (!empty($chat)){
+                $message = UserChatMessage::create([
+                    'chatId'=>$chat->reference,
+                    'message'=>$input['message'],
+                    'sender'=>$user->id
+                ]);
+
+                //send push notification
+                if ($message){
+                    $receiver = User::find($chat->receiver);
+                    $receiver->notify(new SendPushNotification($receiver,'New Message from '.$receiver->username,$input['message']));
+                }
+                return $this->sendResponse([
+                    'redirectTo'=>route('user.chat.detail',['id'=>$chat->reference])
+                ],'Conversation started. We are redirecting you to the page');
+
+            }
+            return $this->sendError('chat.error',['error'=>'Something went wrong and we could not initiate the conversation.']);
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('chat.error',['error'=>'Internal Server error']);
+        }
+    }
+
 }

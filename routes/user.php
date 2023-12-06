@@ -90,6 +90,8 @@ Route::get('chats/{id}/fetch',[ChatController::class,'fetchChat'])
     ->name('user.chat.content');
 Route::post('chats/send-message',[ChatController::class,'sendMessage'])
     ->name('user.chat.sendMessage');
+Route::post('chats/initiate-message',[ChatController::class,'initiateMessage'])
+    ->name('user.chat.initiateMessage');
 /*========================TRANSACTIONS ROUTE ==============================================*/
 Route::get('transactions/index',[TransactionController::class,'landingPage'])
     ->name('user.transactions');

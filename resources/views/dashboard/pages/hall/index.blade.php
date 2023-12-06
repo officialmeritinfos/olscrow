@@ -44,7 +44,13 @@
                                                             <i class="ri-checkbox-circle-fill text-success" style="font-size: 1rem;"
                                                             data-bs-toggle="tooltip" title="Verified Profile"></i>
                                                         @endif
-                                                    </small>
+                                                    </small><sup>
+                                                        @if (Cache::has('user-is-online-' . $slideEscort->id))
+                                                            <span class="text-success">Online</span>
+                                                        @else
+                                                            <span class=" text-danger">Offline</span>
+                                                        @endif
+                                                    </sup>
                                                 </a>
                                             </h3>
                                             <span class="price">

@@ -14,13 +14,27 @@
                                 <div class="avatar">
                                     <img src="{{empty($escort->photo)?'https://ui-avatars.com/api/?name='.$escort->name.'&background=random&round=true':$escort->photo}}"
                                          alt="Images" class="img-thumbnail" style="width: 150px;">
+
                                     <h3>
                                         {{empty($escort->displayName)?ucfirst($escort->username):$escort->displayName}}
                                         @if($escort->isVerified==1)
-                                            <i class="ri-checkbox-circle-fill text-success" style="font-size: 1.5rem;"
+                                            <i class="ri-checkbox-circle-fill text-success" style="font-size: 1rem;"
                                                data-bs-toggle="tooltip" title="Verified Profile"></i>
                                         @endif
                                     </h3>
+                                    <small>
+                                        @if (Cache::has('user-is-online-' . $escort->id))
+                                            <span class="text-success">Online</span>
+                                        @else
+                                            <span class=" text-danger">Offline</span>
+                                        @endif
+                                    </small>
+                                    <div class="text-center mt-3 mb-3">
+                                        <button class="default-btn" data-bs-toggle="modal" data-bs-target="#initiateChat">
+                                            <i class="ri-message-2-fill"></i> Chat</button>
+                                        <button class="danger-btn" data-bs-toggle="modal" data-bs-target="#reportProfile">
+                                            <i class="ri-flag-2-fill"></i> Report</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -143,5 +157,9 @@
         </div>
     </div>
 
-
+@push('js')
+    @include('dashboard.pages.hall.modal.chat')
+    @include('dashboard.pages.hall.modal.booking')
+    <script src="{{asset('requests/dashboard/orders.js')}}"></script>
+@endpush
 @endsection
