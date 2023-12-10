@@ -70,7 +70,7 @@ class Hall extends Controller
             'packages'=>Order::where([
                 'user'=>$escort->id,
                 'status'=>1
-            ])->get()
+            ])->where('personalized','!=',1)->get(),
         ]);
     }
 }

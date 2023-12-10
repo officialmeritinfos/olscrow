@@ -27,6 +27,7 @@
                             <th scope="col">AMOUNT</th>
                             <th scope="col">TYPE</th>
                             <th scope="col">ORDER</th>
+                            <th scope="col">DATE</th>
                             <th scope="col">STATUS</th>
                             <th scope="col">ACTION</th>
                         </tr>
@@ -63,16 +64,27 @@
                                 <td>
                                     {{$injected->getOrderById($booking->orderId)->title}}
                                 </td>
+                                <td>
+                                    {{date('D, d M Y H:i:s',strtotime($booking->created_at))}}
+                                </td>
 
                                 <td class="status">
                                     @switch($booking->status)
                                         @case(1)
                                             <i class="ri-checkbox-circle-line"></i>
-                                            Active
+                                            Completed
+                                            @break
+                                        @case(2)
+                                            <i class="ri-stop-circle-fill text-info"></i>
+                                            Pending Acceptance
+                                            @break
+                                        @case(4)
+                                            <i class="bx bx-refresh bx-spin text-primary"></i>
+                                            Ongoing
                                             @break
                                         @default
                                             <i class="bx bx-x-circle text-danger"></i>
-                                            Inactive
+                                            Cancelled
                                             @break
                                     @endswitch
                                 </td>
@@ -83,22 +95,9 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li>
-                                                <a class="dropdown-item" href="{{route('user.orders.edit',['id'=>$booking->reference])}}">
-                                                    Edit
-                                                    <i class="ri-pencil-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a data-bs-toggle="modal" class="dropdown-item" href="#delete_order"
-                                                   data-value="{{$booking->reference}}">
-                                                    Delete
-                                                    <i class="ri-delete-bin-6-line"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a data-bs-toggle="modal" class="dropdown-item" data-value="{{$booking->reference}}">
-                                                    Share
-                                                    <i class="ri-share-forward-2-fill text-primary"></i>
+                                                <a class="dropdown-item" href="{{route('user.bookings.detail',['id'=>$booking->reference])}}">
+                                                    Details
+                                                    <i class="ri-eye-2-line"></i>
                                                 </a>
                                             </li>
 

@@ -1,4 +1,4 @@
-<div class="pricing-area">
+    <div class="pricing-area">
     <div class="container-fluid">
         <div class="row justify-content-center">
             @foreach($packages as $package)
@@ -28,15 +28,15 @@
                                 @endif
                                 @if(!empty($package->weekend) || $package->weekend!=0)
                                     <li>
-                                        <i class="ri-check-line"></i>
+                                        <i class="ri--check-line"></i>
                                         <b>Weekend:</b>
                                         {{$package->currency}}{{number_format($package->weekend)}}
                                     </li>
                                 @endif
                             </ul>
 
-                            <a href="#" class="default-btn">
-                                Choose plan
+                            <a href="{{route('user.booking.start',['package'=>$package->reference])}}" class="default-btn">
+                                Book Now!
                             </a>
                             <p style="font-size: 10px; margin-top: 1rem;">
                                 Please ensure that the Escort is online before booking an order; alternatively, you can book

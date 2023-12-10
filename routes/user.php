@@ -34,7 +34,8 @@ Route::post('orders/update',[Orders::class,'updateOrder'])
 /*======================== BOOKING ROUTE =====================*/
 Route::get('bookings/index',[Bookings::class,'landingPage'])
     ->name('user.bookings');
-
+Route::get('bookings/{id}/detail',[Bookings::class,'bookingDetail'])
+    ->name('user.bookings.detail');
 
 /*======================== PROFILE ROUTE =====================*/
 Route::get('profile/index',[Profile::class,'landingPage'])
@@ -104,3 +105,9 @@ Route::get('hall/escort/{username}/reviews',[Hall::class,'escortDetail'])
     ->name('user.escort.reviews');
 Route::get('hall/escort/{username}/gallery',[Hall::class,'escortDetail'])
     ->name('user.escort.gallery');
+//Booking
+Route::get('booking/{package}/start',[Bookings::class,'startBookingProcess'])
+    ->name('user.booking.start');
+Route::post('booking/process-booking',[Bookings::class,'processBooking'])
+    ->name('user.booking.process');
+
