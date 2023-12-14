@@ -218,7 +218,7 @@ class Bookings extends BaseController
             $booking->status=4;
             $booking->save();
             //notify booker
-            $message = "Your booking with '.$user->displayName.' has been accepted. Please endeavour to meet up with your escort as agreed.";
+            $message = "Your booking with $user->displayName has been accepted. Please endeavour to meet up with your escort as agreed.";
             $booker->notify(new SendPushNotification($booker,'Booking accepted by Escort',$message));
 
             return $this->sendResponse([

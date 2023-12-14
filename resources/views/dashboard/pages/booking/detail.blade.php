@@ -136,8 +136,8 @@
                     </div>
                 @endif
                 @if($booking->status==4)
-                        <a href="#" class="success-btn"><i class='bx bx-paper-plane'></i> Approve Booking</a>
-                        <a href="#" class="danger-btn"><i class='bx bx-paper-plane'></i> Report Booking</a>
+                        <a href="#" class="success-btn"><i class='bx bx-check-circle'></i> Mark As Delivered</a>
+                        <a href="#" class="danger-btn"><i class='bx bx-x-circle'></i> Report Booking</a>
                 @endif
             </div>
         </div>
@@ -176,6 +176,7 @@
                     }, 1000); // Update every 1 second
                 });
             </script>
+            <script src="{{asset('requests/dashboard/booking.js')}}"></script>
         @endpush
     @else
 

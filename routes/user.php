@@ -36,6 +36,8 @@ Route::get('bookings/index',[Bookings::class,'landingPage'])
     ->name('user.bookings');
 Route::get('bookings/{id}/detail',[Bookings::class,'bookingDetail'])
     ->name('user.bookings.detail');
+Route::post('bookings/accept/order',[Bookings::class,'acceptBooking'])
+    ->name('user.booking.accept');
 
 /*======================== PROFILE ROUTE =====================*/
 Route::get('profile/index',[Profile::class,'landingPage'])

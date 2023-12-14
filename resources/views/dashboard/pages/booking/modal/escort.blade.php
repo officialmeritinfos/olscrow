@@ -11,7 +11,7 @@
             </div>
 
             <div class="modal-body">
-                <form class="row g-3" id="fundMainBalance" action="{{route('user.account.fund')}}"
+                <form class="row g-3" id="acceptBookingOrder" action="{{route('user.booking.accept')}}"
                       method="post">
                     <div class="col-md-12" style="display: none;">
                         <label for="inputEmail4" class="form-label">Amount</label>
