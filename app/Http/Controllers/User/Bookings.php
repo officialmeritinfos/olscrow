@@ -170,10 +170,14 @@ class Bookings extends BaseController
     {
         $web = GeneralSetting::find(1);
         $user = Auth::user();
-        $booking = UserBooking::where('escortId',$user->id)->where('reference',$id)->firstOrFail();
 
         if ($user->accountType!=1){
             $booking=UserBooking::where('user',$user->id)->where('reference',$id)->firstOrFail();
+            $party = User::where('id',$booking->user)->first();
+        }else{
+
+            $booking = UserBooking::where('escortId',$user->id)->where('reference',$id)->firstOrFail();
+            $party = User::where('id',$booking->escortId)->first();
         }
         return view('dashboard.pages.booking.detail')->with([
             'user'=>$user,
@@ -181,7 +185,49 @@ class Bookings extends BaseController
             'siteName'=>$web->name,
             'web'=>$web,
             'services'=>Service::where('status',1)->orderBy('name','asc')->get(),
-            'booking'=>$booking
+            'booking'=>$booking,
+            'package'=>Order::where('id',$booking->orderId)->first(),
+            'party'=>$party
         ]);
+    }
+    //accept booking
+    public function acceptBooking(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(),[
+                'booking'=>['required','numeric',Rule::exists('user_bookings','id')->where('escortId',$user->id)]
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $booking = UserBooking::where([
+                'id'=>$input['booking'],'escortId'=>$user->id
+            ])->first();
+
+            //since this is time bound, bounce back if it has elapsed
+            if (time() > $booking->timeAcceptBooking){
+                return $this->sendError('booking.error',['error'=>'Time to accept booking has elapsed']);
+            }
+
+            $booker = User::where('id',$booking->user)->first();
+            $booking->status=4;
+            $booking->save();
+            //notify booker
+            $message = "Your booking with '.$user->displayName.' has been accepted. Please endeavour to meet up with your escort as agreed.";
+            $booker->notify(new SendPushNotification($booker,'Booking accepted by Escort',$message));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Booking accepted, and client notified');
+
+        }catch (\Exception $exception){
+            Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
+            return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
+        }
     }
 }
