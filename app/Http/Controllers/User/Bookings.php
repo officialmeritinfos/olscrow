@@ -209,10 +209,14 @@ class Bookings extends BaseController
                 'id'=>$input['booking'],'escortId'=>$user->id
             ])->first();
 
+            if ($booking->status!=2){
+                return $this->sendError('booking.error',['error'=>'Booking is either cancelled or has been accepted or even completed.']);
+            }
             //since this is time bound, bounce back if it has elapsed
             if (time() > $booking->timeAcceptBooking){
                 return $this->sendError('booking.error',['error'=>'Time to accept booking has elapsed']);
             }
+
 
             $booker = User::where('id',$booking->user)->first();
             $booking->status=4;
@@ -220,10 +224,181 @@ class Bookings extends BaseController
             //notify booker
             $message = "Your booking with $user->displayName has been accepted. Please endeavour to meet up with your escort as agreed.";
             $booker->notify(new SendPushNotification($booker,'Booking accepted by Escort',$message));
+            $booker->notify(new CustomNotification($booker,$message,'Booking accepted by Escort'));
 
             return $this->sendResponse([
                 'redirectTo'=>url()->previous()
             ],'Booking accepted, and client notified');
+
+        }catch (\Exception $exception){
+            Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
+            return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
+        }
+    }
+
+    //request transport fee
+    public function requestTransportFee(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(),[
+                'booking'=>['required','numeric',Rule::exists('user_bookings','id')->where('escortId',$user->id)],
+                'amount'=>['required','numeric']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $booking = UserBooking::where([
+                'id'=>$input['booking'],'escortId'=>$user->id
+            ])->first();
+
+
+            //check that order is active
+            if ($booking->status !=4){
+                return $this->sendError('booking.error',['error'=>'Booking is either completed or not active.']);
+            }
+            //check if request has been made before
+            if ($booking->requestForTransport==1){
+                return $this->sendError('booking.error',['error'=>'You have already requested for transport fee. Allow for client to respond.']);
+            }
+
+
+
+            $booker = User::where('id',$booking->user)->first();
+            $booking->requestForTransport=1;
+            $booking->transportStatus=4;
+            $booking->transportFee=$input['amount'];
+            $booking->save();
+            //notify booker
+            $message = "Your escort $user->displayName has requested for a transport fee of ".$booking->currency.number_format($input['amount'],2).". Login to approve request or decline the same.";
+            $booker->notify(new SendPushNotification($booker,'Escort Request for Transport',$message));
+            $booker->notify(new CustomNotification($booker,$message,'Escort Request for Transport.'));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Transport Request sent.');
+
+        }catch (\Exception $exception){
+            Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
+            return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
+        }
+    }
+    //escort mark booking delivered
+    public function escortMarkBookingDelivered(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(),[
+                'booking'=>['required','numeric',Rule::exists('user_bookings','id')->where('escortId',$user->id)],
+                'password'=>['required','current_password:web']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $booking = UserBooking::where([
+                'id'=>$input['booking'],'escortId'=>$user->id
+            ])->first();
+
+            if ($booking->status==2){
+                return $this->sendError('booking.error',['error'=>'Booking is pending acceptance']);
+            }
+
+            if ($booking->status==3){
+                return $this->sendError('booking.error',['error'=>'Booking has been cancelled']);
+            }
+
+            if ($booking->status==1){
+                return $this->sendError('booking.error',['error'=>'Booking has been concluded already']);
+            }
+
+            if ($booking->reported==1){
+                return $this->sendError('booking.error',['error'=>'Booking has been reported already. Please appeal instead']);
+            }
+
+            $booker = User::where('id',$booking->user)->first();
+            $booking->approvedByEscort=1;
+            $booking->timeToApproveByClient=strtotime($web->clientTimeToApproveBooking,time());
+            $booking->save();
+            //notify booker
+            $message = "Your booking with $user->displayName has been marked as delivered. If this is not true, please appeal now. You have ".$web->clientTimeToApproveBooking." to appeal this approval";
+            $booker->notify(new SendPushNotification($booker,'Escort Booking delivery',$message));
+            $booker->notify(new CustomNotification($booker,$message,'Escort Booking delivery'));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Booking marking as delivered and pending clients response.');
+
+        }catch (\Exception $exception){
+            Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
+            return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
+        }
+    }
+    //escort cancel booking
+    public function escortCancelBooking(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(),[
+                'booking'=>['required','numeric',Rule::exists('user_bookings','id')->where('escortId',$user->id)],
+                'password'=>['required','current_password:web'],
+                'reason'=>['required','string']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $booking = UserBooking::where([
+                'id'=>$input['booking'],'escortId'=>$user->id
+            ])->first();
+
+            if ($booking->status==2){
+                return $this->sendError('booking.error',['error'=>'Booking is pending acceptance']);
+            }
+
+            if ($booking->status==3){
+                return $this->sendError('booking.error',['error'=>'Booking has been cancelled']);
+            }
+
+            if ($booking->status==1){
+                return $this->sendError('booking.error',['error'=>'Booking has been concluded already']);
+            }
+
+            $amountRefund = 0;
+            if ($booking->requestForTransport==1 && $booking->transportStatus==1){
+                $amountRefund=$amountRefund+$booking->transportFee;
+                $user->transportBalance = $user->transportBalance-$booking->transportFee;
+                $user->save();
+            }
+            $amountRefund=$amountRefund+$booking->amount;
+
+
+            $booker = User::where('id',$booking->user)->first();
+            $booking->status=3;
+            $booking->paymentStatus=5;
+            $booking->cancellationReason=$input['reason'];
+
+            $booker->accountBalance=$booker->accountBalance+$amountRefund;
+            $booker->save();
+            $booking->save();
+            //notify booker
+            $message = "Your booking with $user->displayName has been cancelled by the escort, and every pending appeals resolved, and full amount paid refunded to your balance. We are sorry for the inconveniences";
+            $booker->notify(new SendPushNotification($booker,'Escort Booking Cancelled',$message));
+            $booker->notify(new CustomNotification($booker,$message,'Escort Booking Cancelled'));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Booking cancelled.');
 
         }catch (\Exception $exception){
             Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());

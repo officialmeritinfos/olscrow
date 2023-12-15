@@ -106,6 +106,24 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="single-today-card d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <span class="today">
+                                            Transport Balance <i class="ri-information-fill" data-bs-toggle="tooltip"
+                                                               title="Funds here are utilized for transport purpose.
+                                                               When a client accepts your transportation fee request,
+                                                               it is held here till completion. If you fail to meet up as
+                                                               agreed, we will refund this while also initiating the appropriate penalty."></i>
+                                        </span>
+                                        <span class="text-info">
+                                                {{$user->mainCurrency}} {{number_format($user->penaltyBalance,2)}}
+                                            </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
