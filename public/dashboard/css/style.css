@@ -409,7 +409,113 @@ Info Btn Area Style*/
     animation: fadeInUp 1s linear;
 }
 
+/*
+Warning Btn Area Style*/
+.warning-btn {
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: inline-table;
+    padding: 10px 20px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFEA00), to(#FFBF00));
+    background-image: linear-gradient(to bottom, #FFEA00, #FFBF00);
+    border-radius: 10px;
+}
 
+.warning-btn.radius-btn {
+    border-radius: 10px;
+}
+
+.warning-btn i {
+    position: relative;
+    top: 1.70px;
+    margin-right: 5px;
+}
+
+.warning-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #E34234;
+    z-index: -1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
+}
+
+.warning-btn:hover {
+    color: #ffffff;
+}
+
+.warning-btn:hover::before {
+    height: 100%;
+    bottom: auto;
+    top: 0;
+    -webkit-animation: fadeInUp 1s linear;
+    animation: fadeInUp 1s linear;
+}
+
+/*
+Primary Btn Area Style*/
+.primary-btn {
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: inline-table;
+    padding: 10px 20px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#1434A4), to(#0000FF));
+    background-image: linear-gradient(to bottom, #0047AB, #00008B);
+    border-radius: 10px;
+}
+
+.primary-btn.radius-btn {
+    border-radius: 10px;
+}
+
+.primary-btn i {
+    position: relative;
+    top: 1.70px;
+    margin-right: 5px;
+}
+
+.primary-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #E34234;
+    z-index: -1;
+    -webkit-transition: all ease 0.5s;
+    transition: all ease 0.5s;
+}
+
+.primary-btn:hover {
+    color: #ffffff;
+}
+
+.primary-btn:hover::before {
+    height: 100%;
+    bottom: auto;
+    top: 0;
+    -webkit-animation: fadeInUp 1s linear;
+    animation: fadeInUp 1s linear;
+}
 
 /*
 Read More Btn Area Style*/

@@ -117,7 +117,7 @@
                                                                agreed, we will refund this while also initiating the appropriate penalty."></i>
                                         </span>
                                         <span class="text-info">
-                                                {{$user->mainCurrency}} {{number_format($user->penaltyBalance,2)}}
+                                                {{$user->mainCurrency}} {{number_format($user->transportBalance,2)}}
                                             </span>
                                     </div>
 

@@ -36,6 +36,7 @@ Route::get('bookings/index',[Bookings::class,'landingPage'])
     ->name('user.bookings');
 Route::get('bookings/{id}/detail',[Bookings::class,'bookingDetail'])
     ->name('user.bookings.detail');
+//Escort
 Route::post('bookings/accept/order',[Bookings::class,'acceptBooking'])
     ->name('user.booking.accept');
 Route::post('bookings/request/transport',[Bookings::class,'requestTransportFee'])
@@ -44,6 +45,15 @@ Route::post('bookings/escort/mark-delivered',[Bookings::class,'escortMarkBooking
     ->name('user.booking.escort.markDelivered');
 Route::post('bookings/escort/cancel-booking',[Bookings::class,'escortCancelBooking'])
     ->name('user.booking.escort.cancel');
+//Booker
+Route::post('bookings/approve/transport',[Bookings::class,'approveEscortTransport'])
+    ->name('user.booking.approve.transport');
+Route::post('bookings/reject/transport',[Bookings::class,'rejectEscortTransport'])
+    ->name('user.booking.reject.transport');
+Route::post('bookings/user/cancel-booking',[Bookings::class,'userCancelBooking'])
+    ->name('user.booking.user.cancel');
+Route::post('bookings/user/mark-delivered',[Bookings::class,'userMarkBookingDelivered'])
+    ->name('user.booking.user.markDelivered');
 
 /*======================== PROFILE ROUTE =====================*/
 Route::get('profile/index',[Profile::class,'landingPage'])
