@@ -4,10 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\BookingReport;
 use App\Models\Country;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\Package;
+use App\Models\ReportType;
 use App\Models\Service;
 use App\Models\Transaction;
 use App\Models\User;
@@ -199,7 +201,9 @@ class Bookings extends BaseController
             'services'=>Service::where('status',1)->orderBy('name','asc')->get(),
             'booking'=>$booking,
             'package'=>Order::where('id',$booking->orderId)->first(),
-            'party'=>$party
+            'party'=>$party,
+            'reportTypes'=>ReportType::where('status',1)->get(),
+            'report'=>BookingReport::where('bookingId',$booking->id)->first()
         ]);
     }
     //accept booking
@@ -693,5 +697,105 @@ class Bookings extends BaseController
             Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
             return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
         }
+    }
+    //user reports booking
+    public function userReportBooking(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'booking' => ['required', 'numeric', Rule::exists('user_bookings', 'id')->where('user', $user->id)],
+                'password' => ['required', 'current_password:web'],
+                'reportType'=>['required','numeric','exists:report_types,id'],
+                'reportDetail'=>['required','string']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $booking = UserBooking::where([
+                'id' => $input['booking'], 'user' => $user->id
+            ])->first();
+
+            if ($booking->status == 2) {
+                return $this->sendError('booking.error', ['error' => 'Booking is pending acceptance']);
+            }
+
+
+            if ($booking->status == 3) {
+                return $this->sendError('booking.error', ['error' => 'Booking has been cancelled']);
+            }
+
+            if ($booking->status == 1) {
+                return $this->sendError('booking.error', ['error' => 'Booking has been concluded already']);
+            }
+
+            if ($booking->reported==1){
+                return $this->sendError('booking.error', ['error' => 'Booking has been reported already']);
+            }
+
+            $escort = User::where('id',$booking->escortId)->first();
+
+            $reference = $this->generateUniqueReference('booking_reports','reference',15);
+
+            $report = BookingReport::create([
+                'bookingId'=>$booking->id,'reference'=>$reference,'escortId'=>$escort->id,
+                'user'=>$user->id,'reportType'=>$input['reportType'],'reportDetail'=>$input['reportDetail'],
+                'lastResponder'=>$user->id,'status'=>2
+            ]);
+
+            $booking->reported=1;
+            $booking->report=$input['reportType'];
+            $booking->reportMessage = $input['reportDetail'];
+            $booking->reportedBy=1;
+            $booking->reportId = $report->id;
+            $booking->timeToAppeal = strtotime($web->clientTimeToApproveBooking,time());
+            $booking->save();
+
+            //send escort notification
+            $message = "Your booking with id $booking->reference has been reported by your client. You have ".$web->clientTimeToApproveBooking." to appeal this report or we will cancel this transaction and refund the client.";
+            $escort->notify(new SendPushNotification($escort,'Escort Booking Reported',$message));
+            $escort->notify(new CustomNotification($escort,$message,'Escort Booking Reported'));
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Booking reported. We will intervene once escort appeals or you receive a refund if escort fails to appeal.');
+
+        }catch (\Exception $exception){
+            Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
+            return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
+        }
+    }
+    //booking report detail
+    public function bookingReportDetail($id)
+    {
+        $web = GeneralSetting::find(1);
+        $user = Auth::user();
+
+        if ($user->accountType!=1){
+            $booking=UserBooking::where('user',$user->id)->where('reference',$id)->firstOrFail();
+            $party = User::where('id',$booking->escortId)->first();
+        }else{
+
+            $booking = UserBooking::where('escortId',$user->id)->where('reference',$id)->firstOrFail();
+            $party = User::where('id',$booking->user)->first();
+        }
+        $report = BookingReport::where('bookingId',$booking->id)->first();
+
+        return view('dashboard.pages.booking.report_detail')->with([
+            'user'=>$user,
+            'pageName'=>'Booking Report Detail',
+            'siteName'=>$web->name,
+            'web'=>$web,
+            'services'=>Service::where('status',1)->orderBy('name','asc')->get(),
+            'booking'=>$booking,
+            'package'=>Order::where('id',$booking->orderId)->first(),
+            'party'=>$party,
+            'reportType'=>ReportType::where('id',$report->reportType)->first(),
+            'report'=>$report
+        ]);
     }
 }

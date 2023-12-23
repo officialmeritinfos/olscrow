@@ -54,6 +54,12 @@ Route::post('bookings/user/cancel-booking',[Bookings::class,'userCancelBooking']
     ->name('user.booking.user.cancel');
 Route::post('bookings/user/mark-delivered',[Bookings::class,'userMarkBookingDelivered'])
     ->name('user.booking.user.markDelivered');
+Route::post('bookings/user/report-booking',[Bookings::class,'userReportBooking'])
+    ->name('user.booking.user.report');
+//Booking Report
+Route::get('bookings/report/{id}/detail',[Bookings::class,'bookingReportDetail'])
+    ->name('user.bookings.report.detail');
+
 
 /*======================== PROFILE ROUTE =====================*/
 Route::get('profile/index',[Profile::class,'landingPage'])

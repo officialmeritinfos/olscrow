@@ -15,9 +15,9 @@
             <div class="col-lg-6 col-12">
                 <div class="text text-start">
                     <h4 class="mb-2">Escort</h4>
-                    <span class="d-block mb-1"><strong>Name:</strong> {{ucfirst($party->displayName)}}</span>
-                    <span class="d-block mb-1"><strong>Tel:</strong> <a href="tel:{{$injected->getCountryByCode($booking->country)->phonecode}}{{ucfirst($party->phone)}}">{{$injected->getCountryByCode($booking->country)->phonecode}}{{ucfirst($party->phone)}}</a> </span>
-                    <span class="d-block mb-1"><strong>Your Location:</strong> {{$booking->location}}</span>
+                    <span class="d-block mb-2"><strong>Name:</strong> {{ucfirst($party->displayName)}}</span>
+                    <span class="d-block mb-2"><strong>Tel:</strong> <a href="tel:{{$injected->getCountryByCode($booking->country)->phonecode}}{{ucfirst($party->phone)}}">{{$injected->getCountryByCode($booking->country)->phonecode}}{{ucfirst($party->phone)}}</a> </span>
+                    <span class="d-block mb-2"><strong>Your Location:</strong> {{$booking->location}}</span>
                     <span class="d-block">{{$booking->state}}, {{$injected->getCountryByCode($booking->country)->name}}</span>
                 </div>
             </div>
@@ -26,9 +26,9 @@
             <div class="col-lg-6 col-12">
                 <div class="text text-end">
                     <h4 class="mb-2">Booking</h4>
-                    <span class="d-block mb-1"><strong>Booking ID:</strong> {{$booking->reference}}</span>
-                    <span class="d-block mb-1">{{date('D, d M Y H:i:s A',strtotime($booking->created_at))}}</span>
-                    <span class="d-block mb-1"><strong>Status:</strong>
+                    <span class="d-block mb-2"><strong>Booking ID:</strong> {{$booking->reference}}</span>
+                    <span class="d-block mb-2">{{date('D, d M Y H:i:s A',strtotime($booking->created_at))}}</span>
+                    <span class="d-block mb-2"><strong>Status:</strong>
                                 @switch($booking->status)
                             @case(1)
                                 <span class="badge bg-success">
@@ -54,7 +54,7 @@
                         @endswitch
                             </span>
                     @if($booking->requestForTransport==1)
-                        <span class="d-block mb-1"><strong>Transport Status:</strong>
+                        <span class="d-block mb-2"><strong>Transport Status:</strong>
                                     @switch($booking->transportStatus)
                                 @case(1)
                                     <span class="badge bg-success">
@@ -73,12 +73,12 @@
                                     @break
                             @endswitch
                                 </span>
-                        <span class="d-block mb-1"><strong>Transport Fee:</strong>
+                        <span class="d-block mb-2"><strong>Transport Fee:</strong>
                                     {{$booking->currency}}{{number_format($booking->transportFee,2)}}
                                 </span>
                     @endif
                     @if($booking->approvedByEscort==1)
-                        <span class="d-block mb-1"><strong>Delivery Status:</strong>
+                        <span class="d-block mb-2"><strong>Delivery Status:</strong>
                                     @switch($booking->approvedByEscort)
                                 @case(1)
                                     <span class="badge bg-success">
@@ -97,7 +97,7 @@
                                     @break
                             @endswitch
                                 </span>
-                        <span class="d-block mb-1"><strong>User Approval Status:</strong>
+                        <span class="d-block mb-2"><strong>User Approval Status:</strong>
                                     @switch($booking->approvedByUser)
                                 @case(1)
                                     <span class="badge bg-success">
@@ -113,6 +113,35 @@
                                     @break
                             @endswitch
                                 </span>
+                        @if($booking->reported==1)
+                            <span class="d-block mb-2"><strong>Report Status:</strong>
+                                @switch($report->status)
+                                    @case(1)
+                                        <span class="badge bg-success">
+                                                <i class="ri-checkbox-circle-line"></i>
+                                                Verdict Passed
+                                            </span>
+                                        @break
+                                    @case(1)
+                                        <span class="badge bg-primary">
+                                                <i class="ri-checkbox-circle-line"></i>
+                                                Appealed By Escort
+                                            </span>
+                                        @break
+                                    @case(2)
+                                        <span class="badge bg-info">
+                                                <i class="bx bx-refresh bx-spin"></i>
+                                               Awaiting Appeal
+                                            </span>
+                                        @break
+                                @endswitch
+                            </span>
+
+                            <span class="d-block mb-2 mt-2">
+                                <strong>Report Link:</strong>
+                                <a href="{{route('user.bookings.report.detail',['id'=>$booking->reference])}}" class="primary-btn">View Report</a>
+                            </span>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -171,16 +200,20 @@
         </table>
     </div>
 
-    <div class="invoice-btn-box text-center">
+    <div class="invoice-btn-box text-center row justify-content-center">
         @if($booking->status==2)
-            <button data-bs-toggle="modal" data-bs-target="#cancelBookingUser" class="danger-btn mt-3">
-                <i class='bx bx-x-circle'></i> Cancel Booking
-            </button>
+            <div class="col-md-6">
+                <button data-bs-toggle="modal" data-bs-target="#cancelBookingUser" class="danger-btn mt-3">
+                    <i class='bx bx-x-circle'></i> Cancel Booking
+                </button>
+            </div>
         @endif
         @if($booking->status==4)
             @if($booking->approvedByEscort==1)
-                    <div class="acceptBooking">
-                        <div id="countdown"></div>
+                    <div class="acceptBooking col-md-6">
+                        @if($booking->reported!=1)
+                            <div id="countdown"></div>
+                        @endif
                         <button data-bs-toggle="modal" data-bs-target="#userMarkDelivered" class="success-btn mt-3">
                             <i class='bx bx-check-circle'></i> Mark As Delivered
                         </button>
@@ -188,18 +221,23 @@
             @endif
             @if($booking->requestForTransport==1)
                 @if($booking->transportStatus==4)
-                    <button data-bs-toggle="modal" data-bs-target="#approveEscortTransport" class="info-btn mt-3">
-                        <i class='bx bx-train'></i> Approve Request for Transport Fee
-                    </button>
-                    <button data-bs-toggle="modal" data-bs-target="#rejectEscortTransport" class="warning-btn mt-3">
-                        <i class='bx bx-x-circle'></i> Reject Request for Transport Fee
-                    </button>
+                        <div class="col-md-6">
+                            <button data-bs-toggle="modal" data-bs-target="#approveEscortTransport" class="info-btn mt-3">
+                                <i class='bx bx-train'></i> Approve Request for Transport Fee
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button data-bs-toggle="modal" data-bs-target="#rejectEscortTransport" class="warning-btn mt-3">
+                                <i class='bx bx-x-circle'></i> Reject Request for Transport Fee
+                            </button>
+                        </div>
                 @endif
             @endif
-
-            <button data-bs-toggle="modal" data-bs-target="#reportBookingUser" class="danger-btn mt-3">
-                <i class='bx bx-x-circle'></i> Report Booking
-            </button>
+                <div class="col-md-6">
+                    <button data-bs-toggle="modal" data-bs-target="#reportBookingUser" class="danger-btn mt-3">
+                        <i class='bx bx-x-circle'></i> Report Booking
+                    </button>
+                </div>
         @endif
     </div>
 </div>

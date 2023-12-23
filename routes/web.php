@@ -21,6 +21,8 @@ Route::get('/', function () {
 });
 
 
+Route::get('legal/reports',[])->name('legal.reports');
+
 Route::any('/push',[PushController::class,'store'])->name('push.store');
 Route::get('/push/test',[PushController::class,'push'])->name('push');
 
