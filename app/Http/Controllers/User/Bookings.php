@@ -778,11 +778,9 @@ class Bookings extends BaseController
 
         if ($user->accountType!=1){
             $booking=UserBooking::where('user',$user->id)->where('reference',$id)->firstOrFail();
-            $party = User::where('id',$booking->escortId)->first();
         }else{
 
             $booking = UserBooking::where('escortId',$user->id)->where('reference',$id)->firstOrFail();
-            $party = User::where('id',$booking->user)->first();
         }
         $report = BookingReport::where('bookingId',$booking->id)->first();
 
@@ -794,9 +792,10 @@ class Bookings extends BaseController
             'services'=>Service::where('status',1)->orderBy('name','asc')->get(),
             'booking'=>$booking,
             'package'=>Order::where('id',$booking->orderId)->first(),
-            'party'=>$party,
             'reportType'=>ReportType::where('id',$report->reportType)->first(),
-            'report'=>$report
+            'report'=>$report,
+            'escort'=>User::where('id',$booking->escortId)->first(),
+            'client'=>User::where('id',$booking->user)->first(),
         ]);
     }
     //escort appeal report
@@ -851,6 +850,8 @@ class Bookings extends BaseController
             $booking->appealed=1;
             $report->status=4;
             $report->timeSupportIntervene=strtotime($web->supportInterveneTime,time());
+            $report->appealed=1;
+            $report->appealMessage = $input['appealDetail'];
             $booking->save();
             $report->save();
 

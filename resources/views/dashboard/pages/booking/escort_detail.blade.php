@@ -128,6 +128,12 @@
                                                 Appealed By Escort
                                             </span>
                                         @break
+                                    @case(5)
+                                        <span class="badge bg-primary">
+                                            <i class="bx bx-refresh bx-spin"></i>
+                                            Customer Support Intervened
+                                        </span>
+                                        @break
                                     @case(2)
                                         <span class="badge bg-info">
                                                 <i class="bx bx-refresh bx-spin"></i>
