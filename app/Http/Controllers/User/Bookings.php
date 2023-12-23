@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\BookingReport;
+use App\Models\BookingReportAppeal;
 use App\Models\Country;
 use App\Models\GeneralSetting;
 use App\Models\Order;
@@ -797,5 +798,78 @@ class Bookings extends BaseController
             'reportType'=>ReportType::where('id',$report->reportType)->first(),
             'report'=>$report
         ]);
+    }
+    //escort appeal report
+    public function escortAppealReport(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'booking' => ['required', 'numeric', Rule::exists('user_bookings', 'id')->where('escortId', $user->id)],
+                'password' => ['required', 'current_password:web'],
+                'appealDetail'=>['required','string']
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            $booking = UserBooking::where([
+                'id' => $input['booking'], 'escortId' => $user->id
+            ])->first();
+
+            if ($booking->status == 2) {
+                return $this->sendError('booking.error', ['error' => 'Booking is pending acceptance']);
+            }
+
+            if ($booking->status == 3) {
+                return $this->sendError('booking.error', ['error' => 'Booking has been cancelled']);
+            }
+
+            if ($booking->status == 1) {
+                return $this->sendError('booking.error', ['error' => 'Booking has been concluded already']);
+            }
+
+            if ($booking->reported!=1){
+                return $this->sendError('booking.error', ['error' => 'Booking has not been reported.']);
+            }
+
+            if ($booking->timeToAppeal <time()){
+                return $this->sendError('booking.error', ['error' => 'Time to appeal has elapsed. Please await judgement by support.']);
+            }
+
+            $report = BookingReport::where('bookingId',$booking->id)->first();
+            $booker = User::where('id',$booking->user)->first();
+
+            BookingReportAppeal::create([
+                'reportId'=>$report->id,'escortId'=>$user->id,'user'=>$booking->user,
+                'appealMessage'=>$input['appealDetail'],'type'=>2
+            ]);
+
+            $booking->appealed=1;
+            $report->status=4;
+            $report->timeSupportIntervene=strtotime($web->supportInterveneTime,time());
+            $booking->save();
+            $report->save();
+
+            //send notification to support and booker
+            $bookerMessage = "Your report with ID $report->reference has been appealed by the Escort. We are allowing a window of ".$web->supportInterveneTime." for resolution by both parties before support intervenes";
+            $booker->notify(new SendPushNotification($booker,'Escort booking report Appealed',$bookerMessage));
+            $booker->notify(new CustomNotification($booker,$bookerMessage,'Escort booking report Appealed'));
+
+            //send mail to admin
+            $message = "The Escort Booking reported by ".$booker->name." against the escort ".$user->name." for the booking with ID ".$booking->reference." has been appealed by the escort";
+            $this->sendMailToAdmin('Escort Booking Report Appealed',$message);
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Report Appealed. A customer support agent will wade into the situation in the next '.$web->supportInterveneTime.' if both parties fails to reach a compromise.');
+
+        }catch (\Exception $exception){
+            Log::info('Error on '.$exception->getFile().' on line '.$exception->getLine().': '.$exception->getMessage());
+            return $this->sendError('booking.error',['error'=>'Internal Server error; we are working on this now']);
+        }
     }
 }

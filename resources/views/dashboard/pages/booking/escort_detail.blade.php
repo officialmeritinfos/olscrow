@@ -122,7 +122,7 @@
                                                 Verdict Passed
                                             </span>
                                         @break
-                                    @case(1)
+                                    @case(4)
                                         <span class="badge bg-primary">
                                                 <i class="ri-checkbox-circle-line"></i>
                                                 Appealed By Escort
@@ -235,6 +235,13 @@
                 <i class='bx bx-x-circle'></i> Cancel Booking
             </button>
         @endif
+        @if($booking->reported==1 && $booking->appealed!=1)
+                <div class="appealReport mt-3">
+                    <div id="countdownAppeal"></div>
+                    <button data-bs-toggle="modal" data-bs-target="#appealReport"
+                            class="primary-btn mt-3"><i class='bx bx-check-circle'></i> Appeal Report</button>
+                </div>
+        @endif
     </div>
 </div>
 
@@ -273,4 +280,36 @@
         });
     </script>
     <script src="{{asset('requests/dashboard/booking.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            // Get the countdown timestamp from Blade variable
+            var countdownTimestamp = {{ $booking->timeToAppeal }}; // Assuming $countdownTimestamp is in seconds
+            // Convert the PHP timestamp to JavaScript Date object
+            var countDownDate = new Date(countdownTimestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+
+            // Update the countdown every 1 second
+            var x = setInterval(function() {
+                // Get the current date and time
+                var now = new Date().getTime();
+
+                // Calculate the remaining time
+                var distance = countDownDate - now;
+
+                // Calculate days, hours, minutes, and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the countdown in the element with id "countdown"
+                document.getElementById("countdownAppeal").innerHTML ="Time left to appeal: "+ days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                // If the countdown is over, hide the element with id "hiddenElement"
+                if (distance < 0) {
+                    clearInterval(x); // Stop the countdown
+                    $('.appealReport').hide();
+                }
+            }, 1000); // Update every 1 second
+        });
+    </script>
 @endpush

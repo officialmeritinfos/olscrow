@@ -122,7 +122,7 @@
                                                 Verdict Passed
                                             </span>
                                         @break
-                                    @case(1)
+                                    @case(4)
                                         <span class="badge bg-primary">
                                                 <i class="ri-checkbox-circle-line"></i>
                                                 Appealed By Escort

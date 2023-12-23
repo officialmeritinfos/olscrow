@@ -161,4 +161,56 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="appealReport" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Appeal Report
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="row g-3" id="escortAppealReport" action="{{route('user.booking.escort.appeal.report')}}"
+                          method="post">
+                        <div class="col-md-12" style="display: none;">
+                            <label for="inputEmail4" class="form-label">Id</label>
+                            <input type="number" name="booking" class="form-control" id="inputEmail4"
+                                   required value="{{$booking->id}}"/>
+                        </div>
+                        <div class="col-12 text-center">
+                            <p>
+                                You have been reported by your client. If you feel this report is wrong, please appeal the report below with proofs.
+                                At the end of the countdown, if not appealed, support will intervene and when we do, without any appeal from you,
+                                we will judge in favor of your client.
+                            </p>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Appeal Detail<sup class="text-danger">*</sup></label>
+                            <textarea name="appealDetail" class="form-control" id="inputEmail4" rows="4"></textarea>
+                            <small>Please be as detailed as possible.</small>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="inputEmail4"
+                                   required/>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="primary-btn submit rounded-pill">
+                                Appeal Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endif

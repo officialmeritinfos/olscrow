@@ -59,6 +59,8 @@ Route::post('bookings/user/report-booking',[Bookings::class,'userReportBooking']
 //Booking Report
 Route::get('bookings/report/{id}/detail',[Bookings::class,'bookingReportDetail'])
     ->name('user.bookings.report.detail');
+Route::post('bookings/escort/appeal-report',[Bookings::class,'escortAppealReport'])
+    ->name('user.booking.escort.appeal.report');
 
 
 /*======================== PROFILE ROUTE =====================*/
