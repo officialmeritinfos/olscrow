@@ -155,4 +155,49 @@ class Account extends BaseController
             return $this->sendError('error',['error'=>'Internal Server error']);
         }
     }
+    //convert referral balance
+    public function convertReferralBalance(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'amount' => ['required', 'numeric'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+
+            $input = $validator->validated();
+
+            //check for balance
+            if ($user->referralBalance <$input['amount']){
+                return $this->sendError('balance.error',['error'=>'Insufficient balance in referral account']);
+            }
+
+            $balanceAfter =$user->referralBalance-$input['amount'];
+            $user->referralBalance = $user->referralBalance-$input['amount'];
+
+            $balance = $user->accountBalance;
+            $newBalance = $balance+$input['amount'];
+            $user->accountBalance = $newBalance;
+            $account = 'account';
+
+
+            $transaction = UserTransaction::create([
+                'user'=>$user->id,'reference'=>$this->generateUniqueReference('user_transactions','reference',20),
+                'amount'=>$input['amount'],'type'=>2,'currency'=>'NGN','accountTo'=>$account,
+                'newBalance'=>$balanceAfter
+            ]);
+            if (!empty($transaction)){
+                $user->save();
+
+                return $this->sendResponse([
+                    'redirectTo'=>url()->previous()
+                ],'Conversion was successful.');
+            }
+        }catch (\Exception $exception){
+            Log::alert($exception->getMessage().' on line '.$exception->getLine().' on '.$exception->getFile());
+            return $this->sendError('error',['error'=>'Internal Server error']);
+        }
+    }
 }

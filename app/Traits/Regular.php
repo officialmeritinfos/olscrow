@@ -5,11 +5,15 @@ namespace App\Traits;
 use App\Models\Coin;
 use App\Models\Country;
 use App\Models\Fiat;
+use App\Models\GeneralSetting;
 use App\Models\Login;
+use App\Models\ReferralEarning;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserActivity;
 use App\Models\UserBalance;
 use App\Models\UserSetting;
+use App\Notifications\CustomNotification;
 use App\Notifications\CustomNotificationMail;
 use App\Notifications\SendDepartmentNotification;
 use Carbon\Carbon;
@@ -371,6 +375,47 @@ trait Regular
             $object->delete();
         }catch (\Exception $exception){
             Log::info($exception->getMessage());
+        }
+    }
+    //process referral crediting
+    public function handleReferralCrediting($user,$amount,$order)
+    {
+        $web = GeneralSetting::find(1);
+
+        if ($user->referral !=0){
+            $referrer = User::where('id',$user->referral)->first();
+            if (!empty($referrer)){
+                switch ($user->referralType){
+                    case 1:
+                        $refBonus = ($web->refBonus/100)*$amount;
+                        break;
+                    default:
+                        $refBonus = ($web->affiliateCommission/100)*$amount;
+                        break;
+                }
+                $referrer->referralBalance = $referrer->referralBalance+$refBonus;
+
+                ReferralEarning::create([
+                    'reference'=>$this->generateUniqueReference('referral_earnings','reference',20),
+                    'referral'=>$user->id,'currency'=>$order->currency,'amount'=>$refBonus,'refBy'=>$referrer->id
+                ]);
+                $referrer->save();
+
+                $message = "<p>You just earned ".$order->currency.number_format($refBonus,2)." in commission on ".$web->name."</p>";
+                $referrer->notify(new CustomNotification($referrer,$message,'New Commission Earning',));
+
+                Transaction::create([
+                    'user'=>$referrer->id,'currency'=>$order->currency,'amount'=>$refBonus,
+                    'reference'=>$this->generateUniqueReference('transactions','reference',20),
+                    'purpose'=>'Commission from referral '.$user->username
+                ]);
+
+                return $refBonus;
+            }else{
+                return 0;
+            }
+        }else{
+            return 0;
         }
     }
 }

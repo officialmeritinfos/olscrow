@@ -124,6 +124,38 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="single-today-card d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <span class="today">
+                                            Referral Balance <i class="ri-information-fill" data-bs-toggle="tooltip"
+                                                               title="Funds here are amount you received from your referrals"></i>
+                                        </span>
+                                        <span class="text-info">
+                                                {{$user->mainCurrency}} {{number_format($user->referralBalance,2)}}
+                                            </span>
+                                    </div>
+                                    <div class="flex-shrink-0 align-self-center ">
+                                        <div class="dropdown">
+                                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                                                <li>
+                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#convert_referral_balance">
+                                                        <i class="bx bx-repeat"></i>
+                                                        Convert Balance
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
@@ -165,6 +197,37 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="single-today-card d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <span class="today">
+                                            Referral Balance <i class="ri-information-fill" data-bs-toggle="tooltip"
+                                                                title="Funds here are amount you received from your referrals"></i>
+                                        </span>
+                                        <span class="text-info">
+                                                {{$user->mainCurrency}} {{number_format($user->referralBalance,2)}}
+                                            </span>
+                                    </div>
+                                    <div class="flex-shrink-0 align-self-center ">
+                                        <div class="dropdown">
+                                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                                                <li>
+                                                    <a class="dropdown-item" data-bs-toggle="modal" href="#convert_referral_balance">
+                                                        <i class="bx bx-repeat"></i>
+                                                        Convert Balance
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
 

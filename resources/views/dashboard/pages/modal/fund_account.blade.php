@@ -139,3 +139,43 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="convert_referral_balance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Convert To an account
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row g-3" id="convertReferralBalance" action="{{route('user.account.convert.referral')}}"
+                      method="post">
+                    <div class="col-md-12 mt-2">
+                        <label for="inputEmail4" class="form-label">Amount</label>
+                        <input type="number" name="amount" step="0.01" class="form-control" id="inputEmail4"
+                               required/>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck"
+                                   required>
+                            <label class="form-check-label" for="gridCheck">
+                                I acknowledge that funds converted are non-refundable.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="default-btn submit rounded-pill">Convert Funds</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

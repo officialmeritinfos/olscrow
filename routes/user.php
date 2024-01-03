@@ -20,6 +20,8 @@ Route::post('account/fund/main/escort',[Account::class,'processAccountFunding'])
     ->name('user.account.fund');
 Route::post('account/convert/main/escort',[Account::class,'convertMainBalance'])
     ->name('user.account.convert');
+Route::post('account/convert/referral/main',[Account::class,'convertReferralBalance'])
+    ->name('user.account.convert.referral');
 /*======================== ORDER ROUTE =====================*/
 Route::get('orders/index',[Orders::class,'landingPage'])
     ->name('user.orders');
@@ -110,6 +112,8 @@ Route::get('profile/addons/index',[Profile::class,'profileAddon'])
     ->name('user.addons');//addon landing page
 Route::post('profile/addon/featured/enroll',[Profile::class,'enrollInFeatured'])
     ->name('user.addon.featured.enroll');//enroll in an addon
+Route::get('user/referrals',[Profile::class,'referrals'])
+    ->name('user.referrals');//user referral
 /*========================CHAT ROOM ROUTE ==============================================*/
 Route::get('chats/index',[ChatController::class,'landingPage'])
     ->name('user.chats');

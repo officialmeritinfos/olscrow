@@ -9,6 +9,7 @@ use App\Models\Email;
 use App\Models\Fiat;
 use App\Models\GeneralSetting;
 use App\Models\User;
+use App\Notifications\CustomNotification;
 use App\Notifications\EmailVerification;
 use App\Notifications\WelcomeEmail;
 use App\Traits\Regular;
@@ -27,7 +28,7 @@ class Register extends BaseController
 {
     use Regular;
     //landing page
-    public function landingPage()
+    public function landingPage(Request $request)
     {
         $web = GeneralSetting::find(1);
 
@@ -35,7 +36,9 @@ class Register extends BaseController
             'siteName'=>$web->name,
             'pageName'=>'Account Registration',
             'web'=>$web,
-            'countries'=>Country::get()
+            'countries'=>Country::get(),
+            'referral'=>$request->get('ref'),
+            'refType'=>$request->get('type')
         ]);
     }
     //process registration
@@ -54,7 +57,9 @@ class Register extends BaseController
                 'password' => ['required', Password::min(8)->uncompromised(1)],
                 'password_confirmation'=>['required','same:password'],
                 'gender'=>['required','alpha'],
-                'dob'=>['required','date','before:-18 years']
+                'dob'=>['required','date','before:-18 years'],
+                'referral'=>['nullable','string','exists:user,username'],
+                'refType'=>['nullable','numeric','in:1,2']
             ])->stopOnFirstFailure();
 
             if ($validator->fails()){
@@ -62,6 +67,17 @@ class Register extends BaseController
             }
 
             $input = $validator->validated();
+
+            //check if the referral type is valid
+            if ($request->filled('referral')){
+                $referrer = User::where('username',$input['referral'])->where('refType',$input['refType'])->first();
+                if (empty($referrer)){
+                    return $this->sendError('referral.error',['error'=>'Invalid Referral']);
+                }
+                $refBy = $referrer->id;
+            }else{
+                $refBy=0;
+            }
 
             $reference = $this->generateUniqueId('users','reference');
             //check if the selected country is valid
@@ -84,7 +100,9 @@ class Register extends BaseController
                 'registrationIp'=>$request->ip(),
                 'accountType'=>$input['accountType'],
                 'gender'=>$input['gender'],
-                'dateOfBirth'=>strtotime($input['dob'])
+                'dateOfBirth'=>strtotime($input['dob']),
+                'referral'=>$refBy,
+                'referralType'=>$input['refType']
             ];
             //create user
             $user = User::create($dataUser);
@@ -102,6 +120,11 @@ class Register extends BaseController
                     $user->notify(new EmailVerification($user));
                     $urlTo =route('email-verification');
                     $message = 'A code has been sent to your email. Verify your email to proceed.';
+                }
+                //notify referral
+                if ($refBy!=0){
+                    $mess = "A new sign-up was recorded on ".$web->name." using your referral link. You will receive your commission once user completes a transaction.";
+                    $referrer->notify(new CustomNotification($referrer,$mess,'New Referral Signup'));
                 }
                 return $this->sendResponse([
                     'redirectTo'=>$urlTo

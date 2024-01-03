@@ -1,7 +1,7 @@
 @extends('dashboard.layout.base')
 @section('content')
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-bottom: 5rem;">
 
         @if($user->accountType==1)
             <div class="card shadow mb-3">
@@ -83,7 +83,7 @@
                 <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
                     <div class="flex-grow-1 mb-3 mb-md-0">
                         <h5 class="card-title">
-                            <i class="ri-gift-2-fill"></i> Account Gallery
+                            <i class="ri-gallery-fill"></i> Account Gallery
                         </h5>
                         <p class="card-text" style="word-break: break-word;">
                             Upload photos for your potential clients
@@ -140,6 +140,21 @@
                         </p>
                     </div>
                     <a href="{{route('user.security')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                        Manage
+                    </a>
+                </div>
+            </div>
+            <div class="card shadow mb-3">
+                <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="flex-grow-1 mb-3 mb-md-0">
+                        <h5 class="card-title">
+                            <i class="ri-gift-2-fill"></i> Referrals
+                        </h5>
+                        <p class="card-text" style="word-break: break-word;">
+                            Refer your colleagues/friends and earn 5% of our transaction charges on their successful bookings
+                        </p>
+                    </div>
+                    <a href="{{route('user.referrals')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
                         Manage
                     </a>
                 </div>

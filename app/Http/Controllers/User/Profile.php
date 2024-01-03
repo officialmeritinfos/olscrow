@@ -910,4 +910,25 @@ class Profile extends BaseController
             return $this->sendError('addon.featured.enrollment.error',['error'=>'Internal Server error']);
         }
     }
+
+    //user referral
+    public function referrals()
+    {
+        $user = Auth::user();
+        if ($user->accountType==1){
+            $type ='Escort';
+        }else{
+            $type = 'User';
+        }
+        $web = GeneralSetting::find(1);
+
+        return view('dashboard.pages.profile.referrals')->with([
+            'web'=>$web,
+            'pageName'=>'Referral Programme',
+            'type'=>$type,
+            'siteName'=>$web->name,
+            'user'=>$user,
+            'referrals'=>User::where('referral',$user->id)->paginate(10)
+        ]);
+    }
 }

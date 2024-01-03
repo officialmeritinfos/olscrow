@@ -679,10 +679,13 @@ class Bookings extends BaseController
                 'purpose'=>'Payment for Tfare for booking '.$booking->reference,'orderId'=>$booking->id,'status'=>1,'type'=>1
             ]);
 
+            //handle referral
+            $referral = $this->handleReferralCrediting($escort,$booking->charge,$booking);
 
             $escort->save();
             $booking->approvedByUser=1;
             $booking->status=1;
+            $booking->referralAmount=$referral;
             $booking->save();
 
             //notify booker

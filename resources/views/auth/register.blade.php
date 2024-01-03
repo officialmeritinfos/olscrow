@@ -61,14 +61,14 @@
                 <div class="row">
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Name<sup class="text-danger">*</sup></label>
                             <input class="form-control" type="text" name="name"
                                    placeholder="Enter your legal name">
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Username</label>
+                            <label>Username<sup class="text-danger">*</sup></label>
                             <input class="form-control" type="text" name="username"
                                    placeholder="This is your username">
                         </div>
@@ -76,14 +76,14 @@
 
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Email<sup class="text-danger">*</sup></label>
                             <input class="form-control" type="email" name="email" placeholder="Enter your email">
                         </div>
                     </div>
 
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Account Type</label>
+                            <label>Account Type<sup class="text-danger">*</sup></label>
                             <select class="form-control" name="accountType">
                                 <option value="">Select account Type</option>
                                 <option value="1">Escort</option>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Country</label>
+                            <label>Country<sup class="text-danger">*</sup></label>
                             <select class="form-control" name="country">
                                 <option value="">Select country</option>
                                 @foreach($countries as $country)
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Gender</label>
+                            <label>Gender<sup class="text-danger">*</sup></label>
                             <select class="form-control" name="gender">
                                 <option value="">Select your gender</option>
                                 <option value="male">Male</option>
@@ -114,23 +114,44 @@
                     </div>
                     <div class="col-md-12 col-12">
                         <div class="form-group">
-                            <label>Date of Birth</label>
+                            <label>Date of Birth<sup class="text-danger">*</sup></label>
                             <input class="form-control" type="date" name="dob"/>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Password<sup class="text-danger">*</sup></label>
                             <input class="form-control" type="password" name="password" placeholder="Enter your password">
                         </div>
                     </div>
 
                     <div class="col-md-6 col-12">
                         <div class="form-group">
-                            <label>Repeat password</label>
+                            <label>Repeat password<sup class="text-danger">*</sup></label>
                             <input class="form-control" type="password" name="password_confirmation"
                                    placeholder="Please repeat your password">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Referral<sup>(optional)</sup></label>
+                            <input class="form-control" type="text" name="referral" placeholder="Enter your referral"
+                            value="{{$referral}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Referral Type<sup>(optional)</sup></label>
+                            <select class="form-control" name="refType">
+                                @if($refType=='referral')
+                                    <option value="1" selected>Referral</option>
+                                    <option value="2">Affiliate</option>
+                                @else
+                                    <option value="1">Referral</option>
+                                    <option value="2" selected>Affiliate</option>
+                                @endif
+                            </select>
                         </div>
                     </div>
 
