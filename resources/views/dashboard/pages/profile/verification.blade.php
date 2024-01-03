@@ -31,73 +31,143 @@
                 </div>
             </div>
         @else
-            <div class="submit-property-area col-md-12 mx-auto">
-                <div class="container-fluid">
-                    <form class="submit-property-form" method="post" action="{{route('user.verification.submit')}}"
-                          enctype="multipart/form-data" id="editOrder">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-md-6 mx-auto">
-                                        <div class="form-group">
-                                            <label>Video Sample</label>
-                                            <div class="file-upload">
-                                                <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px;width: auto;">
+            @if($user->accountType==1)
+                <div class="submit-property-area col-md-12 mx-auto">
+                    <div class="container-fluid">
+                        <form class="submit-property-form" method="post" action="{{route('user.verification.submit')}}"
+                              enctype="multipart/form-data" id="editOrder">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Video Sample</label>
+                                                <div class="file-upload">
+                                                    <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px;width: auto;">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 mx-auto">
-                                        <div class="form-group">
-                                            <label>Live Video<i class="ri-information-fill" data-bs-toggle="tooltip"
-                                                title="Make a short vide pronouncing the word BURST"></i> </label>
-                                            <div class="file-upload">
-                                                <input type="file" name="liveVideo" accept="video/*" id="file" class="inputfile">
-                                                <label class="upload" for="file">
-                                                    <i class="ri-video-add-fill"></i>
-                                                    Upload Live Video
-                                                </label>
-                                            </div>
-                                            <small>Make a short vide pronouncing the word <b>BURST</b></small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mx-auto">
-                                        <div class="form-group">
-                                            <label>Image Sample</label>
-                                            <div class="file-upload">
-                                                <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px; width: auto;">
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Live Video<i class="ri-information-fill" data-bs-toggle="tooltip"
+                                                                    title="Make a short vide pronouncing the word BURST"></i> </label>
+                                                <div class="file-upload">
+                                                    <input type="file" name="liveVideo" accept="video/*" id="file" class="inputfile">
+                                                    <label class="upload" for="file">
+                                                        <i class="ri-video-add-fill"></i>
+                                                        Upload Live Video
+                                                    </label>
+                                                </div>
+                                                <small>Make a short vide pronouncing the word <b>BURST</b></small>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 mx-auto">
-                                        <div class="form-group">
-                                            <label>Live Image</label>
-                                            <div class="file-upload">
-                                                <input type="file" name="liveImage" accept="image/*" id="image" class="inputfile">
-                                                <label class="upload" for="image">
-                                                    <i class="ri-image-add-fill"></i>
-                                                    Upload Live Image
-                                                </label>
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Image Sample</label>
+                                                <div class="file-upload">
+                                                    <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px; width: auto;">
+                                                </div>
                                             </div>
-                                            <small>
-                                                On a plain paper, write the word <b>{{$siteName}}</b>. Below the word, write:
-                                                <b>MY USERNAME IS {{$user->username}}</b>. Hold the paper and snap yourself while
-                                                holding the picture. Ensure that the image is clear enough.
-                                            </small>
+                                        </div>
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Live Image</label>
+                                                <div class="file-upload">
+                                                    <input type="file" name="liveImage" accept="image/*" id="image" class="inputfile">
+                                                    <label class="upload" for="image">
+                                                        <i class="ri-image-add-fill"></i>
+                                                        Upload Live Image
+                                                    </label>
+                                                </div>
+                                                <small>
+                                                    On a plain paper, write the word <b>{{$siteName}}</b>. Below the word, write:
+                                                    <b>MY USERNAME IS {{$user->username}}</b>. Hold the paper and snap yourself while
+                                                    holding the picture. Ensure that the image is clear enough.
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-                            <div class="col-lg-12 text-center">
-                                <button type="submit" class="default-btn me-3 submit">
-                                    Upload
-                                </button>
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="default-btn me-3 submit">
+                                        Upload
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="submit-property-area col-md-12 mx-auto">
+                    <div class="container-fluid">
+                        <form class="submit-property-form" method="post" action="{{route('user.verification.user.submit')}}"
+                              enctype="multipart/form-data" id="editOrder">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Video Sample</label>
+                                                <div class="file-upload">
+                                                    <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px;width: auto;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Live Video<i class="ri-information-fill" data-bs-toggle="tooltip"
+                                                                    title="Make a short vide pronouncing the word BURST"></i> </label>
+                                                <div class="file-upload">
+                                                    <input type="file" name="liveVideo" accept="video/*" id="file" class="inputfile">
+                                                    <label class="upload" for="file">
+                                                        <i class="ri-video-add-fill"></i>
+                                                        Upload Live Video
+                                                    </label>
+                                                </div>
+                                                <small>Make a short vide pronouncing the word <b>BURST</b></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Image Sample</label>
+                                                <div class="file-upload">
+                                                    <img src="{{asset('dashboard/images/cover-img.jpg')}}" style="height: 140px; width: auto;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Live Image</label>
+                                                <div class="file-upload">
+                                                    <input type="file" name="liveImage" accept="image/*" id="image" class="inputfile">
+                                                    <label class="upload" for="image">
+                                                        <i class="ri-image-add-fill"></i>
+                                                        Upload Live Image
+                                                    </label>
+                                                </div>
+                                                <small>
+                                                    On a plain paper, write the word <b>{{$siteName}}</b>. Below the word, write:
+                                                    <b>MY USERNAME IS {{$user->username}}</b>. Hold the paper and snap yourself while
+                                                    holding the picture. Ensure that the image is clear enough.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="default-btn me-3 submit">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
         @endif
     </div>
 

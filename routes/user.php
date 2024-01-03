@@ -81,7 +81,9 @@ Route::get('fetch/state_city',[Profile::class,'fetchStateCity'])
 Route::get('profile/verification/index',[Profile::class,'escortVerification'])
     ->name('user.verification');
 Route::post('profile/verification/submit',[Profile::class,'processEscortVerification'])
-    ->name('user.verification.submit');//submit profile verification
+    ->name('user.verification.submit');//submit escort profile verification
+Route::post('profile/user-verification/submit',[Profile::class,'processUserVerification'])
+    ->name('user.verification.user.submit');//submit user profile verification
 Route::get('profile/security/index',[Profile::class,'securitySetting'])
     ->name('user.security');
 Route::post('profile/security/password',[Profile::class,'changePassword'])

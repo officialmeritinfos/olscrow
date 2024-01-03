@@ -40,11 +40,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">State :</th>
-                                    <td>{{$option->getStateById($user->state)->name}}</td>
+                                    <td>{{$option->getStateById($user->state)->name??'N/A'}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">City :</th>
-                                    <td>{{$option->getCityById($user->city)->name}}</td>
+                                    <td>{{$option->getCityById($user->city)->name??'N/A'}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Status :</th>

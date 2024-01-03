@@ -20,6 +20,7 @@ use App\Models\UserActivity;
 use App\Models\UserAddonEnrollment;
 use App\Models\UserFeature;
 use App\Models\UserSetting;
+use App\Models\UserVerification;
 use App\Notifications\CustomNotification;
 use App\Notifications\SendPushNotification;
 use App\Traits\Regular;
@@ -316,7 +317,7 @@ class Profile extends BaseController
 
         return view('dashboard.pages.profile.verification')->with([
             'web'=>$web,
-            'pageName'=>'Escort verification',
+            'pageName'=>'Profile verification',
             'siteName'=>$web->name,
             'user'=>$user,
             'countries'=>Country::where('status',1)->get()
@@ -362,6 +363,57 @@ class Profile extends BaseController
                     $message = "A new Escort verification was submitted on ".$web->name." by the escort ".$user->name.". Review immediately";
                     $admin->notify(new CustomNotification($admin,$message,'New Escort verification document received'));
                     $admin->notify(new SendPushNotification($admin,'New Escort verification document received',$message));
+                }
+                return $this->sendResponse([
+                    'redirectTo'=>url()->previous()
+                ],'Verification document submitted.');
+            }else{
+                return $this->sendError('verification.error',['error'=>'Something went wrong']);
+            }
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('location.error',['error'=>'Internal Server error']);
+        }
+    }
+    public function processUserVerification(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'liveVideo' => ['required', 'mimetypes:video/avi,video/mpeg,video/quicktime,video/mp4,video/3gpp,video/x-msvideo,video/webm','max:20840'],
+                'liveImage' => ['required', 'image','max:1024'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+
+            //upload the video
+            $videoResult = $this->uploadGoogle($request->file('liveVideo'));
+            $video  = $videoResult['link'];
+            //upload image - we will watermark this image
+            $imageResult = $this->uploadGoogle($request->file('liveImage'));
+            $image  = $imageResult['link'];
+
+            $verification = UserVerification::create([
+                'user'=>$user->id,'liveVideo'=>$video,
+                'photo'=>$image,'status'=>4
+            ]);
+            if (!empty($verification)){
+                $user->isVerified=4;
+                $user->save();
+                UserActivity::create([
+                    'user'=>$user->id,'title'=>'KYC Submitted',
+                    'content'=>'Account KYC was submitted from account via IP: '.$request->ip()
+                ]);
+                //send mail to admin
+                $admin = User::where('isAdmin',1)->first();
+                if (!empty($admin)){
+                    $message = "A new User verification was submitted on ".$web->name." by the escort ".$user->name.". Review immediately";
+                    $admin->notify(new CustomNotification($admin,$message,'New User verification document received'));
+                    $admin->notify(new SendPushNotification($admin,'New User verification document received',$message));
                 }
                 return $this->sendResponse([
                     'redirectTo'=>url()->previous()
