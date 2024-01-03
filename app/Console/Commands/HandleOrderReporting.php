@@ -48,6 +48,11 @@ class HandleOrderReporting extends Command
             ->where('timeToAppeal','<=',time())->get();
         if ($bookings->count()>0){
             foreach ($bookings as $booking) {
+                $report = BookingReport::where('bookingId',$booking->id)->where('status',4)->where('timeToAppeal','<=',time())->first();
+
+                $report->status=5;
+                $report->save();
+
                 $message="An escort booking with ID ".$booking->reference." which was reported by the booker has not been
                 appealed by the Escort and time is up. your attention is needed to take a decision about this.";
                 $this->sendMailToAdmin('Booking Report Needs Attention',$message);
@@ -64,6 +69,8 @@ class HandleOrderReporting extends Command
 
                 $report = BookingReport::where('bookingId',$booking->id)->where('status',4)->where('timeSupportIntervene','<=',time())->first();
                 if (!empty($report)){
+                    $report->status=5;
+                    $report->save();
                     $message="An escort booking with ID ".$booking->reference." which was reported by the booker and was
                 appealed by the Escort needs your attention as both parties have failed to reach a consensus. Report ID is ".$report->reference;
                     $this->sendMailToAdmin('Booking Report Needs Attention',$message);

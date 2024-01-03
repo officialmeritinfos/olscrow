@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Webhooks;
 
 use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserDeposit;
 use App\Models\UserTransaction;
@@ -83,6 +84,11 @@ class FlutterwaveTransactions extends Controller
                 UserTransaction::create([
                     'user'=>$user->id,'reference'=>$this->generateUniqueReference('user_transactions','reference',20),
                     'amount'=>$amount,'currency'=>$data['currency'],'type'=>1,'transactionId'=>$deposit->id,
+                    'status'=>1
+                ]);
+                Transaction::create([
+                    'user'=>$user->id,'reference'=>$this->generateUniqueReference('transactions','reference',20),
+                    'amount'=>$amount,'currency'=>$data['currency'],'type'=>1,'purpose'=>"Account funding",
                     'status'=>1
                 ]);
 
