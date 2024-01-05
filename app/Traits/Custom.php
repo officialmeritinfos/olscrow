@@ -19,9 +19,11 @@ use App\Models\Service;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
+use App\Models\UserBank;
 use App\Models\UserFeature;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Custom
@@ -106,5 +108,19 @@ class Custom
     public function getServiceById($id)
     {
         return Service::where('id',$id)->first();
+    }
+    //get user payout accounts
+    public function userPayoutAccounts($user)
+    {
+        if (strtoupper($user->countryCode)=='NGA'){
+            return UserBank::where('user',$user->id)->get();
+        }else{
+
+        }
+    }
+    //fetch a particular payout account
+    public function fetchPayoutAccountByReference($id)
+    {
+        return UserBank::where('reference',$id)->first();
     }
 }

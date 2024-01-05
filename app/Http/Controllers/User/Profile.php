@@ -15,17 +15,21 @@ use App\Models\GeneralSetting;
 use App\Models\Package;
 use App\Models\Service;
 use App\Models\State;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserActivity;
 use App\Models\UserAddonEnrollment;
+use App\Models\UserBank;
 use App\Models\UserFeature;
 use App\Models\UserSetting;
 use App\Models\UserVerification;
 use App\Notifications\CustomNotification;
 use App\Notifications\SendPushNotification;
+use App\Traits\Flutterwave;
 use App\Traits\Regular;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -931,4 +935,109 @@ class Profile extends BaseController
             'referrals'=>User::where('referral',$user->id)->paginate(10)
         ]);
     }
+    //payout account
+    public function payoutAccounts()
+    {
+        $user = Auth::user();
+        $web = GeneralSetting::find(1);
+
+        return view('dashboard.pages.profile.payout_accounts')->with([
+            'web'=>$web,
+            'pageName'=>'Payout Accounts',
+            'siteName'=>$web->name,
+            'user'=>$user,
+            'referrals'=>User::where('referral',$user->id)->paginate(10)
+        ]);
+    }
+    //add a beneficiary account
+    public function addPayoutAccount(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'password'=>['required','string','current_password:web',Password::min(8)->uncompromised(1)],
+                'otp'=>['required','numeric'],
+                'bank'=>['required','numeric'],
+                'accountNumber'=>['required','numeric'],
+                'isPrimary'=>['nullable','numeric'],
+            ],['current_password'=>'Current password is wrong'],['oldPassword'=>'Current Password'])->stopOnFirstFailure();
+
+            if ($validator->fails()) {
+                return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+            }
+            $input = $validator->validated();
+            //check the otp.
+            if ($user->otpExpires<time()){
+                return $this->sendError('authentication.error', ['error' => 'OTP has timed out.']);
+            }
+
+            if (!Hash::check($input['otp'],$user->otp)){
+                return $this->sendError('authentication.error', ['error' => 'Invalid OTP']);
+            }
+            $user->otp='';
+            $user->otpExpires='';
+            $user->save();
+
+            //check if account already exists
+            $exists = UserBank::where([
+                'bank'=>$input['bank'],
+                'accountNumber'=>$input['accountNumber'],
+                'user'=>$user->id
+            ])->first();
+
+            if (!empty($exists)){
+                return $this->sendError('payout.account.error',['error'=>'Payout account already exist']);
+            }
+
+            $reference = $this->generateUniqueReference('user_banks','reference',20);
+            //create the beneficiary
+            $client = new Flutterwave();
+            $response = $client->addBeneficiary([
+               'account_bank'=>$input['bank'],
+                'account_number'=>$input['accountNumber'],
+                'beneficiary_name'=>$user->name
+            ]);
+
+            if ($response->ok()){
+                $res = $response->json();
+                $data = $res['data'];
+
+                $bankName = $data['bank_name'];
+                $benId = $data['id'];
+                $accountName = $data['full_name'];
+            }else{
+                Log::info($response->json());
+                return $this->sendError('payout.account.error',['error'=>'Something went wrong registering beneficiary']);
+            }
+
+            $beneficiary = UserBank::create([
+                'user'=>$user->id,'bank'=>$input['bank'],
+                'bankName'=>$bankName,'accountNumber'=>$input['accountNumber'],
+                'reference'=>$reference,'benRef'=>$benId,
+                'accountName'=>$accountName
+            ]);
+
+            if (!empty($beneficiary)){
+
+
+                $message = 'A new payout account has been added to your account on '.$web->name;
+                UserActivity::create([
+                    'user'=>$user->id,'title'=>'New Payout account',
+                    'content'=>$message
+                ]);
+                //send notification
+                $user->notify(new SendPushNotification($user,'New Payout Account',$message));
+                return $this->sendResponse([
+                    'redirectTo'=>url()->previous()
+                ],'Beneficiary account successfully added.');
+            }
+            return $this->sendError('payout.account.error',['error'=>'We are unable to add beneficiary.']);
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('location.error',['error'=>'Internal Server error']);
+        }
+    }
+
 }

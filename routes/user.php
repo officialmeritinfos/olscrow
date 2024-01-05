@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('dashboard',[Dashboard::class,'landingPage'])
     ->name('user.dashboard');
+Route::post('dashboard/send-otp',[Dashboard::class,'sendOtp'])
+    ->name('user.send.otp')->middleware('throttle:5,1');
+Route::get('dashboard/fetch-banks',[Dashboard::class,'getCountryBanks'])
+    ->name('user.get.banks')->middleware('throttle:5,1');
 /*======================== ACCOUNT ROUTE =====================*/
 Route::get('account/index',[Account::class,'landingPage'])
     ->name('user.account');
@@ -22,6 +26,8 @@ Route::post('account/convert/main/escort',[Account::class,'convertMainBalance'])
     ->name('user.account.convert');
 Route::post('account/convert/referral/main',[Account::class,'convertReferralBalance'])
     ->name('user.account.convert.referral');
+Route::post('account/withdraw/main',[Account::class,'processAccountWithdrawal'])
+    ->name('user.account.withdraw');
 /*======================== ORDER ROUTE =====================*/
 Route::get('orders/index',[Orders::class,'landingPage'])
     ->name('user.orders');
@@ -114,6 +120,10 @@ Route::post('profile/addon/featured/enroll',[Profile::class,'enrollInFeatured'])
     ->name('user.addon.featured.enroll');//enroll in an addon
 Route::get('user/referrals',[Profile::class,'referrals'])
     ->name('user.referrals');//user referral
+Route::get('user/payout-accounts',[Profile::class,'payoutAccounts'])
+    ->name('user.payout-accounts');//user payout accounts
+Route::post('profile/payout-account/add',[Profile::class,'addPayoutAccount'])
+    ->name('user.payout.account.add');//add a payout account
 /*========================CHAT ROOM ROUTE ==============================================*/
 Route::get('chats/index',[ChatController::class,'landingPage'])
     ->name('user.chats');

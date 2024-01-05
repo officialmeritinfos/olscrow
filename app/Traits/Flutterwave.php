@@ -34,4 +34,32 @@ class Flutterwave
             "Authorization" =>'Bearer '.$this->secKey
         ])->get($this->url.'transactions'.$id.'/verify');
     }
+    //initiate withdrawal
+    public function initiateWithdrawal($data): PromiseInterface|Response
+    {
+        return Http::withHeaders([
+            "Authorization" =>'Bearer '.$this->secKey
+        ])->post($this->url.'transfers',$data);
+    }
+    //add beneficiary
+    public function addBeneficiary($data): PromiseInterface|Response
+    {
+        return Http::withHeaders([
+            "Authorization" =>'Bearer '.$this->secKey
+        ])->post($this->url.'beneficiaries',$data);
+    }
+    //verify account number
+    public function verifyAccountNumber($data): PromiseInterface|Response
+    {
+        return Http::withHeaders([
+            "Authorization" =>'Bearer '.$this->secKey
+        ])->post($this->url.'accounts/resolve',$data);
+    }
+    //get banks in a country
+    public function fetchBank($country): PromiseInterface|Response
+    {
+        return Http::withHeaders([
+            "Authorization" =>'Bearer '.$this->secKey
+        ])->get($this->url.'banks/'.$country);
+    }
 }
