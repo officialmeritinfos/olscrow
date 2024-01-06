@@ -128,7 +128,7 @@
                                     {{$order->currency}} {{number_format($order->amount,2)}}
                                 </td>
                                 <td>
-                                    {{date('FD, d M Y H:i:s',strtotime($order->created_at))}}
+                                    {{date('F, d M Y H:i:s',strtotime($order->created_at))}}
                                 </td>
 
                             </tr>
