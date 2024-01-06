@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\UpdateFiatRates;
 use App\Console\Commands\CancelBookings;
 use App\Console\Commands\HandleOrderReporting;
+use App\Console\Commands\UserRenewalCron;
 
 class Kernel extends ConsoleKernel
 {
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
          $schedule->command('update:fiatRates')->everyFifteenMinutes();
          $schedule->command('cancel:bookings')->everyMinute();
          $schedule->command('handle:orderReporting')->everyMinute();
+         $schedule->command('user:renewalCron')->everyMinute();
 
     }
 

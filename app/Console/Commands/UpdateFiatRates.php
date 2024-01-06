@@ -21,7 +21,7 @@ class UpdateFiatRates extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update Fiat Rate';
 
     /**
      * Execute the console command.

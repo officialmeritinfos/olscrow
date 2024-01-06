@@ -704,9 +704,10 @@ class Profile extends BaseController
             }
             $subscription = EscortSubscriptionPayment::create([
                 'user'=>$user->id,'reference'=>$this->generateUniqueReference('escort_subscription_payments','reference',20),
-                'amount'=>$amountToCharge,'currency'=>$user->mainCurrency,'balanceAfter'=>$balance-$amountToCharge
+                'amount'=>$amountToCharge,'currency'=>$user->mainCurrency,'balanceAfter'=>$balance-$amountToCharge,'package'=>$package->id
             ]);
             if (!empty($subscription)){
+                $user->enrollmentType=$input['paymentMethod'];
                 $user->isPublic=1;
                 $user->renewSubscription=1;
                 $message = 'Your subscription to '.$package->name.' was successful and account now public..';
