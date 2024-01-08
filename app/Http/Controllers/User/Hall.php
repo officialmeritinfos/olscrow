@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\EscortPhoto;
 use App\Models\EscortProfile;
+use App\Models\EscortReview;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\UserBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
-class Hall extends Controller
+class Hall extends BaseController
 {
     //landing page
     public function landingPage()
@@ -71,6 +78,53 @@ class Hall extends Controller
                 'user'=>$escort->id,
                 'status'=>1
             ])->where('personalized','!=',1)->get(),
+            'photos'=>EscortPhoto::where('user',$escort->id)->paginate(15),
+            'reviews'=>EscortReview::where('user',$escort->id)->paginate(15)
         ]);
+    }
+    //post a review of escort
+    public function reviewEscort(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $web = GeneralSetting::find(1);
+            $validator = Validator::make($request->all(), [
+                'escort' => ['required', 'string',Rule::exists('users','reference')->where('accountType',1)],
+                'content' => ['required', 'string'],
+            ])->stopOnFirstFailure();
+
+            if ($validator->fails()) return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
+
+            $input = $validator->validated();
+            //check if there is a booking between the two
+            $escort = User::where([
+                'reference'=>$input['escort'],'accountType'=>1
+            ])->first();
+
+            if (empty($escort)){
+                return $this->sendError('escort.profile.error',['error'=>'Escort not found']);
+            }
+            if ($escort->id == $user->id){
+                return $this->sendError('escort.profile.error',['error'=>'You cannot write a review for yourself']);
+            }
+            $hasBooking = UserBooking::where([
+                'user'=>$user->id,'escortId'=>$escort->id,'status'=>1
+            ])->get();
+            if ($hasBooking->count()<1){
+                return $this->sendError('review.error',['error'=>'You have not concluded a booking with escort and therefore cannot write a review of service']);
+            }
+
+            EscortReview::create([
+                'reviewer'=>$user->id,'user'=>$escort->id,'content'=>$input['content']
+            ]);
+
+            return $this->sendResponse([
+                'redirectTo'=>url()->previous()
+            ],'Review sent.');
+
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on '.$exception->getLine());
+            return $this->sendError('review.error',['error'=>'Internal Server error']);
+        }
     }
 }

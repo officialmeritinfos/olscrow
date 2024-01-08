@@ -147,6 +147,8 @@ Route::get('hall/escort/{username}/reviews',[Hall::class,'escortDetail'])
     ->name('user.escort.reviews');
 Route::get('hall/escort/{username}/gallery',[Hall::class,'escortDetail'])
     ->name('user.escort.gallery');
+Route::post('hall/escort/review',[Hall::class,'reviewEscort'])
+    ->name('user.hall.escort.review');
 //Booking
 Route::get('booking/{package}/start',[Bookings::class,'startBookingProcess'])
     ->name('user.booking.start');
