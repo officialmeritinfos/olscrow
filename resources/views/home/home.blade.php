@@ -10,7 +10,7 @@
                 <div class="col-lg-5 col-md-7 col-xs-8 col-10" data-aos-duration="1000" data-aos="fade-left" data-aos-delay="300">
                     <div class="home-2_hero-image-block">
                         <div class="home-2_hero-image">
-                            <img src="{{asset('home/image/home-2/hero-image.png')}}" alt="hero image" />
+                            <img src="{{asset('home/image/home-2/hero-image.jpg')}}" alt="hero image" />
                             <div class="home-2_hero-image-shape">
                                 <img src="{{asset('home/image/home-2/hero-image-shape.svg')}}" alt="hero shape" />
                             </div>
