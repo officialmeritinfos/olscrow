@@ -319,7 +319,7 @@
             <div class="row row--custom ">
                 <div class="offset-xl-1 col-xl-5 col-lg-5 col-auto" data-aos-duration="1000" data-aos="fade-left">
                     <div class="home-2_integration-image content-image--mobile-width">
-                        <img src="{{asset('home/image/home-2/integration-image.png')}}" alt="alternative text">
+                        <img src="{{asset('home/image/home-2/faces.jpg')}}" alt="alternative text">
                     </div>
                 </div>
                 <div class=" col-xl-6 col-lg-7 col-md-10 col-auto" data-aos-duration="1000" data-aos="fade-right">

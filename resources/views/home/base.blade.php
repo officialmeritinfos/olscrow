@@ -203,23 +203,23 @@
                         </div>
                         <ul class="list-social list-social--hvr-black">
                             <li>
-                                <a href="#">
-                                    <i class="fa-brands fa-facebook-f"></i>
+                                <a href="https://t.me/oloscrow" target="_blank">
+                                    <i class="fa-brands fa-telegram"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://twitter.com/oloscrow" target="_blank">
                                     <i class="fa-brands fa-twitter"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://instagram.com/oloscrowconnect" target="_blank">
                                     <i class="fa-brands fa-instagram"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="fa-brands fa-github"></i>
+                                    <i class="fa-brands fa-whatsapp"></i>
                                 </a>
                             </li>
                         </ul>
