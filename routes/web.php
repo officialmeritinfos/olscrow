@@ -30,6 +30,8 @@ Route::get('legal/reports',[Home::class,'reportTypes'])->name('legal.reports');
 Route::get('legal/escort/terms',[Home::class,'escortTerm'])->name('legal.escort.terms');
 Route::get('legal/client/terms',[Home::class,'clientTerms'])->name('legal.client.terms');
 Route::get('legal/privacy',[Home::class,'privacyPolicy'])->name('legal.privacy');
+Route::get('legal/community-guide',[Home::class,'communityGuide'])->name('legal.community-guide');
+Route::get('legal/modern-day-slavery',[Home::class,'modernDaySlavery'])->name('legal.modern-day-slavery');
 
 Route::any('/push',[PushController::class,'store'])->name('push.store');
 Route::get('/push/test',[PushController::class,'push'])->name('push');

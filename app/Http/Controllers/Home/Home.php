@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
+use App\Models\Fiat;
 use App\Models\GeneralSetting;
 use App\Models\Package;
 use Illuminate\Http\Request;
@@ -87,7 +88,8 @@ class Home extends BaseController
         return view('home.escort_term')->with([
             'web'=>$web,
             'siteName'=>$web->name,
-            'pageName'=>'Escort Terms & Conditions'
+            'pageName'=>'Escort Terms & Conditions',
+            'fiats'=>Fiat::where('status',1)->get()
         ]);
     }
     //client terms page
@@ -98,7 +100,8 @@ class Home extends BaseController
         return view('home.client_terms')->with([
             'web'=>$web,
             'siteName'=>$web->name,
-            'pageName'=>'Client Terms & Conditions'
+            'pageName'=>'Client Terms & Conditions',
+            'fiats'=>Fiat::where('status',1)->get()
         ]);
     }
     //privacy policy page
@@ -132,6 +135,28 @@ class Home extends BaseController
             'web'=>$web,
             'siteName'=>$web->name,
             'pageName'=>'Escort Guide'
+        ]);
+    }
+    //community Guide page
+    public function communityGuide()
+    {
+        $web = GeneralSetting::find(1);
+
+        return view('home.communit_guideline')->with([
+            'web'=>$web,
+            'siteName'=>$web->name,
+            'pageName'=>'Community Guideline'
+        ]);
+    }
+    //Modern Day Slavery page
+    public function modernDaySlavery()
+    {
+        $web = GeneralSetting::find(1);
+
+        return view('home.communit_guideline')->with([
+            'web'=>$web,
+            'siteName'=>$web->name,
+            'pageName'=>'Modern Day Slavery Awareness: Understanding Our Role'
         ]);
     }
 }

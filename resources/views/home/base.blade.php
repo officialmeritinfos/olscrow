@@ -93,14 +93,24 @@
                                                 <span class="menu-item-text">Client Terms</span>
                                             </a>
                                         </li>
-                                        <li class="sub-menu_item">
-                                            <a href="{{route('home.escort.guide')}}">
-                                                <span class="menu-item-text">Escort Guide</span>
-                                            </a>
-                                        </li>
+{{--                                        <li class="sub-menu_item">--}}
+{{--                                            <a href="{{route('home.escort.guide')}}">--}}
+{{--                                                <span class="menu-item-text">Escort Guide</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
                                         <li class="sub-menu_item">
                                             <a href="{{route('home.faq')}}">
                                                 <span class="menu-item-text">FAQs</span>
+                                            </a>
+                                        </li>
+                                        <li class="sub-menu_item">
+                                            <a href="{{route('legal.community-guide')}}">
+                                                <span class="menu-item-text">Community Guide</span>
+                                            </a>
+                                        </li>
+                                        <li class="sub-menu_item">
+                                            <a href="{{route('legal.modern-day-slavery')}}">
+                                                <span class="menu-item-text">Modern Day Slavery</span>
                                             </a>
                                         </li>
 
