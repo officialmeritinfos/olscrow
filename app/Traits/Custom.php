@@ -20,6 +20,7 @@ use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
 use App\Models\UserBank;
+use App\Models\UserBooking;
 use App\Models\UserFeature;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
@@ -122,5 +123,15 @@ class Custom
     public function fetchPayoutAccountByReference($id)
     {
         return UserBank::where('reference',$id)->first();
+    }
+    //total escorts
+    public function totalActiveEscorts()
+    {
+        return User::where('accountType',1)->where('status',1)->get()->count();
+    }
+    //total transactions
+    public function completedBooking()
+    {
+        return UserBooking::where('status',1)->get()->count();
     }
 }
