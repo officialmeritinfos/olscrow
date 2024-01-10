@@ -218,7 +218,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://whatsapp.com/channel/0029VaK10Jr0QeamTg5uvc2h " target="_blank">
                                     <i class="fa-brands fa-whatsapp"></i>
                                 </a>
                             </li>
