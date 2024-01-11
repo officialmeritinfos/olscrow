@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\GeneralSetting;
+use App\Models\UserBooking;
 use App\Notifications\CustomNotification;
 use App\Traits\Flutterwave;
 use App\Traits\Regular;
@@ -26,8 +27,10 @@ class Dashboard extends BaseController
         $user = Auth::user();
         if ($user->accountType==1){
             $type ='Escort';
+            $bookings = UserBooking::where('escortId',$user->id)->orderBy('id','desc')->limit(10)->get();
         }else{
             $type = 'User';
+            $bookings=UserBooking::where('user',$user->id)->orderBy('id','desc')->limit(10)->get();
         }
         $web = GeneralSetting::find(1);
 
@@ -36,7 +39,8 @@ class Dashboard extends BaseController
             'pageName'=>$type.' Dashboard',
             'type'=>$type,
             'siteName'=>$web->name,
-            'user'=>$user
+            'user'=>$user,
+            'bookings'=>$bookings,
         ]);
     }
     //send otp
