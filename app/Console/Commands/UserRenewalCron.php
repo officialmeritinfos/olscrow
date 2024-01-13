@@ -42,6 +42,7 @@ class UserRenewalCron extends Command
     public function handle()
     {
         $this->handleUserSubscription();
+        $this->handleUserAddonFeature();
     }
     //handle user subscription
     public function handleUserSubscription()
@@ -155,6 +156,37 @@ class UserRenewalCron extends Command
                                 $user->notify(new CustomNotification($user, $message, 'Subscription Renewal'));
                             }
                         }
+                    }
+                }
+            }
+        }catch (\Exception $exception){
+            Log::info($exception->getMessage().' on line '.$exception->getLine().' in file '.$exception->getFile());
+        }
+    }
+    //handle user addon feature
+    public function handleUserAddonFeature()
+    {
+        try {
+
+            $web = GeneralSetting::find(1);
+
+            $users = User::where('hasAddon', 1)->where('accountType', 1)->where('featuredEnd', '<=', time())->get();
+            if ($users->count() > 0) {
+                foreach ($users as $user) {
+                    if ($user->fetaured==1){
+                        $user->fetaured=2;
+                        $user->hasAddon=2;
+                        $user->featuredEnd='';
+                        $user->save();
+
+                        $pushMessage = "Your subscription on " . $web->name . " to the Featured Addon has expired and account featuring deactivated. Please repurchase if you want to continue enjoying this feature. ";
+                        $user->notify(new SendPushNotification($user, 'Featured Addon Expired', $pushMessage));
+                        $message = "
+                            Your subscription to the Featured Addon on ".$web->name." has expired, and the premium addon turned off on your account.
+                            Please resubscribe if you want to continue enjoying the premium service or subscribe to a package to keep your featuring
+                            active.
+                        ";
+                        $user->notify(new CustomNotification($user, $message, 'Failed Subscription Renewal'));
                     }
                 }
             }

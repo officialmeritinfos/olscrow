@@ -891,6 +891,7 @@ class Profile extends BaseController
             if (!empty($enrollment)){
 
                 $user->fetaured=4;
+                $user->hasAddon=4;
                 $user->save();
 
                 UserActivity::create([
