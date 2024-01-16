@@ -72,6 +72,8 @@
                                 <strong>3.3 Cancellation:</strong> Clients may cancel bookings within the designated timeframe for a refund. Late cancellations may incur penalties.
                                 <br>
                                 <strong>3.4 No-Show Policy:</strong> Clients are expected to show up for confirmed bookings. Failure to do so without proper communication may result in penalties.
+                                <strong>3.5 Reports And Appeal judgement:</strong> We reserve the right to pass our judgement on a booking was reported - whether appealed by escort or not, and our
+                                judgement is and shall stand as long as both Escort and Client transacted using {{$siteName}}.
                             </p>
 
                             <p>
@@ -82,6 +84,9 @@
                                 <strong>4.2 Communication Etiquette:</strong> Timely and respectful communication is essential. Clients should provide clear expectations and preferences.
                                 <br>
                                 <strong>4.3 No Discrimination:</strong> Discrimination or harassment based on race, gender, religion, or any other criteria is strictly prohibited.
+                                <strong>4.4 Offline Transactions:</strong> Transactions not completed on {{$siteName}} will not be of our concern. In essence, if you collect an escort's
+                                contact details, and make payments off {{$siteName}} and Escort fails to show up, we will not aid in anyway to recover your money; and your rating of such
+                                escort will be deleted from the platform.<br/><b>OFFLINE BOOKING IS AT CLIENT'S OWN RISK.</b>
                             </p>
 
                             <p>
@@ -92,6 +97,7 @@
                                 <strong>5.2 Escort Transportation:</strong> Clients are responsible for transportation fare and agree to pay if included as part of the service. {{$siteName}} is not responsible for disputes related to transportation fare.
                                 <br>
                                 <strong>5.3 Legal Compliance:</strong> Clients must comply with all local laws and regulations while using {{$siteName}} services.
+                                <strong>5.4 {{$siteName}} Rules:</strong> Clients must comply with our rules at all time.
                             </p>
 
                             <p>

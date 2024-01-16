@@ -16,6 +16,7 @@ use App\Models\EscortReview;
 use App\Models\Fiat;
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\StaffRole;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserActivity;
@@ -205,5 +206,10 @@ class Custom
     public function userTotalBooking($user)
     {
         return UserBooking::where('user',$user->id)->get()->count();
+    }
+    //fetch role
+    public function fetchRole($id)
+    {
+        return StaffRole::where('id',$id)->first();
     }
 }

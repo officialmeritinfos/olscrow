@@ -81,6 +81,15 @@
                 </a>
             </li>
 
+            @if($user->isStaff==1)
+                <li>
+                    <a href="{{route('staff.dashboard')}}" class="box-style">
+                        <i class="ri-toggle-fill"></i>
+                        <span class="menu-title">Switch To Staff</span>
+                    </a>
+                </li>
+            @endif
+
         </ul>
 
 
