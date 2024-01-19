@@ -40,12 +40,12 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.users.escorts')}}">
                             <span class="menu-title">Escorts</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.users.clients')}}">
                             <span class="menu-title">Clients</span>
                         </a>
                     </li>

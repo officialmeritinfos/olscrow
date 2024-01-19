@@ -68,6 +68,8 @@ return new class extends Migration
             $table->string('otpExpires', 100)->nullable();
             $table->string('numberRetry', 100)->default('0');
             $table->string('nextRetry', 100)->default('0');
+            $table->integer('setPin')->default(2);
+            $table->string('accountPin',200)->nullable();
             $table->integer('hasAddon')->default(2);
             $table->softDeletes();
             $table->timestamps();

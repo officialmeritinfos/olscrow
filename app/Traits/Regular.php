@@ -418,4 +418,14 @@ trait Regular
             return 0;
         }
     }
+    //create staff activity
+    public function createStaffActivity($title,$content,$user)
+    {
+        UserActivity::create([
+            'user'=> $user->id,
+            'title'=>$title,
+            'content'=>$content,
+            'isStaff'=>1
+        ]);
+    }
 }

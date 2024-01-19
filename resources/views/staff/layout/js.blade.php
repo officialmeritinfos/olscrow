@@ -118,3 +118,69 @@
     });
 
 </script>
+
+@if($user->setPin!=1)
+    <!-- Modal -->
+    <div class="modal fade" id="set_account_pin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Add money to your account
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="row g-3" id="setPin" action="{{route('staff.dashboard.setPin')}}"
+                          method="post">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <label class="form-check-label" for="gridCheck">
+                                    You are yet to set your account pin. Set up your account pin before you can operate
+                                    as a staff
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Pin</label>
+                            <input type="password" name="pin"  class="form-control" id="inputEmail4"
+                                   required maxlength="6" minlength="6"/>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Confirm Pin</label>
+                            <input type="password" name="pin_confirmation"  class="form-control" id="inputEmail4"
+                                   required maxlength="6" minlength="6"/>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Password</label>
+                            <input type="password" name="password"  class="form-control" id="inputEmail4"
+                                   required/>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="default-btn submit rounded-pill">Set Pin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function (){
+            $('#set_account_pin').modal('show')
+        });
+    </script>
+    <script src="{{asset('requests/staff/set_pin.js')}}"></script>
+@endif
+
+<script>
+    $(document).ready(function(){
+        $(".searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".table tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
