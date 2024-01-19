@@ -4,6 +4,7 @@ use App\Http\Controllers\Staff\Bookings;
 use App\Http\Controllers\Staff\Home;
 use App\Http\Controllers\Staff\Transactions;
 use App\Http\Controllers\Staff\Users;
+use App\Http\Controllers\Staff\Verifications;
 use Illuminate\Support\Facades\Route;
 
 
@@ -56,3 +57,10 @@ Route::get('transactions/withdrawals',[Transactions::class,'withdrawals'])
 Route::get('transactions/withdrawals/{id}/detail',[Transactions::class,'withdrawalDetail'])
     ->name('transactions.withdrawals.detail');
 
+/*=================  VERIFICATIONS LISTS  ==================================*/
+Route::get('verifications/completed',[Verifications::class,'completed'])
+    ->name('verifications.completed');
+Route::get('verifications/pending',[Verifications::class,'pending'])
+    ->name('verifications.pending');
+Route::get('verifications/{id}/detail',[Verifications::class,'verificationDetail'])
+    ->name('verifications.detail');

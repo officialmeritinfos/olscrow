@@ -211,12 +211,12 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.verifications.pending')}}">
                             <span class="menu-title">Pending Verifications </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.verifications.completed')}}">
                             <span class="menu-title">Completed Verifications </span>
                         </a>
                     </li>
