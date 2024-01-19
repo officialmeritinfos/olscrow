@@ -143,37 +143,37 @@
 
                     <ul class="sidemenu-nav-second-level">
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.general-settings')}}">
                                 <span class="menu-title">General Settings</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.fiats')}}">
                                 <span class="menu-title">Supported Fiats </span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.country')}}">
                                 <span class="menu-title">Supported Countries </span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.packages')}}">
                                 <span class="menu-title">Packages </span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.reports')}}">
                                 <span class="menu-title">Report Types </span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.faqs')}}">
                                 <span class="menu-title">FAQs </span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.settings.services')}}">
                                 <span class="menu-title">Services </span>
                             </a>
                         </li>
