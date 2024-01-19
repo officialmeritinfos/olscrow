@@ -92,11 +92,20 @@ class Users extends BaseController
         $client = User::where('reference',$id)->firstOrFail();
 
         return view('staff.users.client_detail')->with([
-            'web'       =>$web,
-            'siteName'  =>$web->name,
-            'pageName'  =>'Client Detail',
-            'user'      =>$user,
-            'client'    =>$client
+            'web'               =>$web,
+            'siteName'          =>$web->name,
+            'pageName'          =>'Client Detail',
+            'user'              =>$user,
+            'client'            =>$client,
+            'bookings'          =>UserBooking::where('user',$client->id)->paginate(10,'*','bookings'),
+            'deposits'          =>UserDeposit::where('user',$client->id)->paginate(10,'*','user_deposit'),
+            'transactions'      =>Transaction::where('user',$client->id)->paginate(10,'*','transactions'),
+            'userTransactions'  =>UserTransaction::where('user',$client->id)->paginate(10,'*','user_transactions'),
+            'settings'          =>UserSetting::where('user',$client->id)->first(),
+            'withdrawals'       =>UserWithdrawal::where('user',$client->id)->paginate(10,'*','withdrawals'),
+            'banks'             =>UserBank::where('user',$client->id)->paginate(10,'*','banks'),
+            'reviews'           =>EscortReview::where('reviewer',$client->id)->paginate(10,'*','reviews'),
+            'verification'      =>EscortVerification::where('user',$client->id)->first()
         ]);
     }
 }

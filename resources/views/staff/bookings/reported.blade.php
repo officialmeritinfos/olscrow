@@ -8,7 +8,7 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-today-card d-flex align-items-center">
                         <div class="flex-grow-1">
-                                <span class="today">Total Booking</span>
+                            <span class="today">Total Booking</span>
                             <h6>{{$total->count()}}</h6>
                         </div>
 
@@ -48,6 +48,7 @@
                             <th scope="col">ORDER</th>
                             <th scope="col">DATE</th>
                             <th scope="col">STATUS</th>
+                            <th scope="col">APPEALED</th>
                             <th scope="col">ACTION</th>
                         </tr>
                         </thead>
@@ -62,16 +63,16 @@
                                     </div>
                                 </td>
                                 <td>
-                                   <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($booking->user)->reference])}}"
-                                   class="badge bg-info">
-                                       {{$injected->getUserById($booking->user)->name}}
-                                   </a>
+                                    <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($booking->user)->reference])}}"
+                                       class="badge bg-info">
+                                        {{$injected->getUserById($booking->user)->name}}
+                                    </a>
                                 </td>
                                 <td>
-                                   <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($booking->escortId)->reference])}}"
-                                   class="badge bg-dark">
-                                       {{$injected->getUserById($booking->escortId)->name}}
-                                   </a>
+                                    <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($booking->escortId)->reference])}}"
+                                       class="badge bg-dark">
+                                        {{$injected->getUserById($booking->escortId)->name}}
+                                    </a>
                                 </td>
                                 <td>
                                     {{$booking->currency}} {{number_format($booking->amount,2)}}
@@ -97,22 +98,46 @@
                                 </td>
 
                                 <td class="status">
-                                    @switch($booking->status)
+                                    @switch($injected->getReportById($booking->reportId)->status)
                                         @case(1)
-                                            <i class="ri-checkbox-circle-line"></i>
-                                            Completed
+                                            <span class="badge bg-success">
+                                                <i class="ri-checkbox-circle-line"></i>
+                                                Resolved
+                                            </span>
                                             @break
                                         @case(2)
-                                            <i class="ri-stop-circle-fill text-info"></i>
-                                            Pending Acceptance
+                                            <span class="badge bg-info">
+                                                <i class="ri-stop-circle-fill"></i>
+                                                Pending Appeal
+                                            </span>
                                             @break
                                         @case(4)
-                                            <i class="bx bx-refresh bx-spin text-primary"></i>
-                                            Ongoing
+                                            <span class="badge bg-primary">
+                                                <i class="bx bx-refresh bx-spin"></i>
+                                                Appealed - Awaiting Resolution by Parties
+                                            </span>
+                                            @break
+
+                                        @case(5)
+                                            <span class="badge bg-primary">
+                                            <i class="bx bx-refresh bx-spin"></i>
+                                            Customer Support Intervened
+                                        </span>
+                                            @break
+                                        @default
+                                            <span class="badge bg-danger">Cancelled</span>
+                                            @break
+                                    @endswitch
+                                </td>
+                                <td class="status">
+                                    @switch($booking->appealed)
+                                        @case(1)
+                                            <i class="ri-checkbox-circle-line"></i>
+                                            Appealed
                                             @break
                                         @default
                                             <i class="bx bx-x-circle text-danger"></i>
-                                            Cancelled
+                                            Not Appealed
                                             @break
                                     @endswitch
                                 </td>

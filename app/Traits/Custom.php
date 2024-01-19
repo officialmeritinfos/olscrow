@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\BookingReport;
 use App\Models\Business;
 use App\Models\BusinessCryptoWithdrawal;
 use App\Models\BusinessCustomer;
@@ -211,5 +212,10 @@ class Custom
     public function fetchRole($id)
     {
         return StaffRole::where('id',$id)->first();
+    }
+    //fetch report by Id
+    public function getReportById($id)
+    {
+        return BookingReport::where('id',$id)->first();
     }
 }

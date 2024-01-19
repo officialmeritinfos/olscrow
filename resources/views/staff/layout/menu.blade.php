@@ -60,17 +60,22 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.bookings.ongoing')}}">
+                            <span class="menu-title">Ongoing</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('staff.bookings.completed')}}">
                             <span class="menu-title">Completed</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.bookings.pending')}}">
                             <span class="menu-title">Pending </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.bookings.reported')}}">
                             <span class="menu-title">Reported </span>
                         </a>
                     </li>
