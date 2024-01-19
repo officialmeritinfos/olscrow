@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Staff\Bookings;
 use App\Http\Controllers\Staff\Home;
+use App\Http\Controllers\Staff\Transactions;
 use App\Http\Controllers\Staff\Users;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,26 @@ Route::get('bookings/reported',[Bookings::class,'reportedBookings'])
     ->name('bookings.reported');
 Route::get('bookings/{id}/detail',[Bookings::class,'bookingDetail'])
     ->name('bookings.detail');
+
+/*=================  TRANSACTIONS LISTS  ==================================*/
+//Subscription
+Route::get('transactions/subscriptions',[Transactions::class,'subscriptions'])
+    ->name('transactions.subscriptions');
+Route::get('transactions/subscription/{id}/detail',[Transactions::class,'subscriptionDetail'])
+    ->name('transactions.subscription.detail');
+//Addon
+Route::get('transactions/addons',[Transactions::class,'addonPurchases'])
+    ->name('transactions.addons');
+Route::get('transactions/addon/{id}/detail',[Transactions::class,'addonPurchaseDetail'])
+    ->name('transactions.addon.detail');
+//account funding
+Route::get('transactions/funding',[Transactions::class,'accountFunding'])
+    ->name('transactions.funding');
+Route::get('transactions/funding/{id}/detail',[Transactions::class,'accountFundingDetail'])
+    ->name('transactions.funding.detail');
+//withdrawals
+Route::get('transactions/withdrawals',[Transactions::class,'withdrawals'])
+    ->name('transactions.withdrawals');
+Route::get('transactions/withdrawals/{id}/detail',[Transactions::class,'withdrawalDetail'])
+    ->name('transactions.withdrawals.detail');
+

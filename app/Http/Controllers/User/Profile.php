@@ -886,7 +886,7 @@ class Profile extends BaseController
 
             $enrollment = UserAddonEnrollment::create([
                 'user'=>$user->id,'reference'=>$this->generateUniqueReference('user_addon_enrollments','reference',20),
-                'amount'=>$fee,'duration'=>$duration,'type'=>'Premium Account Featuring'
+                'amount'=>$fee,'duration'=>$duration,'type'=>'Premium Account Featuring','status'=>4
             ]);
             if (!empty($enrollment)){
 

@@ -14,10 +14,6 @@
 <script src="{{asset('dashboard/js/mixitup.min.js')}}"></script>
 <!-- Dark Mode Switch Min JS -->
 <script src="{{asset('dashboard/js/dark-mode-switch.min.js')}}"></script>
-<!-- Apexcharts Min JS -->
-<script src="{{asset('dashboard/js/apexcharts/apexcharts.min.js')}}"></script>
-<!-- Charts Custom Min JS -->
-<script src="{{asset('dashboard/js/charts-custom.js')}}"></script>
 <!-- Form Validator Min JS -->
 <script src="{{asset('dashboard/js/form-validator.min.js')}}"></script>
 <!-- Contact JS -->

@@ -90,22 +90,22 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.transactions.subscriptions')}}">
                             <span class="menu-title">Subscriptions</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.transactions.addons')}}">
                             <span class="menu-title">Addon Purchases </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.transactions.funding')}}">
                             <span class="menu-title">Account Funding </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.transactions.withdrawals')}}">
                             <span class="menu-title">Withdrawals </span>
                         </a>
                     </li>

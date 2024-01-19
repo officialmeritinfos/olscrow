@@ -16,6 +16,7 @@ use App\Models\EscortProfile;
 use App\Models\EscortReview;
 use App\Models\Fiat;
 use App\Models\Order;
+use App\Models\Package;
 use App\Models\Service;
 use App\Models\StaffRole;
 use App\Models\State;
@@ -217,5 +218,10 @@ class Custom
     public function getReportById($id)
     {
         return BookingReport::where('id',$id)->first();
+    }
+    //fetch package by ID
+    public function fetchSubscriptionPackageById($id)
+    {
+        return Package::where('id',$id)->first();
     }
 }
