@@ -43,10 +43,17 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($transaction->user)->reference])}}"
-                                       class="badge bg-info">
-                                        {{$injected->getUserById($transaction->user)->name}}
-                                    </a>
+                                    @if($injected->getUserById($transaction->user)->accountType==1)
+                                        <a href="{{route('staff.user.escort.details',['id'=>$injected->getUserById($transaction->user)->reference])}}"
+                                           class="badge bg-info">
+                                            {{$injected->getUserById($transaction->user)->name}}
+                                        </a>
+                                    @else
+                                        <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($transaction->user)->reference])}}"
+                                           class="badge bg-info">
+                                            {{$injected->getUserById($transaction->user)->name}}
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     {{$transaction->currency}}{{number_format($transaction->amount,2)}}

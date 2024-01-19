@@ -64,3 +64,11 @@ Route::get('verifications/pending',[Verifications::class,'pending'])
     ->name('verifications.pending');
 Route::get('verifications/{id}/detail',[Verifications::class,'verificationDetail'])
     ->name('verifications.detail');
+
+/*=================  ESCORT FEATURES LISTS  ==================================*/
+//packages
+Route::get('features/packages',[\App\Http\Controllers\Staff\Features::class,'packages'])
+    ->name('features.packages');
+//body features
+Route::get('features/body-feature',[\App\Http\Controllers\Staff\Features::class,'escortBodyFeature'])
+    ->name('features.escort-body-feature');

@@ -190,12 +190,12 @@
 
                 <ul class="sidemenu-nav-second-level">
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.features.packages')}}">
                             <span class="menu-title">Escort Packages</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('staff.features.escort-body-feature')}}">
                             <span class="menu-title">Features </span>
                         </a>
                     </li>

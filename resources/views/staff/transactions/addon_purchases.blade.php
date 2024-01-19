@@ -42,7 +42,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($transaction->user)->reference])}}"
+                                    <a href="{{route('staff.user.escort.details',['id'=>$injected->getUserById($transaction->user)->reference])}}"
                                        class="badge bg-info">
                                         {{$injected->getUserById($transaction->user)->name}}
                                     </a>

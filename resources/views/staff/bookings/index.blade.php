@@ -68,7 +68,7 @@
                                    </a>
                                 </td>
                                 <td>
-                                   <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($booking->escortId)->reference])}}"
+                                   <a href="{{route('staff.user.escort.details',['id'=>$injected->getUserById($booking->escortId)->reference])}}"
                                    class="badge bg-dark">
                                        {{$injected->getUserById($booking->escortId)->name}}
                                    </a>

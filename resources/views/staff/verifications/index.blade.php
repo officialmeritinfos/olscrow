@@ -33,7 +33,7 @@
                         @foreach($escorts as $escort)
                             <tr>
                                 <td>
-                                    <a href="{{route('staff.user.client.details',['id'=>$injected->getUserById($escort->user)->reference])}}"
+                                    <a href="{{route('staff.user.escort.details',['id'=>$injected->getUserById($escort->user)->reference])}}"
                                        class="badge bg-info">
                                         {{$injected->getUserById($escort->user)->name}}
                                     </a>
