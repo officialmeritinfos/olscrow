@@ -122,12 +122,12 @@
 
                     <ul class="sidemenu-nav-second-level">
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.staff.add')}}">
                                 <span class="menu-title">New Staff</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('staff.staff.index')}}">
                                 <span class="menu-title">Staff List </span>
                             </a>
                         </li>

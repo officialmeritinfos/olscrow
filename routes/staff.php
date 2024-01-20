@@ -10,6 +10,7 @@ use App\Http\Controllers\Staff\Settings\GeneralSettings;
 use App\Http\Controllers\Staff\Settings\Packages;
 use App\Http\Controllers\Staff\Settings\Reports;
 use App\Http\Controllers\Staff\Settings\Services;
+use App\Http\Controllers\Staff\Staff;
 use App\Http\Controllers\Staff\Transactions;
 use App\Http\Controllers\Staff\Users;
 use App\Http\Controllers\Staff\Verifications;
@@ -123,3 +124,10 @@ Route::get('settings/services/edit',[Services::class,'landingPage'])
     ->name('settings.services.edit');//edit landing page
 Route::post('settings/services/update',[Services::class,'landingPage'])
     ->name('settings.services.update');//update
+
+/*=================  STAFF SETUP SETTING  ==================================*/
+Route::get('staff/list',[Staff::class,'landingPage'])
+    ->name('staff.index');
+
+Route::get('staff/add',[Staff::class,'createStaff'])
+    ->name('staff.add');
