@@ -43,7 +43,10 @@ class Login extends BaseController
             $validator = Validator::make($request->all(),[
                 'email'=>['required','email','exists:users,email'],
                 'password'=>['required',Password::min(8)->uncompromised(1)],
-                'remember'=>['nullable','integer']
+                'remember'=>['nullable','integer'],
+                'g-recaptcha-response' => ['required','recaptchav3:register,0.5']
+            ],[],[
+                'recaptchav3'=>'Recaptcha validation failed'
             ])->stopOnFirstFailure();
             if ($validator->fails()) return $this->sendError('validation.error',['error'=>$validator->errors()->all()]);
 

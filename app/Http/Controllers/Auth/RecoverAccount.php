@@ -41,7 +41,8 @@ class RecoverAccount extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => ['required', 'email', 'exists:users,email']
+                'email' => ['required', 'email', 'exists:users,email'],
+                'g-recaptcha-response' => ['required','recaptchav3:register,0.5']
             ])->stopOnFirstFailure();
             if ($validator->fails()){
                 return $this->sendError('validation.error',['error'=>$validator->errors()->all()]);

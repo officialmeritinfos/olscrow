@@ -39,6 +39,8 @@
     <title>{{$siteName}} - {{$pageName}}</title>
 
     @include('genericCss')
+
+    {!! RecaptchaV3::initJs() !!}
 </head>
 
 <body class="body-bg-f5f5f5">
@@ -152,6 +154,16 @@
                                     <option value="2" selected>Affiliate</option>
                                 @endif
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-12  form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                        <div class="col-md-6">
+                            {!! RecaptchaV3::field('register') !!}
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                            @endif
                         </div>
                     </div>
 

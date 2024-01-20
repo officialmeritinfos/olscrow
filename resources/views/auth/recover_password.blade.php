@@ -39,6 +39,7 @@
     <title>{{$siteName}} - {{$pageName}}</title>
 
     @include('genericCss')
+    {!! RecaptchaV3::initJs() !!}
 </head>
 
 <body class="body-bg-f5f5f5">
@@ -65,6 +66,16 @@
                             <label>Email</label>
                             <input class="form-control" type="email" name="email"
                                    placeholder="Enter your email">
+                        </div>
+                    </div>
+                    <div class="col-12  form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                        <div class="col-md-6">
+                            {!! RecaptchaV3::field('register') !!}
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                            @endif
                         </div>
                     </div>
 
