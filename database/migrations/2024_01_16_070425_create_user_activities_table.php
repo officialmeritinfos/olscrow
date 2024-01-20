@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('user');
             $table->string('title', 150)->nullable();
             $table->longText('content');
+            $table->integer('isStaff')->default(2);
             $table->integer('status')->default(2);
             $table->string('created_at', 150)->nullable();
             $table->string('updated_at', 150)->nullable();
