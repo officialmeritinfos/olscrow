@@ -9,6 +9,14 @@
     <title>
         {{$siteName}}  - {{$pageName}}
     </title>
+    <meta name="og:title" content="{{$siteName}} -{{$pageName}} "/>
+    <meta name="og:type" content="company"/>
+    <meta name="og:url" content="/"/>
+    <meta name="og:image" content="{{asset($web->favicon)}}"/>
+    <meta name="og:site_name" content="{{$siteName}}"/>
+    <meta name="og:description" content="{{$web->description}}"/>
+    <meta name="description" content="{{$web->description}}">
+    <meta name="keywords" content="{{$web->keywords}}">
     <link rel="shortcut icon" href="{{asset($web->favicon)}}" type="image/x-icon">
     <!-- Plugin'stylesheets  -->
     <link rel="stylesheet" type="text/css" href="{{asset('home/fonts/typography/fonts.css')}}">
