@@ -1,10 +1,10 @@
-const packageRequest=function (){
+const staffRequest=function (){
     //add new
     const initiateSubmission=function (){
         //process the form submission
-        $('#package').submit(function(e) {
+        $('#addStaff').submit(function(e) {
             e.preventDefault();
-            var baseURL = $('#package').attr('action');
+            var baseURL = $('#addStaff').attr('action');
             var baseURLs='';
             $.ajaxSetup({
                 headers: {
@@ -18,7 +18,7 @@ const packageRequest=function (){
                 dataType:"json",
                 beforeSend:function(){
                     $('.submit').attr('disabled', true);
-                    $("#package :input").prop("readonly", true);
+                    $("#addStaff :input").prop("readonly", true);
                     $(".submit").LoadingOverlay("show",{
                         text        : "please wait ...",
                         size        : "20"
@@ -38,7 +38,7 @@ const packageRequest=function (){
                         setTimeout(function(){
                             $('.submit').attr('disabled', false);
                             $(".submit").LoadingOverlay("hide");
-                            $("#package :input").prop("readonly", false);
+                            $("#addStaff :input").prop("readonly", false);
                         }, 3000);
                     }
                     if(data.error === 'ok')
@@ -52,7 +52,7 @@ const packageRequest=function (){
                         setTimeout(function(){
                             $('.submit').attr('disabled', false);
                             $(".submit").LoadingOverlay("hide");
-                            $("package :input").prop("readonly", false);
+                            $("addStaff :input").prop("readonly", false);
                             window.location.replace(data.data.redirectTo)
                         }, 5000);
                     }
@@ -63,7 +63,7 @@ const packageRequest=function (){
                         "progressBar" : true
                     }
                     toastr.error(errorThrown);
-                    $("#package :input").prop("readonly", false);
+                    $("#addStaff :input").prop("readonly", false);
                     $('.submit').attr('disabled', false);
                     $(".submit").LoadingOverlay("hide");
                 },
@@ -79,6 +79,6 @@ const packageRequest=function (){
 }();
 
 jQuery(document).ready(function() {
-    packageRequest.init();
+    staffRequest.init();
 });
 

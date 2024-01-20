@@ -100,12 +100,18 @@ Route::get('settings/faqs',[Faqs::class,'landingPage'])
 //Packages
 Route::get('settings/packages',[Packages::class,'landingPage'])
     ->name('settings.packages');//landing page
-Route::post('settings/packages/add',[Packages::class,'landingPage'])
+Route::get('settings/packages/add',[Packages::class,'addPackage'])
     ->name('settings.packages.add');//add new
-Route::get('settings/packages/edit',[Packages::class,'landingPage'])
+Route::post('settings/packages/add/process',[Packages::class,'processPackageCreation'])
+    ->name('settings.packages.add.process');//process add new
+Route::get('settings/packages/{id}/edit',[Packages::class,'editPackage'])
     ->name('settings.packages.edit');//edit landing page
-Route::post('settings/packages/update',[Packages::class,'landingPage'])
+Route::post('settings/packages/update',[Packages::class,'updatePackage'])
     ->name('settings.packages.update');//update
+Route::get('settings/packages/{id}/delete',[Packages::class,'deletePackage'])
+    ->name('settings.packages.id.delete');
+Route::post('settings/packages/delete',[Packages::class,'delete'])
+    ->name('settings.packages.delete');
 //Report Type
 Route::get('settings/reports',[Reports::class,'landingPage'])
     ->name('settings.reports');//landing page
@@ -127,7 +133,10 @@ Route::post('settings/services/update',[Services::class,'landingPage'])
 
 /*=================  STAFF SETUP SETTING  ==================================*/
 Route::get('staff/list',[Staff::class,'landingPage'])
-    ->name('staff.index');
-
+    ->name('staff.index');//landing page
 Route::get('staff/add',[Staff::class,'createStaff'])
-    ->name('staff.add');
+    ->name('staff.add');//add
+Route::post('staff/create',[Staff::class,'processStaffAddition'])
+    ->name('staff.create');//process add
+Route::get('staff/{id}/detail',[Staff::class,'staffDetail'])
+    ->name('staff.detail');//detail

@@ -11,14 +11,6 @@
                     </form>
                 </div>
 
-                <div class="col-lg-6 col-sm-6">
-                    <div class="add-new-orders">
-                        <a href="#" class="new-orders">
-                            Add New Escort
-                            <i class="ri-add-circle-line"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
 
             <div class="latest-transaction-area">

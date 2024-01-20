@@ -34,7 +34,7 @@ class Users extends BaseController
             'siteName'  =>$web->name,
             'pageName'  =>'Escort Lists',
             'user'      =>$user,
-            'escorts'   =>User::where('accountType',1)
+            'escorts'   =>User::where('accountType',1)->where('isStaff','!=',1)
                 ->orderBy('status','asc')
                 ->orderBy('id','desc')
                 ->paginate(15)
@@ -50,7 +50,7 @@ class Users extends BaseController
             'siteName'  =>$web->name,
             'pageName'  =>'Client Lists',
             'user'      =>$user,
-            'clients'   =>User::where('accountType',2)
+            'clients'   =>User::where('accountType',2)->where('isStaff','!=',1)
                 ->orderBy('status','asc')
                 ->orderBy('id','desc')
                 ->paginate(15)

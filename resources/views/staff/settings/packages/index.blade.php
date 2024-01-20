@@ -13,6 +13,15 @@
                         <input class="form-control searchInput" type="search" placeholder="Search" aria-label="Search">
                     </form>
                 </div>
+                <div class="col-lg-6 col-sm-6">
+                    <div class="add-new-orders">
+                        <a href="{{route('staff.settings.packages.add')}}" class="new-orders">
+                            Add New Package
+                            <i class="ri-add-circle-line"></i>
+                        </a>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -31,6 +40,7 @@
                             <th scope="col">HAS FEATURED</th>
                             <th scope="col">FEATURED DURATION</th>
                             <th scope="col">STATUS</th>
+                            <th scope="col">ACTION</th>
                         </tr>
                         </thead>
                         <tbody class="searches">
@@ -114,6 +124,28 @@
                                             Inactive
                                             @break
                                     @endswitch
+                                </td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="ri-more-2-fill"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('staff.settings.packages.edit',['id'=>$package->id])}}">
+                                                    Edit
+                                                    <i class="ri-eye-2-line"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('staff.settings.packages.id.delete',['id'=>$package->id])}}">
+                                                    Delete
+                                                    <i class="ri-delete-bin-4-fill"></i>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

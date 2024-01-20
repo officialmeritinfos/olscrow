@@ -224,4 +224,9 @@ class Custom
     {
         return Package::where('id',$id)->first();
     }
+    //staff role by id
+    public function fetchStaffRoleById($id)
+    {
+        return StaffRole::where('id',$id)->first();
+    }
 }
