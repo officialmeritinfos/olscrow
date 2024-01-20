@@ -72,7 +72,7 @@
                         <div class="about_content-image content-image--mobile-width">
                             <img src="{{asset('home/image/about/video-image.png')}}" alt="alternative text">
                         </div>
-                        <a href="https://www.youtube.com/watch?v=zo9dJFo8H8g" data-fancybox class="btn-play absolute-center btn-play">
+                        <a href="https://www.youtube.com/watch?v=4ScOVrDCTf0" data-fancybox class="btn-play absolute-center btn-play">
                             <i class="fa-solid fa-play"></i>
                         </a>
                     </div>

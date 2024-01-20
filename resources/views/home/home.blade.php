@@ -224,7 +224,7 @@
                 <div class=" col-lg-12" data-aos-duration="1000" data-aos="fade-up">
                     <div class="home-2_content-image-3 ">
                         <img src="{{asset('home/image/home-2/video-image.png')}}" alt="alternative text">
-                        <a href="https://www.youtube.com/watch?v=zo9dJFo8H8g" data-fancybox class="btn-play absolute-center btn-play--120 text-primary-l02">
+                        <a href="https://www.youtube.com/watch?v=4ScOVrDCTf0" data-fancybox class="btn-play absolute-center btn-play--120 text-primary-l02">
                             <i class="fa-solid fa-play"></i>
                         </a>
                     </div>
