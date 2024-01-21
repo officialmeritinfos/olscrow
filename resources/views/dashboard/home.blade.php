@@ -4,6 +4,100 @@
     @if($user->accountType==1)
         <div class="today-card-area pt-24">
             <div class="container-fluid">
+
+                <div class="ui-kit-cards grid mb-24">
+                    <h3>Basic Activities to Perform First</h3>
+                    @if(empty($injected->escortHasProfile($user)))
+                        <div class="card shadow mb-3">
+                            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="flex-grow-1 mb-3 mb-md-0">
+                                    <h5 class="card-title">
+                                        <i class="ri-global-fill"></i> Public Profile
+                                    </h5>
+                                    <p class="card-text" style="word-break: break-word;">
+                                        Set up your public information. This can be changed from the profile page later.
+                                    </p>
+                                </div>
+                                <a href="{{route('user.profile.public')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                    Set
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(empty($user->city))
+                        <div class="card shadow mb-3">
+                            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="flex-grow-1 mb-3 mb-md-0">
+                                    <h5 class="card-title">
+                                        <i class="ri-global-fill"></i> Location & Display Name
+                                    </h5>
+                                    <p class="card-text" style="word-break: break-word;">
+                                        Setup your current location and availability. This can be changed later
+                                    </p>
+                                </div>
+                                <a href="{{route('user.profile.location')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                    Set
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($user->isVerified!=4 && $user->isVerified!=1)
+                            <div class="card shadow mb-3">
+                                <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="flex-grow-1 mb-3 mb-md-0">
+                                        <h5 class="card-title">
+                                            <i class="ri-shield-check-fill"></i> User Verification
+                                        </h5>
+                                        <p class="card-text" style="word-break: break-word;">
+                                            Verify your ID. This is necessary before you can go public
+                                        </p>
+                                    </div>
+                                    <a href="{{route('user.verification')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                        Set
+                                    </a>
+                                </div>
+                            </div>
+                    @endif
+
+                    @if(empty($injected->escortHasPackage($user)))
+                        <div class="card shadow mb-3">
+                            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="flex-grow-1 mb-3 mb-md-0">
+                                    <h5 class="card-title">
+                                        <i class="ri-global-fill"></i> Packages
+                                    </h5>
+                                    <p class="card-text" style="word-break: break-word;">
+                                        Setup your packages which clients can book from
+                                    </p>
+                                </div>
+                                <a href="{{route('user.orders')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                    Set
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($user->isEnrolled!=1)
+                        <div class="card shadow mb-3">
+                            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="flex-grow-1 mb-3 mb-md-0">
+                                    <h5 class="card-title">
+                                        <i class="ri-global-fill"></i> Activate Account
+                                    </h5>
+                                    <p class="card-text" style="word-break: break-word;">
+                                        Activate your account by enrolling in one of our packages. This could be the free package.
+                                    </p>
+                                </div>
+                                <a href="{{route('user.subscription')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                    Set
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-sm-6">
                         <div class="single-today-card d-flex align-items-center">

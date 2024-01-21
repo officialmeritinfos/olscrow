@@ -229,4 +229,14 @@ class Custom
     {
         return StaffRole::where('id',$id)->first();
     }
+    //has profile
+    public function escortHasProfile($user)
+    {
+        return EscortProfile::where('user',$user->id)->first();
+    }
+    //escort has package
+    public function escortHasPackage($user)
+    {
+        return Order::where('user',$user->id)->first();
+    }
 }

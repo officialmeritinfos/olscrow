@@ -12,6 +12,7 @@ use App\Models\EscortSubscriptionPayment;
 use App\Models\EscortVerification;
 use App\Models\Fiat;
 use App\Models\GeneralSetting;
+use App\Models\Order;
 use App\Models\Package;
 use App\Models\Service;
 use App\Models\State;
@@ -235,6 +236,13 @@ class Profile extends BaseController
                 return $this->sendError('state.error',['error'=>'City not found.']);
             }
 
+            //check that user has updated profile
+            $hasUpdatedProfile = EscortProfile::where('user',$user->id)->first();
+
+            if ($user->accountType==1 && empty($hasUpdatedProfile)){
+                return $this->sendError('profile.error',['error'=>'Please update your public profile first']);
+            }
+
             $user->countryCode = $input['country'];
             $user->city = $input['city'];
             $user->state = $input['state'];
@@ -349,6 +357,10 @@ class Profile extends BaseController
             //upload image - we will watermark this image
             $imageResult = $this->uploadGoogle($request->file('liveImage'));
             $image  = $imageResult['link'];
+
+            if ($user->accountType==1 && empty($user->city)){
+                return $this->sendError('profile.error',['error'=>'Please update your public location first']);
+            }
 
             $verification = EscortVerification::create([
                 'user'=>$user->id,'liveVideo'=>$video,
@@ -658,6 +670,29 @@ class Profile extends BaseController
             }
 
             $package = Package::where('id',$input['package'])->first();
+
+            //check that user has updated profile
+            $hasUpdatedProfile = EscortProfile::where('user',$user->id)->first();
+
+            if ($user->accountType==1 && empty($hasUpdatedProfile)){
+                return $this->sendError('profile.error',['error'=>'Please update your public profile first']);
+            }
+
+            //check that user has updated location
+            if ($user->accountType==1 && empty($user->city)){
+                return $this->sendError('profile.error',['error'=>'Please update your public location first']);
+            }
+
+            //check if user has set orders
+            $hasOrders = Order::where('user',$user->id)->where('status',1)->get();
+            if ($hasOrders->count()<1){
+                return $this->sendError('profile.error',['error'=>'Please set your packages first before activating account']);
+            }
+
+
+            if ($user->isVerified!=1){
+                return $this->sendError('kyc.error',['error'=>'Please verify your account first']);
+            }
 
             $fiat = Fiat::where('code',$user->mainCurrency)->first();
             $balance = $user->subscriptionBalance;

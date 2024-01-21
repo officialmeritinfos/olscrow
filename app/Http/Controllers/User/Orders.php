@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\EscortProfile;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\Service;
@@ -55,6 +56,17 @@ class Orders extends BaseController
             if ($validator->fails()) return $this->sendError('validation.error', ['error' => $validator->errors()->all()]);
 
             $input = $validator->validated();
+
+            //check that user has updated profile
+            $hasUpdatedProfile = EscortProfile::where('user',$user->id)->first();
+
+            if ($user->accountType==1 && empty($hasUpdatedProfile)){
+                return $this->sendError('profile.error',['error'=>'Please update your public profile first']);
+            }
+            //check for location
+            if ($user->accountType==1 && empty($user->city)){
+                return $this->sendError('profile.error',['error'=>'Please update your public location first']);
+            }
 
             $services = implode(',',$input['service']);
 
