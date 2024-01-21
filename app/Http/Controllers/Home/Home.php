@@ -8,6 +8,7 @@ use App\Models\Faq;
 use App\Models\Fiat;
 use App\Models\GeneralSetting;
 use App\Models\Package;
+use App\Models\ReportType;
 use Illuminate\Http\Request;
 
 class Home extends BaseController
@@ -123,7 +124,8 @@ class Home extends BaseController
         return view('home.report_types')->with([
             'web'=>$web,
             'siteName'=>$web->name,
-            'pageName'=>'Report Information'
+            'pageName'=>'Report Information',
+            'reports'=>ReportType::where('status',1)->get()
         ]);
     }
     //escort Guide page

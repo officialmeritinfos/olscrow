@@ -36,6 +36,7 @@
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap');
         @import url('https://fonts.cdnfonts.com/css/clash-display');
     </style>
+    @stack('css')
 </head>
 
 <body>
@@ -328,5 +329,6 @@
 <script src="{{asset('home/js/menu.js')}}"></script>
 <script src="{{asset('home/js/custom.js')}}"></script>
 <!-- Activation Script -->
+@stack('js')
 </body>
 </html>
