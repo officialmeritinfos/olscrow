@@ -331,6 +331,41 @@
     @else
         <div class="today-card-area pt-24">
             <div class="container-fluid">
+                <div class="ui-kit-cards grid mb-24">
+                    <h3>Basic Activities to Perform First</h3>
+                    @if($user->isVerified!=1)
+                        <div class="card shadow mb-3">
+                            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="flex-grow-1 mb-3 mb-md-0">
+                                    <h5 class="card-title">
+                                        <i class="ri-user-5-fill"></i> Profile Setup
+                                    </h5>
+                                    <p class="card-text" style="word-break: break-word;">
+                                        Setup and manage your location & Profile
+                                    </p>
+                                </div>
+                                <a href="{{route('user.profile.location')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                    Manage
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-3">
+                            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="flex-grow-1 mb-3 mb-md-0">
+                                    <h5 class="card-title">
+                                        <i class="ri-shield-check-fill"></i> User Verification
+                                    </h5>
+                                    <p class="card-text" style="word-break: break-word;">
+                                        Manage your Identity Verification
+                                    </p>
+                                </div>
+                                <a href="{{route('user.verification')}}" class="btn btn-outline-primary rounded-pill btn-sm small-button">
+                                    Manage
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-sm-6">
                         <div class="single-today-card d-flex align-items-center">
