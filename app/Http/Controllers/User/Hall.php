@@ -41,6 +41,13 @@ class Hall extends BaseController
             ->where('id','!=',$user->id)->limit(30)->orderBy('isLoggedIn','asc')
             ->orderBy('created_at','desc')->get();
 
+        if ($user->accountType!=1 && $user->isVerified!=1){
+            return back()->with('error','Please verify your account before you can proceed to escort hall');
+        }
+
+        if ($user->accountType==1 && $user->isStaff!=1){
+            return back()->with('error','Please create a client account to view Escort Hall. You cannot view escort hall as an escort.');
+        }
 
         //return the view
         return view('dashboard.pages.hall.index')->with([
