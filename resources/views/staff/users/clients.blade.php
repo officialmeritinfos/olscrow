@@ -39,19 +39,19 @@
                                     {{$client->name}} ({{$client->email}})
                                 </td>
                                 <td>
-                                    {{$user->username}}
+                                    {{$client->username}}
                                 </td>
                                 <td class="bold">
-                                    {{$user->country}}
+                                    {{$client->country}}
                                 </td>
                                 <td class="rating">
-                                    {{$user->gender}}
+                                    {{$client->gender}}
                                 </td>
                                 <td class="rating">
-                                    {{date('d F, Y - H:i a',strtotime($user->created_at))}}
+                                    {{date('d F, Y - H:i a',strtotime($client->created_at))}}
                                 </td>
                                 <td>
-                                    @switch($user->isVerified)
+                                    @switch($client->isVerified)
                                         @case(1)
                                             <span class="badge bg-success">Verified</span>
                                             @break
@@ -64,7 +64,7 @@
                                     @endswitch
                                 </td>
                                 <td>
-                                    @switch($user->status)
+                                    @switch($client->status)
                                         @case(1)
                                             <span class="badge bg-success">Active</span>
                                             @break

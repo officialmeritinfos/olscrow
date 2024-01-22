@@ -39,19 +39,19 @@
                                     {{$escort->name}} ({{$escort->email}})
                                 </td>
                                 <td>
-                                    {{$user->username}}
+                                    {{$escort->username}}
                                 </td>
                                 <td class="bold">
-                                    {{$user->country}}
+                                    {{$escort->country}}
                                 </td>
                                 <td class="rating">
-                                    {{$user->gender}}
+                                    {{$escort->gender}}
                                 </td>
                                 <td class="rating">
-                                    {{date('d F, Y - H:i a',strtotime($user->created_at))}}
+                                    {{date('d F, Y - H:i a',strtotime($escort->created_at))}}
                                 </td>
                                 <td>
-                                    @switch($user->isVerifiedg)
+                                    @switch($escort->isVerifiedg)
                                         @case(1)
                                             <span class="badge bg-success">Verified</span>
                                         @break
@@ -64,7 +64,7 @@
                                     @endswitch
                                 </td>
                                 <td>
-                                    @switch($user->status)
+                                    @switch($escort->status)
                                         @case(1)
                                             <span class="badge bg-success">Active</span>
                                         @break
