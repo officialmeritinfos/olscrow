@@ -44,7 +44,6 @@ class Login extends BaseController
                 'email'=>['required','email','exists:users,email'],
                 'password'=>['required',Password::min(8)->uncompromised(1)],
                 'remember'=>['nullable','integer'],
-                'g-recaptcha-response' => ['required','recaptchav3:register,0.5']
             ],[],[
                 'recaptchav3'=>'Recaptcha validation failed'
             ])->stopOnFirstFailure();

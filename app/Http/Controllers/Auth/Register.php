@@ -60,7 +60,6 @@ class Register extends BaseController
                 'dob'=>['required','date','before:-18 years'],
                 'referral'=>['nullable','string','exists:user,username'],
                 'refType'=>['nullable','numeric','in:1,2'],
-                'g-recaptcha-response' => ['required','recaptchav3:register,0.5']
             ])->stopOnFirstFailure();
 
             if ($validator->fails()){
