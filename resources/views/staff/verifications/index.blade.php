@@ -39,7 +39,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img src="{{$escort->video}}" style="width: 200px;">
+                                    <img src="{{$escort->liveVideo}}" style="width: 200px;">
                                 </td>
                                 <td>
                                     <img src="{{$escort->photo}}" style="width: 200px;"/>
@@ -129,7 +129,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img src="{{$client->video}}" style="width: 200px;">
+                                    <img src="{{$client->liveVideo}}" style="width: 200px;">
                                 </td>
                                 <td>
                                     <img src="{{$client->photo}}" style="width: 200px;"/>
