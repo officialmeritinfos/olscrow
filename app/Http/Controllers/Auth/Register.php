@@ -132,7 +132,7 @@ class Register extends BaseController
             }
             return $this->sendError('account.error',['error'=>'Something went wrong']);
         }catch (\Exception $exception){
-            Log::alert($exception->getMessage());
+            Log::alert($exception->getMessage().' on line '.$exception->getLine().' on file '.$exception->getFile());
             return $this->sendError('account.error',['error'=>'Internal Server error.']);
         }
     }
