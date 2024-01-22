@@ -88,8 +88,8 @@
                             <label>Account Type<sup class="text-danger">*</sup></label>
                             <select class="form-control" name="accountType">
                                 <option value="">Select account Type</option>
-                                <option value="1">Escort - who renders service</option>
-                                <option value="2">Client - who needs service</option>
+                                <option value="1">Escort - who provides service</option>
+                                <option value="2">Client - who pays for service</option>
                             </select>
                         </div>
                     </div>
