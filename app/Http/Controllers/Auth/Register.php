@@ -58,7 +58,7 @@ class Register extends BaseController
                 'password_confirmation'=>['required','same:password'],
                 'gender'=>['required','alpha'],
                 'dob'=>['required','date','before:-18 years'],
-                'referral'=>['nullable','string','exists:user,username'],
+                'referral'=>['nullable','string','exists:users,username'],
                 'refType'=>['nullable','numeric','in:1,2'],
             ])->stopOnFirstFailure();
 
