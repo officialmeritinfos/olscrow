@@ -32,13 +32,21 @@ class Register extends BaseController
     {
         $web = GeneralSetting::find(1);
 
+        if ($request->has('ref')){
+            //let us store it for future purpose
+            $request->session()->put([
+                'ref'=>$request->get('ref'),
+                'refType'=>$request->get('type')
+            ]);
+        }
+
         return view('auth.register')->with([
             'siteName'=>$web->name,
             'pageName'=>'Account Registration',
             'web'=>$web,
             'countries'=>Country::get(),
-            'referral'=>$request->get('ref'),
-            'refType'=>$request->get('type')
+            'referral'=>($request->session()->exists('ref'))?$request->session()->get('ref'):$request->get('ref'),
+            'refType'=>($request->session()->exists('refType'))?$request->session()->get('refType'):$request->get('refType')
         ]);
     }
     //process registration
