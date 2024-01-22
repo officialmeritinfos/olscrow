@@ -45,7 +45,7 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <img src="{{$escort->photo}}" style="width: 150px;"/>
+                                    <img src="{{$escort->photo}}" style="width: 100px;"/>
                                 </td>
                                 <td class="status">
                                     @switch($escort->status)
@@ -132,13 +132,16 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <p>
-                                        Your browser doesn't support HTML video. Here is a
-                                        <a href="{{$client->liveVideo}}">link to the video</a> instead.
-                                    </p>
+                                    <video controls width="100">
+                                        <source src="{{$client->liveVideo}}"/>
+                                        <p>
+                                            Your browser doesn't support HTML video. Here is a
+                                            <a href="{{$client->liveVideo}}">link to the video</a> instead.
+                                        </p>
+                                    </video>
                                 </td>
                                 <td>
-                                    <img src="{{$client->photo}}" style="width: 150px;"/>
+                                    <img src="{{$client->photo}}" style="width: 100px;"/>
                                 </td>
                                 <td class="status">
                                     @switch($client->status)
