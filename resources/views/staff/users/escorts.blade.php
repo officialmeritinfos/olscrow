@@ -51,7 +51,7 @@
                                     {{date('d F, Y - H:i a',strtotime($user->created_at))}}
                                 </td>
                                 <td>
-                                    @switch($user->status)
+                                    @switch($user->isVerified)
                                         @case(1)
                                             <span class="badge bg-success">Verified</span>
                                         @break
