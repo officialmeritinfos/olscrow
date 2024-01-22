@@ -39,7 +39,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img src="{{$escort->liveVideo}}" style="width: 200px;">
+                                    <video controls width="100">
+                                        <source src="{{$client->liveVideo}}"/>
+                                        <p>
+                                            Your browser doesn't support HTML video. Here is a
+                                            <a href="{{$client->liveVideo}}">link to the video</a> instead.
+                                        </p>
+                                    </video>
                                 </td>
                                 <td>
                                     <img src="{{$escort->photo}}" style="width: 200px;"/>
@@ -129,7 +135,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img src="{{$client->liveVideo}}" style="width: 200px;">
+                                    <video controls width="100">
+                                        <source src="{{$client->liveVideo}}"/>
+                                        <p>
+                                            Your browser doesn't support HTML video. Here is a
+                                            <a href="{{$client->liveVideo}}">link to the video</a> instead.
+                                        </p>
+                                    </video>
                                 </td>
                                 <td>
                                     <img src="{{$client->photo}}" style="width: 200px;"/>
