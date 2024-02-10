@@ -9,6 +9,7 @@ use App\Models\EscortProfile;
 use App\Models\EscortReview;
 use App\Models\EscortSubscriptionPayment;
 use App\Models\EscortVerification;
+use App\Models\Fiat;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\Transaction;
@@ -81,7 +82,12 @@ class Users extends BaseController
             'photos'            =>EscortPhoto::where('user',$escort->id)->paginate(10,'*','photos'),
             'reviews'           =>EscortReview::where('user',$escort->id)->paginate(10,'*','reviews'),
             'profile'           =>EscortProfile::where('user',$escort->id)->first(),
-            'verification'      =>EscortVerification::where('user',$escort->id)->first()
+            'verifications'     =>EscortVerification::where('user',$escort->id)->paginate(10,'*','verifications'),
+            'fiat'              =>Fiat::where('code',$escort->mainCurrency)->first(),
+            'totalWithdrawals'  =>UserWithdrawal::where(['user'=>$escort->id,'status' => 1])->sum('amount'),
+            'totalDeposits'     =>UserDeposit::where(['user'=>$escort->id,'status' => 1])->sum('amount'),
+            'totalEarning'      =>UserBooking::where(['escortId'=>$escort->id,'status' => 1])->sum('amount'),
+            'totalSubs'         =>EscortSubscriptionPayment::where(['user'=>$escort->id])->sum('amount'),
         ]);
     }
     //client detail
